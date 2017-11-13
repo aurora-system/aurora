@@ -1,6 +1,8 @@
 CREATE SCHEMA `aurora` ;
 USE aurora;
 
+-- This is a sample change
+
 CREATE TABLE `aurora`.`order` (
   `order_id` INT NOT NULL,
   `customer_id` INT NOT NULL,
