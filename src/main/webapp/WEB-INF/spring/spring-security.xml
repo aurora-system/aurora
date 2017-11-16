@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						   http://www.springframework.org/schema/security 
+						   http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<!-- This is where we configure Spring-Security  -->
+	<http use-expressions="true" >
+		<access-denied-handler error-page="/denied"/>
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/dailysales" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+		
+		<form-login 
+			login-processing-url="/j_spring_security_check"
+			login-page="/login" 
+			authentication-failure-url="/login?error=true"
+			username-parameter="username"
+			password-parameter="password" />
+		
+		<logout 
+			success-handler-ref="myLogoutSuccessHandler"
+			logout-url="/j_spring_security_logout"
+			/>
+				
+	</http>
+	
+	<!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+	<beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+
+</beans:beans>
