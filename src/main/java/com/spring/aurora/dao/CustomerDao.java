@@ -1,5 +1,12 @@
 package com.spring.aurora.dao;
 
-public interface CustomerDao {
+import com.spring.aurora.model.Customer;
 
+import java.util.List;
+
+public interface CustomerDao {
+    Customer insert(Customer customer);
+    Customer update(Customer customer);
+    Customer find(Customer customer);
+    List<Customer> findAll();
 }

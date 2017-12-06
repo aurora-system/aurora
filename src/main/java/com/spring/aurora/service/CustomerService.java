@@ -1,5 +1,12 @@
 package com.spring.aurora.service;
 
-public interface CustomerService {
+import com.spring.aurora.model.Customer;
 
+import java.util.List;
+
+public interface CustomerService {
+    Customer insert(Customer customer);
+    Customer update(Customer customer);
+    Customer find(Customer customer);
+    List<Customer> findAll();
 }

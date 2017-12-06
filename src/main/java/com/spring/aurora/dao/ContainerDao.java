@@ -1,10 +1,10 @@
-package com.spring.aurora.service;
+package com.spring.aurora.dao;
 
 import com.spring.aurora.model.Container;
 
 import java.util.List;
 
-public interface ContainerService {
+public interface ContainerDao {
     Container insert(Container container);
     List<Container> findAllByCustomerId(int customerId);
 }
