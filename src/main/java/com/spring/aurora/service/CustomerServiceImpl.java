@@ -2,9 +2,12 @@ package com.spring.aurora.service;
 
 import com.spring.aurora.dao.*;
 import com.spring.aurora.model.Customer;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
     private OrderDao orderDao;
@@ -54,7 +57,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer insert(Customer customer) {
-        return customerDao.insert(customer);
+        customer.setCustomerId("1");
+        return customer;
     }
 
     @Override
@@ -69,6 +73,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findAll() {
-        return customerDao.findAll();
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer());
+        return customers;
     }
 }

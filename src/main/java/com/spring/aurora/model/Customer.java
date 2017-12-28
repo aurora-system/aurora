@@ -100,5 +100,8 @@ public class Customer {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
+
+	public boolean isNew() {
+		return (this.customerId == null);
+	}
 }
