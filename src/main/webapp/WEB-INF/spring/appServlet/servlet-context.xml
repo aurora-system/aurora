@@ -32,7 +32,7 @@
         <beans:property name="url"
             value="jdbc:mysql://localhost:3306/aurora?zeroDateTimeBehavior=convertToNull" />
         <beans:property name="username" value="root" />
-        <beans:property name="password" value="P@ssw0rd" />
+        <beans:property name="password" value="admin" />
     </beans:bean>
 	
 	<!-- Hibernate 4 SessionFactory Bean definition -->
@@ -56,13 +56,13 @@
         </beans:property>
     </beans:bean>
     
-<!-- 	<beans:bean id="customerDao" class="com.spring.aurora.dao.CustomerDaoImpl"> -->
-<!--         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" /> -->
-<!--     </beans:bean> -->
+	<beans:bean id="customerDao" class="com.spring.aurora.dao.CustomerDaoImpl">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
-<!--     <beans:bean id="customerService" class="com.spring.aurora.service.CustomerServiceImpl"> -->
-<!--         <beans:property name="customerDao" ref="customerDao"></beans:property> -->
-<!--     </beans:bean> -->
+    <beans:bean id="customerService" class="com.spring.aurora.service.CustomerServiceImpl">
+        <beans:property name="customerDao" ref="customerDao"></beans:property>
+    </beans:bean>
     
 <!--     <beans:bean id="customLogoutSuccessHandler" class="com.spring.aurora.util.MyLogoutSuccessHandler" ></beans:bean> -->
     
