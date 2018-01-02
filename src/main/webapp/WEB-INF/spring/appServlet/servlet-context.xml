@@ -58,13 +58,13 @@
         </beans:property>
     </beans:bean>
     
-	<beans:bean id="customerDao" class="com.spring.aurora.dao.CustomerDaoImpl">
+	<!--<beans:bean id="customerDao" class="com.spring.aurora.dao.CustomerDaoImpl">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     
     <beans:bean id="customerService" class="com.spring.aurora.service.CustomerServiceImpl">
         <beans:property name="customerDao" ref="customerDao"></beans:property>
-    </beans:bean>
+    </beans:bean>-->
     
 <!--     <beans:bean id="customLogoutSuccessHandler" class="com.spring.aurora.util.MyLogoutSuccessHandler" ></beans:bean> -->
     
