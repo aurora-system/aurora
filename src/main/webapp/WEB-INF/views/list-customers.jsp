@@ -16,7 +16,6 @@
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Id</th>
                             <th>Type</th>
                             <th>Customer Name</th>
                             <th>Address</th>
@@ -30,7 +29,6 @@
                         <tbody>
                             <c:forEach var="c" items="${customers}">
                                 <tr>
-                                    <td>${c.customerId}</td>
                                     <td>${c.type}</td>
                                     <td>${c.name}</td>
                                     <td>${c.address}</td>
@@ -39,9 +37,8 @@
                                     <td>${c.contactName}</td>
                                     <td>${c.alternateNumber}</td>
                                     <td>
-                                        <button class="btn btn-info">Query</button>
-                                        <button class="btn btn-primary">Update</button>
-                                        <button class="btn btn-danger">Delete</button>
+                                        <button class="btn btn-default">New Order</button>
+                                        <button class="btn btn-info">View</button>
                                     </td>
                                 </tr>
                             </c:forEach>

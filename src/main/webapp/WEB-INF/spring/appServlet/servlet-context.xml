@@ -14,9 +14,10 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 	
-	<context:component-scan base-package="com.spring.aurora" />
-	
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<context:annotation-config />
+    <context:component-scan base-package="com.spring.aurora" />
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -46,6 +47,7 @@
                 <beans:value>com.spring.aurora.model.Debt</beans:value>
                 <beans:value>com.spring.aurora.model.Order</beans:value>
                 <beans:value>com.spring.aurora.model.Payment</beans:value>
+                <beans:value>com.spring.aurora.model.Expense</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">

@@ -54,3 +54,12 @@ CREATE TABLE `aurora`.`container` (
   `round_count` INT NULL,
   `slim_count` INT NULL,
   `date` DATETIME NULL);
+
+-- Expenses
+CREATE TABLE `aurora`.`expense` (
+  `expense_id` INT NOT NULL AUTO_INCREMENT,
+  `amount` DECIMAL(2) NOT NULL,
+  `description` VARCHAR(45) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`expense_id`),
+  UNIQUE INDEX `expense_id_UNIQUE` (`expense_id` ASC));

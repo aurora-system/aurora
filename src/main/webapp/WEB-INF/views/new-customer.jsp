@@ -18,8 +18,8 @@
                     Create Customer
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/customers/save"/>
-                    <form:form class="form-horizontal" action="${cusstomers-save}" method="POST">
+                    <spring:url value="/customers/save" var="customersSave"/>
+                    <form:form class="form-horizontal" action="${customersSave}" method="POST">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="name">Customer Name:</label>
                             <div class="col-sm-10"><input type="text" class="form-control" id="name"></div>
