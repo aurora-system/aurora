@@ -1,4 +1,4 @@
-package com.spring.aurora.com.spring.aurora.util;
+package com.spring.aurora.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

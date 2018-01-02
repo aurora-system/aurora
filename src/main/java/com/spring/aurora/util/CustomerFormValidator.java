@@ -1,4 +1,4 @@
-package com.spring.aurora.com.spring.aurora.util;
+package com.spring.aurora.util;
 
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.service.CustomerService;

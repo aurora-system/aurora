@@ -1,8 +1,8 @@
 package com.spring.aurora.controller;
 
-import com.spring.aurora.com.spring.aurora.util.CustomerFormValidator;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.util.CustomerFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 @Controller
 public class CustomerController {
