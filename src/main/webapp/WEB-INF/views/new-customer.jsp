@@ -18,37 +18,72 @@
                     Create Customer
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/customers/save" var="customersSave"/>
-                    <form:form class="form-horizontal" action="${customersSave}" method="POST">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="name">Customer Name:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" id="name"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="type">Customer Type:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" id="type"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="address">Address:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" id="address"></div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-sm-2" for="mainnumber">Contact Number:</label>
-                          <div class="col-sm-10"><input type="text" class="form-control" id="mainnumber"></div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-sm-2" for="contactname">Contact Person:</label>
-                          <div class="col-sm-10"><input type="text" class="form-control" id="contactname"></div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-sm-2" for="alternatenumber">Alternate Contact:</label>
-                          <div class="col-sm-10"><input type="text" class="form-control" id="alternatenumber"></div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-sm-2" for="email">Email address:</label>
-                          <div class="col-sm-10"><input type="email" class="form-control" id="email"></div>
-                        </div>
-                        <div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-default">Submit</button></div>
+                    <spring:url value="/customers/save" var="saveCustomerUrl"/>
+                    <form:form class="form-horizontal" action="${saveCustomerUrl}" method="post" modelAttribute="customerForm">
+                        <form:hidden path="customerId"/>
+                        <spring:bind path="name">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="control-label col-sm-2" for="name">Customer name:</label>
+                                <div class="col-sm-10">
+                                    <form:input path="name" type="text" class="form-control" id="name" placeholder="Customer name" />
+                                    <form:errors path="name" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="type">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="type">Customer type:</label>
+                                <div class="col-sm-10">
+                                    <form:input path="type" type="text" class="form-control" id="type" placeholder="Customer type"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="address">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-2 control-label">Address: </label>
+                                <div class="col-sm-10">
+                                    <form:input path="address" type="text" class="form-control" id="address" placeholder="Address"/>
+                                    <form:errors path="address" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="mainNumber">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-2 control-label">Main number: </label>
+                                <div class="col-sm-10">
+                                    <form:input path="mainNumber" type="text" class="form-control" id="mainNumber" placeholder="Main number"/>
+                                    <form:errors path="mainNumber" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="contactName">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-2 control-label">Contact person: </label>
+                                <div class="col-sm-10">
+                                    <form:input path="contactName" type="text" class="form-control" id="contactName" placeholder="Contact person"/>
+                                    <form:errors path="contactName" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="alternateNumber">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-2 control-label">Alternate number: </label>
+                                <div class="col-sm-10">
+                                    <form:input path="alternateNumber" type="text" class="form-control" id="alternateNumber" placeholder="Alternate number"/>
+                                    <form:errors path="alternateNumber" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <spring:bind path="emailAddress">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-2 control-label">Email address: </label>
+                                <div class="col-sm-10">
+                                    <form:input path="emailAddress" type="text" class="form-control" id="emailAddress" placeholder="Email address"/>
+                                    <form:errors path="emailAddress" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        <div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn-md btn-primary">Submit</button></div>
                     </form:form>
                 </div>
             </div>

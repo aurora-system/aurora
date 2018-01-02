@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class CustomerDaoImpl implements CustomerDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDaoImpl.class);
@@ -20,18 +21,22 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Autowired
 	private SessionFactory sessionFactory;
     
-    public void setSessionFactory(SessionFactory sf){
+    /*public void setSessionFactory(SessionFactory sf){
         this.sessionFactory = sf;
-    }
+    }*/
     
     @Override
     public Customer insert(Customer customer) {
-        customer.setCustomerId("1");
+        Session session = sessionFactory.getCurrentSession();
+        logger.debug("CustomerName:" + customer.getName());
+        session.save(customer);
         return customer;
     }
 
     @Override
     public Customer update(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(customer);
         return customer;
     }
 
@@ -42,8 +47,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @SuppressWarnings("unchecked")
 	@Override
-	@Transactional
-    public List<Customer> findAll() {
+	public List<Customer> findAll() {
     	
     	Session session = this.sessionFactory.getCurrentSession();
         

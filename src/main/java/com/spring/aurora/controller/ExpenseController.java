@@ -27,10 +27,6 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
 
-    public void setExpenseService(ExpenseService expenseService) {
-        this.expenseService = expenseService;
-    }
-
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
 

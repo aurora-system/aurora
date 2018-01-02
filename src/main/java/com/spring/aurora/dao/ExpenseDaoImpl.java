@@ -25,9 +25,9 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sf){
+    /*public void setSessionFactory(SessionFactory sf){
         this.sessionFactory = sf;
-    }
+    }*/
 
     @Override
     public Expense insert(Expense expense) {

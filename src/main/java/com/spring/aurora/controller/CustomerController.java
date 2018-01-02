@@ -34,9 +34,9 @@ public class CustomerController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         logger.debug("index()");
-        return "redirect:/customers";
+        return "redirect:/customers/list";
     }
-    @RequestMapping(value = "/customers", method = RequestMethod.GET)
+    @RequestMapping(value = "/customers/list", method = RequestMethod.GET)
     public String listCustomers(Model model) {
         logger.info("List Customer form.");
         model.addAttribute("customers", customerService.findAll());
@@ -45,7 +45,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/customers/new", method = RequestMethod.GET)
     public String newCustomer(Model model) {
-        logger.info("New Customer form.");
+        logger.debug("New Customer form.");
         model.addAttribute("customerForm", new Customer());
         return "new-customer";
     }
@@ -54,7 +54,7 @@ public class CustomerController {
     public String saveCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
                                BindingResult result, Model model,
                                final RedirectAttributes redirectAttributes) {
-        logger.info("Save customer.");
+        logger.debug("Save customer.");
         if (result.hasErrors()) {
             //populateDefaultModel(model);
             return "new-customer";
@@ -70,7 +70,7 @@ public class CustomerController {
             customerService.insert(customer);
 
             // POST/REDIRECT/GET
-            return "redirect:/customers";
+            return "redirect:/customers/list";
             //return "redirect:/customers/" + customer.getCustomerId();
         }
     }
