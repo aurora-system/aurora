@@ -38,7 +38,7 @@ public class CustomerController {
     }
     @RequestMapping(value = "/customers/list", method = RequestMethod.GET)
     public String listCustomers(Model model) {
-        logger.info("List Customer form.");
+        logger.info("List Customer.");
         model.addAttribute("customers", customerService.findAll());
         return "list-customers";
     }

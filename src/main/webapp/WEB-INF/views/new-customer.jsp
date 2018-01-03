@@ -3,19 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New Customer</title>
-</head>
+<jsp:include page="fragments/header.jsp" />
 <body>
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    Create Customer
+                    Create New Customer
                 </div>
                 <div class="panel-body">
                     <spring:url value="/customers/save" var="saveCustomerUrl"/>
@@ -83,7 +78,7 @@
                                 </div>
                             </div>
                         </spring:bind>
-                        <div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn-md btn-primary">Submit</button></div>
+                        <div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-primary">Submit</button></div>
                     </form:form>
                 </div>
             </div>

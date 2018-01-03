@@ -11,28 +11,40 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1>List of expenses for the day</h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-info">
+                    <div class="panel-body">form dropdown date, submit on change</div>
+                </div>
             </div>
-            <div class="panel-body">
-                <table id="expensesTable" class="table table-striped table-bordered table-hover">
-			        <thead>
-			        	<tr>
-			        		<th>Date</th>
-			        		<th>Description</th>
-			        		<th>Amount</th>
-			        	</tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="exp" items="${expenses}">
-                            <tr>
-                                <td>${exp.created_at}</td>
-                                <td>${exp.description}</td>
-                                <td>${exp.amount}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        List of expenses for the day
+                    </div>
+                    <div class="panel-body">
+                        <table id="expensesTable" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="exp" items="${expenses}">
+                                    <tr>
+                                        <td>${exp.created_at}</td>
+                                        <td>${exp.description}</td>
+                                        <td>${exp.amount}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

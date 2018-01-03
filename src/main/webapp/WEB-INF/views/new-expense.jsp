@@ -13,9 +13,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-green">
+                <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h1>New Expense</h1>
+                        New Expense
                     </div>
                     <div class="panel-body">
                         <spring:url value="/expenses/save" var="saveExpenseUrl"/>
@@ -50,7 +50,7 @@
                             </spring:bind>
                             <div class="form-group">
 		                        <div class="col-sm-offset-2 col-sm-10">
-		                      	    <button type="submit" class="btn-lg btn-primary">Log Expense</button>
+		                      	    <button type="submit" class="btn btn-primary">Log Expense</button>
 		                        </div>
 		                    </div>
                         </form:form>

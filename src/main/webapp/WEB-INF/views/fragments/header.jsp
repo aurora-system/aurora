@@ -14,6 +14,7 @@
 
 <spring:url value="/" var="urlHome" />
 <spring:url value="/customers/new" var="urlAddUser" />
+<spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 
 <nav class="navbar navbar-inverse ">
 	<div class="container">
@@ -23,6 +24,7 @@
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="${urlAddUser}">New Customer</a></li>
+				<li><a href="${urlListExpenses}">Expenses</a></li>
 			</ul>
 		</div>
 	</div>

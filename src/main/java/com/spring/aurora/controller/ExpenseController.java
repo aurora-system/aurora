@@ -10,10 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
@@ -61,10 +59,12 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "/expenses/list", method = RequestMethod.GET)
-    public String listExpensesToday(Model model) {
+    public ModelAndView listExpensesToday(@RequestParam(required = false, defaultValue = "today", value = "d") String d) {
         logger.debug("list today's expenses");
-        List<Expense> expenses = expenseService.findAllByDate(Date.valueOf(LocalDate.of(2018,1,31)));
-        model.addAttribute("expenses", expenses);
-        return "list-expenses";
+        Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
+        List<Expense> expenses = expenseService.findAllByDate(date);
+        ModelAndView model = new ModelAndView("list-expenses");
+        model.addObject("expenses", expenses);
+        return model;
     }
 }

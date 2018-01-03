@@ -8,7 +8,7 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     List of Customers
                 </div>
@@ -36,9 +36,9 @@
                                     <td>${c.mainNumber}</td>
                                     <td>${c.contactName}</td>
                                     <td>${c.alternateNumber}</td>
-                                    <td>
-                                        <button class="btn btn-default">New Order</button>
-                                        <button class="btn btn-info">View</button>
+                                    <td nowrap>
+                                        <p><button class="btn btn-default">New Order</button>
+                                        <button class="btn btn-info">View</button></p>
                                     </td>
                                 </tr>
                             </c:forEach>
