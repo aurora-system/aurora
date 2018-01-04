@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping(value = "/customers")
 public class CustomerController {
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
@@ -25,32 +27,42 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     CustomerFormValidator customerFormValidator;
+    
     //Set a form validator
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(customerFormValidator);
     }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
-        logger.debug("index()");
-        return "redirect:/customers/list";
+    
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchCustomer(Model model) {
+        logger.info("Display customer search result.");
+        //model.addAttribute("customers", customerService.findAll());
+        return "customer-search-result";
     }
-    @RequestMapping(value = "/customers/list", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listCustomers(Model model) {
-        logger.info("List Customer.");
+        logger.info("List all customers.");
         model.addAttribute("customers", customerService.findAll());
         return "list-customers";
     }
+    
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String viewCustomer(Model model, @RequestParam String customerId) {
+        logger.info("Display customer information.");
+        model.addAttribute("customer", customerService.view(customerId));
+        return "view-customer";
+    }
 
-    @RequestMapping(value = "/customers/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newCustomer(Model model) {
         logger.debug("New Customer form.");
         model.addAttribute("customerForm", new Customer());
         return "new-customer";
     }
 
-    @RequestMapping(value = "/customers/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
                                BindingResult result, Model model,
                                final RedirectAttributes redirectAttributes) {

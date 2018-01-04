@@ -57,4 +57,16 @@ public class CustomerDaoImpl implements CustomerDao {
         
         return customers;
     }
+
+	@Override
+	public Customer view(String customerId) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		Customer customer = new Customer();
+		
+		customer = (Customer) session.createQuery("select c from Customer c where c.customerId = :customerId").setParameter("customerId", customerId).list().get(0);
+		
+		return customer;
+	}
 }

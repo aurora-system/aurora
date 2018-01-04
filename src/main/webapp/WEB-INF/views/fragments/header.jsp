@@ -13,7 +13,12 @@
 </head>
 
 <spring:url value="/" var="urlHome" />
+<spring:url value="/search" var="urlSearch" />
+<spring:url value="/orders/list" var="urlOrders" />
+<spring:url value="/reports" var="urlReports" />
+<spring:url value="/customers/list" var="urlCustomers" />
 <spring:url value="/customers/new" var="urlAddUser" />
+
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 
 <nav class="navbar navbar-inverse ">
@@ -23,7 +28,11 @@
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlAddUser}">New Customer</a></li>
+				<li class="active"><a href="${urlSearch}">Search</a></li>
+				<li class="active"><a href="${urlOrders}">Orders</a></li>
+				<li class="active"><a href="${urlReports}">Reports</a></li>
+				<li class="active"><a href="${urlCustomers}">Customers</a></li>
+<%-- 				<li class="active"><a href="${urlAddUser}">New Customer</a></li> --%>
 				<li><a href="${urlListExpenses}">Expenses</a></li>
 			</ul>
 		</div>

@@ -37,9 +37,16 @@
                                     <td>${c.contactName}</td>
                                     <td>${c.alternateNumber}</td>
                                     <td nowrap>
-                                        <p><button class="btn btn-default">New Order</button>
-                                        <button class="btn btn-info">View</button></p>
-                                    </td>
+										<p><button class="btn btn-default">New Order</button></p> 
+										<!--                                         <button class="btn btn-info">View</button> -->
+
+										<form action="view" method="get">
+											<input type="hidden" name="${_csrf.parameterName}"
+												value="${_csrf.token}" /> <input type="hidden"
+												name=customerId value=${c.customerId}> <input
+												class="btn btn-info" type="submit" value="View">
+										</form>
+									</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
