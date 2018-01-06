@@ -9,4 +9,5 @@ public interface OrderService {
     Order update(Order order);
     List<Order> findAllByCustomerId(int customerId);
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
+    List<Order> findAll();
 }

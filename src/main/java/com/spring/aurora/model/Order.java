@@ -1,5 +1,6 @@
 package com.spring.aurora.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ORDER")
+@Table(name="ORDERS")
 public class Order {
 
 	@Id
@@ -37,7 +38,7 @@ public class Order {
 	private int roundCount;
 	
 	@Column(name="created_at")
-	private LocalDateTime createdAt;
+	private Date createdAt;
 
 	public String getOrderId() {
 		return orderId;
@@ -95,12 +96,12 @@ public class Order {
 		this.roundCount = roundCount;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	
+
 }
