@@ -15,7 +15,7 @@ CREATE TABLE `aurora`.`customer` (
 COMMENT = 'Customer details';
 
 -- ORDER
-CREATE TABLE `aurora`.`order` (
+CREATE TABLE `aurora`.`orders` (
   `order_id` INT NOT NULL,
   `customer_id` INT NOT NULL,
   `delivery_receipt_num` VARCHAR(45) NOT NULL,
@@ -34,8 +34,8 @@ CREATE TABLE `aurora`.`debt` (
   `amount` DECIMAL(2) NOT NULL,
   `remarks` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (`debt_id`))
-  UNIQUE INDEX `debt_id_UNIQUE` (`debt_id` ASC);
+  PRIMARY KEY (`debt_id`),
+  UNIQUE INDEX `debt_id_UNIQUE` (`debt_id` ASC));
 
 -- PAYMENT
 CREATE TABLE `aurora`.`payment` (
