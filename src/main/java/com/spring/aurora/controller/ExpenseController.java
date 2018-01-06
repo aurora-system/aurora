@@ -40,6 +40,7 @@ public class ExpenseController {
     public String newExpenseForm(Model model) {
         logger.debug("show new expense form.");
         Expense expense = new Expense();
+        expense.setCreated_at(Date.valueOf(LocalDate.now()));
         model.addAttribute("expense", expense);
         return "new-expense";
     }
@@ -52,7 +53,7 @@ public class ExpenseController {
         if (result.hasErrors()) {
             return "new-expense";
         } else {
-            redirect.addFlashAttribute("msg", "User added successfully!");
+            redirect.addFlashAttribute("msg", "Expense logged successfully!");
         }
         expenseService.save(expense);
         return "redirect:/expenses/list";
@@ -65,6 +66,7 @@ public class ExpenseController {
         List<Expense> expenses = expenseService.findAllByDate(date);
         ModelAndView model = new ModelAndView("list-expenses");
         model.addObject("expenses", expenses);
+        model.addObject("date", date.toLocalDate());
         return model;
     }
 }

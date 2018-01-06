@@ -13,8 +13,29 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <c:if test="${not empty msg}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>${msg}</strong>
+                    </div>
+                </c:if>
                 <div class="panel panel-info">
-                    <div class="panel-body">form dropdown date, submit on change</div>
+                    <div class="panel-body">
+                        <spring:url value="/expenses/list" var="listExpensesUrl"/>
+                        <form class="form-horizontal" method="get" action="${listExpensesUrl}">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Date: </label>
+                                <div class="col-sm-3">
+                                    <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
+                                </div>
+   								<div class="col-sm-5">
+								    <button type="submit" class="btn btn-primary">List Expenses</button>
+								</div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,7 +43,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        List of expenses for the day
+                        List of expenses for ${date}
                     </div>
                     <div class="panel-body">
                         <table id="expensesTable" class="table table-striped table-bordered table-hover">

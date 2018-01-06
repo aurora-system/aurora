@@ -59,6 +59,7 @@ public class CustomerController {
     public String newCustomer(Model model) {
         logger.debug("New Customer form.");
         model.addAttribute("customerForm", new Customer());
+        model.addAttribute("types",new String[]{" Business "," Residential "});
         return "new-customer";
     }
 
@@ -74,9 +75,9 @@ public class CustomerController {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
             if(customer.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "User added successfully!");
+                redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
             }else{
-                redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
+                redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
             }
 
             customerService.insert(customer);

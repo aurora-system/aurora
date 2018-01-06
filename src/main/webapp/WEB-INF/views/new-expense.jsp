@@ -23,17 +23,17 @@
                             <form:hidden path="expenseId"/>
                             <spring:bind path="created_at">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-2 control-label">Date: </label>
-                                    <div class="col-sm-10">
-                                        <form:input path="created_at" type="text" class="form-control" id="created_at" placeholder="Date"/>
+                                    <label class="col-sm-3 control-label">Date: </label>
+                                    <div class="col-sm-9">
+                                        <form:input path="created_at" type="date" class="form-control" id="created_at" placeholder="Date"/>
                                         <form:errors path="created_at" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
                             <spring:bind path="description">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-2 control-label">Description: </label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-3 control-label">Description: </label>
+                                    <div class="col-sm-9">
                                         <form:input path="description" type="text" class="form-control" id="description" placeholder="Description"/>
                                         <form:errors path="description" class="control-label"/>
                                     </div>
@@ -41,15 +41,15 @@
                             </spring:bind>
                             <spring:bind path="amount">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-2 control-label">Amount in Php: </label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-3 control-label">Amount in Php: </label>
+                                    <div class="col-sm-9">
                                         <form:input path="amount" type="text" class="form-control" id="amount" placeholder="Amount"/>
                                         <form:errors path="amount" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
                             <div class="form-group">
-		                        <div class="col-sm-offset-2 col-sm-10">
+		                        <div class="col-sm-offset-3 col-sm-9">
 		                      	    <button type="submit" class="btn btn-primary">Log Expense</button>
 		                        </div>
 		                    </div>
