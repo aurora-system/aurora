@@ -10,24 +10,33 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Create New Customer
+                    Create New Order
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/customers/save" var="saveCustomerUrl"/>
-                    <form:form class="form-horizontal" action="${saveCustomerUrl}" method="post" modelAttribute="customerForm">
-                        <form:hidden path="customerId"/>
-                        <spring:bind path="name">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label" for="name">Customer name:</label>
+                    <spring:url value="/orders/save" var="saveOrderUrl"/>
+                    <form:form class="form-horizontal" action="${saveOrderUrl}" method="post" modelAttribute="orderForm">
+                        <form:hidden path="orderId"/>
+<%--                         <spring:bind path="name"> --%>
+<%--                             <div class="form-group ${status.error ? 'has-error' : ''}"> --%>
+<!--                                 <label class="col-sm-3 control-label" for="name">Customer name:</label> -->
+<!--                                 <div class="col-sm-9"> -->
+<%--                                     <form:input path="name" type="text" class="form-control" id="name" placeholder="Customer name" /> --%>
+<%--                                     <form:errors path="name" class="control-label"/> --%>
+<!--                                 </div> -->
+<!--                             </div> -->
+<%--                         </spring:bind> --%>
+						<spring:bind path="customer">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Select Customer:</label>
                                 <div class="col-sm-9">
-                                    <form:input path="name" type="text" class="form-control" id="name" placeholder="Customer name" />
-                                    <form:errors path="name" class="control-label"/>
+                                    <form:radiobuttons path="type" items="${types}"/>
                                 </div>
                             </div>
                         </spring:bind>
-                        <spring:bind path="type">
+
+                        <spring:bind path="amountPaid">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Customer type:</label>
+                                <label class="col-sm-3 control-label" for="type">Amount paid:</label>
                                 <div class="col-sm-9">
                                     <form:radiobuttons path="type" items="${types}"/>
                                 </div>

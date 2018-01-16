@@ -4,13 +4,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
+<spring:url value="/resources/css/main.css" var="mainCss" />
+<spring:url value="/customers/new" var="urlAddCustomer" />
 <body>
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    List of Customers
+                <div class="panel-heading clearfix">
+                    <p class="pull-left">List of Customers</p> 
+                    
+                    <a href="${urlAddCustomer}" class="btn btn-default pull-right" role="button">New Customer</a>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
@@ -19,10 +23,10 @@
                             <th>Type</th>
                             <th>Customer Name</th>
                             <th>Address</th>
-                            <th>Email Address</th>
-                            <th>Contact Number</th>
+<!--                             <th>Email Address</th> -->
                             <th>Contact Person</th>
-                            <th>Alt Number</th>
+                            <th>Contact Number</th>
+<!--                             <th>Alt Number</th> -->
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -32,19 +36,24 @@
                                     <td>${c.type}</td>
                                     <td>${c.name}</td>
                                     <td>${c.address}</td>
-                                    <td>${c.emailAddress}</td>
+<%--                                     <td>${c.emailAddress}</td> --%>
+									<td>${c.contactName}</td>
                                     <td>${c.mainNumber}</td>
-                                    <td>${c.contactName}</td>
-                                    <td>${c.alternateNumber}</td>
+<%--                                     <td>${c.alternateNumber}</td> --%>
                                     <td nowrap>
-										<p><button class="btn btn-default">New Order</button></p> 
+<!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->
-
-										<form action="view" method="get">
-											<input type="hidden" name="${_csrf.parameterName}"
-												value="${_csrf.token}" /> <input type="hidden"
-												name=customerId value=${c.customerId}> <input
-												class="btn btn-info" type="submit" value="View">
+										
+										<form action="view" method="get" style="display: inline-block;" >
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+											<input type="hidden" name=customerId value=${c.customerId}> 
+											<input class="btn btn-info" type="submit" value="View">
+										</form>
+										
+										<form action="new-order" method="get" style="display: inline-block;">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+											<input type="hidden" name=customerId value=${c.customerId}> 
+											<input class="btn btn-default" type="submit" value="New Order">
 										</form>
 									</td>
                                 </tr>
