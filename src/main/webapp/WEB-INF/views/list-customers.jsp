@@ -50,7 +50,7 @@
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
 										
-										<form action="new-order" method="get" style="display: inline-block;">
+										<form action="neworder" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=customerId value=${c.customerId}> 
 											<input class="btn btn-default" type="submit" value="New Order">

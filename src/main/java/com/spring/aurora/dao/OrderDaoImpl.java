@@ -24,12 +24,17 @@ public class OrderDaoImpl implements OrderDao {
 	
     @Override
     public Order insert(Order order) {
-        return null;
+    	Session session = sessionFactory.getCurrentSession();
+        logger.debug("Order ID:" + order.getOrderId());
+        session.save(order);
+        return order;
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+    	Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(order);
+        return order;
     }
 
     @Override

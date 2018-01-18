@@ -24,12 +24,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order insert(Order order) {
-        return null;
+        return orderDao.insert(order);
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+        return orderDao.update(order);
     }
 
     @Override

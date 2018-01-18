@@ -25,68 +25,58 @@
 <!--                                 </div> -->
 <!--                             </div> -->
 <%--                         </spring:bind> --%>
-						<spring:bind path="customer">
+						
+						<form:hidden path="customerId"/>
+						
+<%-- 						<spring:bind path="customerId"> --%>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Select Customer:</label>
-                                <div class="col-sm-9">
-                                    <form:radiobuttons path="type" items="${types}"/>
+                                <label class="col-sm-3 control-label" for="type">Customer Name:</label>
+                               <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="customerName" placeholder="Name" disabled="true"/>
                                 </div>
                             </div>
-                        </spring:bind>
+<%--                         </spring:bind> --%>
 
                         <spring:bind path="amountPaid">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Amount paid:</label>
-                                <div class="col-sm-9">
-                                    <form:radiobuttons path="type" items="${types}"/>
+                                <label class="col-sm-3 control-label" for="type">Amount Paid:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"/>
+                                    <form:errors path="amountPaid" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>
-                        <spring:bind path="address">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label">Address: </label>
-                                <div class="col-sm-9">
-                                    <form:input path="address" type="text" class="form-control" id="address" placeholder="Address"/>
-                                    <form:errors path="address" class="control-label"/>
+                        
+                        <spring:bind path="totalAmount">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Total Amount:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="totalAmount" type="text" class="form-control" id="totalAmount" placeholder="Total Amount"/>
+                                    <form:errors path="totalAmount" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>
-                        <spring:bind path="mainNumber">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label">Main number: </label>
-                                <div class="col-sm-9">
-                                    <form:input path="mainNumber" type="text" class="form-control" id="mainNumber" placeholder="Main number"/>
-                                    <form:errors path="mainNumber" class="control-label"/>
+                        
+                         <spring:bind path="slimCount">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Slim Count:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="slimCount" type="text" class="form-control" id="slimCount" />
+                                    <form:errors path="slimCount" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>
-                        <spring:bind path="contactName">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label">Contact person: </label>
-                                <div class="col-sm-9">
-                                    <form:input path="contactName" type="text" class="form-control" id="contactName" placeholder="Contact person"/>
-                                    <form:errors path="contactName" class="control-label"/>
+                        
+                        <spring:bind path="roundCount">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Round Count:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="roundCount" type="text" class="form-control" id="roundCount" />
+                                    <form:errors path="roundCount" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>
-                        <spring:bind path="alternateNumber">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label">Alternate number: </label>
-                                <div class="col-sm-9">
-                                    <form:input path="alternateNumber" type="text" class="form-control" id="alternateNumber" placeholder="Alternate number"/>
-                                    <form:errors path="alternateNumber" class="control-label"/>
-                                </div>
-                            </div>
-                        </spring:bind>
-                        <spring:bind path="emailAddress">
-                            <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <label class="col-sm-3 control-label">Email address: </label>
-                                <div class="col-sm-9">
-                                    <form:input path="emailAddress" type="email" class="form-control" id="emailAddress" placeholder="Email address"/>
-                                    <form:errors path="emailAddress" class="control-label"/>
-                                </div>
-                            </div>
-                        </spring:bind>
+                        
                         <div class="col-sm-offset-3 col-sm-9"><button type="submit" class="btn btn-primary">Submit</button></div>
                     </form:form>
                 </div>

@@ -1,6 +1,7 @@
 package com.spring.aurora.controller;
 
 import com.spring.aurora.model.Customer;
+import com.spring.aurora.model.Order;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.util.CustomerFormValidator;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,14 +27,15 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    CustomerFormValidator customerFormValidator;
+    // Temporarily disabled this while new-order is not yet transferred to order controller
+//    @Autowired
+//    CustomerFormValidator customerFormValidator;
     
     //Set a form validator
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(customerFormValidator);
-    }
+//    @InitBinder
+//    protected void initBinder(WebDataBinder binder) {
+//        binder.setValidator(customerFormValidator);
+//    }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchCustomer(Model model) {
@@ -61,6 +64,18 @@ public class CustomerController {
         model.addAttribute("customerForm", new Customer());
         model.addAttribute("types",new String[]{" Business "," Residential "});
         return "new-customer";
+    }
+    
+    // TODO: Transfer to OrderController
+    @RequestMapping(value = "/neworder", method = RequestMethod.GET)
+    public String newOrder(@ModelAttribute(value="customerId") String customerId, Model model) {
+        logger.debug("New Order form for customer: " + customerId);
+        Order order = new Order();
+        order.setCustomerId(customerId);
+        model.addAttribute("orderForm", order);
+        model.addAttribute("customerId", customerId); // TODO: Show the customer name but id is submitted (hidden)
+        // TODO: Assign delivery receipt number 
+        return "new-order";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

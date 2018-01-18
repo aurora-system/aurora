@@ -104,4 +104,7 @@ public class Order {
 		this.createdAt = createdAt;
 	}
 
+	public boolean isNew() {
+		return (this.orderId == null);
+	}
 }
