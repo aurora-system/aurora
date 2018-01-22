@@ -33,8 +33,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllByCustomerId(int customerId) {
-        return null;
+    public List<Order> findAllByCustomerId(String customerId) {
+        return orderDao.findAllByCustomerId(customerId);
     }
 
     @Override

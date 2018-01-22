@@ -1,7 +1,6 @@
 package com.spring.aurora.controller;
 
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.aurora.entity.OrderCustomerEntity;
+import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Order;
+import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.OrderService;
 
 @Controller
@@ -27,6 +29,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    
+    @Autowired
+    private CustomerService customerService;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
@@ -35,9 +40,20 @@ public class OrderController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listOrders(Model model) {
     	logger.info("List all orders.");
-        List<Order> orders = new ArrayList<>();
-        orders = orderService.findAll();
-        model.addAttribute("orders", orders);
+        
+    	List<Order> orderList = new ArrayList<>();
+    	List<OrderCustomerEntity> orderCustomerEntityList = new ArrayList<>();
+        
+    	orderList = orderService.findAll();
+        
+        for (Order order : orderList) {
+        	OrderCustomerEntity oce = new OrderCustomerEntity();
+        	oce.setOrder(order);
+        	Customer customer = customerService.view(order.getCustomerId());
+            oce.setCustomerName(customer.getContactName());
+            orderCustomerEntityList.add(oce);
+        }
+        model.addAttribute("orders", orderCustomerEntityList);
         return "list-orders";
     }
 

@@ -37,9 +37,17 @@ public class OrderDaoImpl implements OrderDao {
         return order;
     }
 
-    @Override
-    public List<Order> findAllByCustomerId(int customerId) {
-        return null;
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<Order> findAllByCustomerId(String customerId) {
+        
+    	Session session = this.sessionFactory.getCurrentSession();
+		
+		List<Order> orders = new ArrayList<>();
+    	
+		orders = session.createQuery("select o from Order o where o.customerId = :customerId").setParameter("customerId", customerId).list();
+		
+		return orders;
     }
 
     @Override

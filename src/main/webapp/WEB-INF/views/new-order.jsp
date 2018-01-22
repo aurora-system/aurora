@@ -32,10 +32,20 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Customer Name:</label>
                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="customerName" placeholder="Name" disabled="true"/>
+                                    <input type="text" class="form-control" id="customerName" placeholder="${customerName}" disabled="true"/>
                                 </div>
                             </div>
 <%--                         </spring:bind> --%>
+
+						<spring:bind path="deliveryReceiptNum">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" placeholder="Delivery Receipt Number"/>
+                                    <form:errors path="deliveryReceiptNum" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
 
                         <spring:bind path="amountPaid">
                             <div class="form-group">

@@ -3,7 +3,12 @@ package com.spring.aurora.controller;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Order;
 import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.OrderService;
 import com.spring.aurora.util.CustomerFormValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,10 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    
+    @Autowired
+    private OrderService orderService;
+    
     // Temporarily disabled this while new-order is not yet transferred to order controller
 //    @Autowired
 //    CustomerFormValidator customerFormValidator;
@@ -54,7 +63,13 @@ public class CustomerController {
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String viewCustomer(Model model, @RequestParam String customerId) {
         logger.info("Display customer information.");
+        
+        List<Order> orderList = new ArrayList<>();
+        orderList = orderService.findAllByCustomerId(customerId);
+        
         model.addAttribute("customer", customerService.view(customerId));
+        model.addAttribute("orders", orderList);
+        
         return "view-customer";
     }
 
@@ -74,6 +89,9 @@ public class CustomerController {
         order.setCustomerId(customerId);
         model.addAttribute("orderForm", order);
         model.addAttribute("customerId", customerId); // TODO: Show the customer name but id is submitted (hidden)
+        
+        Customer customer = customerService.view(customerId);
+        model.addAttribute("customerName", customer.getName());
         // TODO: Assign delivery receipt number 
         return "new-order";
     }

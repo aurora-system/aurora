@@ -29,14 +29,14 @@
                         <tbody>
                             <c:forEach var="o" items="${orders}">
                                 <tr>
-                                    <td>${o.orderId}</td>
-                                    <td>${o.customerId}</td>
-                                    <td>${o.deliveryReceiptNum}</td>
-                                    <td>${o.amountPaid}</td>
-                                    <td>${o.totalAmount}</td>
-                                    <td>${o.slimCount}</td>
-                                    <td>${o.roundCount}</td>
-                                    <td>${o.createdAt}</td>
+                                    <td>${o.order.orderId}</td>
+                                    <td>${o.customerName}</td>
+                                    <td>${o.order.deliveryReceiptNum}</td>
+                                    <td>${o.order.amountPaid}</td>
+                                    <td>${o.order.totalAmount}</td>
+                                    <td>${o.order.slimCount}</td>
+                                    <td>${o.order.roundCount}</td>
+                                    <td>${o.order.createdAt}</td>
 <!--                                     <td nowrap> -->
 <!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->
