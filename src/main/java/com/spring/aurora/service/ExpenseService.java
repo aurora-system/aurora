@@ -8,4 +8,5 @@ import java.util.List;
 public interface ExpenseService {
     Expense save(Expense expense);
     List<Expense> findAllByDate(Date date);
+    double getTotalExpensesByDate(Date date);
 }

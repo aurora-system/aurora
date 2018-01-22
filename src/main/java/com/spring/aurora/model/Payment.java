@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Date;
 
 @Entity
 @Table(name="PAYMENT")
@@ -26,7 +27,7 @@ public class Payment {
 	private String remarks;
 	
 	@Column(name="created_at")
-	private String createdAt;
+	private Date createdAt;
 
 	public String getPaymentId() {
 		return paymentId;
@@ -60,11 +61,11 @@ public class Payment {
 		this.remarks = remarks;
 	}
 
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	

@@ -5,6 +5,6 @@ import com.spring.aurora.model.Debt;
 import java.util.List;
 
 public interface DebtDao {
-    Debt insert(Debt customer);
-    List<Debt> findAllByCustomerId(int customerId);
+    Debt insert(Debt debt);
+    List<Debt> findAllByCustomerId(String customerId);
 }

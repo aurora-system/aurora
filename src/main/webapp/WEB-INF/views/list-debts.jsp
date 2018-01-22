@@ -21,49 +21,33 @@
                         <strong>${msg}</strong>
                     </div>
                 </c:if>
-                <div class="panel panel-info">
-                    <div class="panel-body">
-                        <spring:url value="/expenses/list" var="listExpensesUrl"/>
-                        <form class="form-horizontal" method="get" action="${listExpensesUrl}">
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label">Date: </label>
-                                <div class="col-sm-3">
-                                    <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
-                                </div>
-   								<div class="col-sm-5">
-								    <button type="submit" class="btn btn-primary">List Expenses</button>
-								</div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of expenses for ${date}.</p>
-                        <p>Running Total: ${expensesTotal}.
-                            <spring:url value="/expenses/new" var="newExpenseUrl"/>
-                            <a href="${newExpenseUrl}" class="btn btn-default pull-right" role="button">Add Expense</a>
+                        <p>List of debts for ${customer.name}.</p>
+                        <p>Running Total: ${debtsTotal}.
+                            <spring:url value="/debts/new?cid=${customer.customerId}" var="newDebtUrl" />
+                            <a href="${newDebtUrl}" class="btn btn-default pull-right" role="button">New Debt</a>
                         </p>
                     </div>
                     <div class="panel-body">
-                        <table id="expensesTable" class="table table-striped table-bordered table-hover">
+                        <table id="debtsTable" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Description</th>
+                                    <th>Remarks</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="exp" items="${expenses}">
+                                <c:forEach var="debt" items="${debts}">
                                     <tr>
-                                        <td>${exp.created_at}</td>
-                                        <td>${exp.description}</td>
-                                        <td>${exp.amount}</td>
+                                        <td>${debt.createdAt}</td>
+                                        <td>${debt.remarks}</td>
+                                        <td>${debt.amount}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -78,11 +62,5 @@
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-    <script type="text/javascript">
-        $(document).ready(() => {
-            $('#expensesTable').DataTable()
-        })
-    </script>
-
 </body>
 </html>

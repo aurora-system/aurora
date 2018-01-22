@@ -66,6 +66,7 @@ public class ExpenseController {
         List<Expense> expenses = expenseService.findAllByDate(date);
         ModelAndView model = new ModelAndView("list-expenses");
         model.addObject("expenses", expenses);
+        model.addObject("expensesTotal", expenseService.getTotalExpensesByDate(date));
         model.addObject("date", date.toLocalDate());
         return model;
     }

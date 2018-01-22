@@ -16,11 +16,11 @@ COMMENT = 'Customer details';
 
 -- ORDER
 CREATE TABLE `aurora`.`orders` (
-  `order_id` INT NOT NULL,
+  `order_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `delivery_receipt_num` VARCHAR(45) NOT NULL,
-  `amount_paid` DECIMAL(2) NOT NULL,
-  `total_amount` DECIMAL(2) NOT NULL,
+  `amount_paid` DECIMAL(10,2) NOT NULL,
+  `total_amount` DECIMAL(10,2) NOT NULL,
   `cont_slim_count` INT NOT NULL DEFAULT 0,
   `cont_round_count` INT NOT NULL DEFAULT 0,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
@@ -29,9 +29,9 @@ CREATE TABLE `aurora`.`orders` (
   
 -- DEBT
 CREATE TABLE `aurora`.`debt` (
-  `debt_id` INT NOT NULL,
+  `debt_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
-  `amount` DECIMAL(2) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
   `remarks` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`debt_id`),
@@ -39,9 +39,9 @@ CREATE TABLE `aurora`.`debt` (
 
 -- PAYMENT
 CREATE TABLE `aurora`.`payment` (
-  `payment_id` INT NOT NULL,
+  `payment_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
-  `amount` DECIMAL(2) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
   `remarks` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`payment_id`),
@@ -49,7 +49,7 @@ CREATE TABLE `aurora`.`payment` (
 
 -- CONTAINER
 CREATE TABLE `aurora`.`container` (
-  `customer_id` INT NOT NULL,
+  `customer_id` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(45) NOT NULL,
   `round_count` INT NULL,
   `slim_count` INT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `aurora`.`container` (
 -- Expenses
 CREATE TABLE `aurora`.`expense` (
   `expense_id` INT NOT NULL AUTO_INCREMENT,
-  `amount` DECIMAL(2) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
   `description` VARCHAR(45) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`expense_id`),

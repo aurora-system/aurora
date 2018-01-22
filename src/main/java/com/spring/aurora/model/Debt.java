@@ -1,5 +1,6 @@
 package com.spring.aurora.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -28,7 +29,7 @@ public class Debt {
 	private String remarks;
 	
 	@Column(name="created_at")
-	private LocalDateTime createdAt;
+	private Date createdAt;
 
 	public String getDebtId() {
 		return debtId;
@@ -62,11 +63,11 @@ public class Debt {
 		this.remarks = remarks;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	

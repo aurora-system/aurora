@@ -27,4 +27,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<Expense> findAllByDate(Date date) {
         return expenseDao.findAllByDate(date);
     }
+
+    @Override
+    public double getTotalExpensesByDate(Date date) {
+        List<Expense> expenses = expenseDao.findAllByDate(date);
+        double total = expenses.stream().mapToDouble(p -> p.getAmount()).sum();
+        return total;
+    }
 }
