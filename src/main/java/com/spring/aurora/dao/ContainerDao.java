@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ContainerDao {
     Container insert(Container container);
-    List<Container> findAllByCustomerId(int customerId);
+    List<Container> findAllByCustomerId(String customerId);
 }

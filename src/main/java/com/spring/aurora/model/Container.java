@@ -1,5 +1,7 @@
 package com.spring.aurora.model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -18,14 +20,14 @@ public class Container {
 	@Column(name="status")
 	private String status;
 	
-	@Column(name="rount_count")
+	@Column(name="round_count")
 	private int roundCount;
 	
 	@Column(name="slim_count")
 	private int slimCount;
 	
 	@Column(name="date")
-	private LocalDateTime date;
+	private Timestamp date;
 
 	public String getCustomerId() {
 		return customerId;
@@ -59,11 +61,11 @@ public class Container {
 		this.slimCount = slimCount;
 	}
 
-	public LocalDateTime getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 	

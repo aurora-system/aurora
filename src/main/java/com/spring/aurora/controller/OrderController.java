@@ -1,5 +1,6 @@
 package com.spring.aurora.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.OrderCustomerEntity;
+import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Order;
+import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.OrderService;
 
@@ -32,6 +35,9 @@ public class OrderController {
     
     @Autowired
     private CustomerService customerService;
+    
+    @Autowired
+    private ContainerService containerService;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
@@ -87,9 +93,18 @@ public class OrderController {
             }
 
             java.util.Date today = new java.util.Date();
-            order.setCreatedAt(new java.sql.Date(today.getTime()));
+            order.setCreatedAt(new java.sql.Timestamp(today.getTime()));
             
             orderService.insert(order);
+            
+            // Borrowed containers - TODO we should put into consideration the returned containers
+            Container containerActivity = new Container();
+            containerActivity.setCustomerId(order.getCustomerId());
+            containerActivity.setRoundCount(order.getRoundCount());
+            containerActivity.setSlimCount(order.getSlimCount());
+            containerActivity.setStatus("B");
+            containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
+            containerService.insert(containerActivity);
 
             // POST/REDIRECT/GET
             return "redirect:/customers/list";

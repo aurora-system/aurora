@@ -1,6 +1,7 @@
 package com.spring.aurora.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -38,7 +39,7 @@ public class Order {
 	private int roundCount;
 	
 	@Column(name="created_at")
-	private Date createdAt;
+	private Timestamp createdAt;
 
 	public String getOrderId() {
 		return orderId;
@@ -96,11 +97,11 @@ public class Order {
 		this.roundCount = roundCount;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
