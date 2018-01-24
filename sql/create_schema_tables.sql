@@ -34,7 +34,7 @@ CREATE TABLE `aurora`.`debt` (
   `debt_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `amount` DECIMAL(10,2) NOT NULL,
-  `remarks` VARCHAR(45) NULL,
+  `remarks` VARCHAR(255) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`debt_id`),
   UNIQUE INDEX `debt_id_UNIQUE` (`debt_id` ASC));

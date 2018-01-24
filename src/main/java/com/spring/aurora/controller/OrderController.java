@@ -1,5 +1,6 @@
 package com.spring.aurora.controller;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.spring.aurora.entity.OrderCustomerEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
+import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.DebtService;
 import com.spring.aurora.service.OrderService;
 
 @Controller
@@ -38,6 +41,9 @@ public class OrderController {
     
     @Autowired
     private ContainerService containerService;
+    
+    @Autowired
+    private DebtService debtService;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
@@ -92,10 +98,11 @@ public class OrderController {
                 redirectAttributes.addFlashAttribute("msg", "Order updated successfully!");
             }
 
-            java.util.Date today = new java.util.Date();
-            order.setCreatedAt(new java.sql.Timestamp(today.getTime()));
+            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             
             orderService.insert(order);
+            
+            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId());
             
             saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
 
@@ -105,17 +112,44 @@ public class OrderController {
         }
     }
     
-    public void saveContainerActivity (int slimCount, int roundCount, int slimReturned, int roundReturned, String customerId) {
+    /**
+     * Saves the debt of the customer if amount paid is less than total amount for a given order.
+     * 
+     * @param amountPaid
+     * @param totalAmount
+     * @param customerId
+     */
+    public void saveDebt (double amountPaid, double totalAmount, String customerId) {
     	
-    	// Borrowed containers - TODO we should put into consideration the returned containers
-    	java.util.Date today = new java.util.Date();
+    	double deficit = totalAmount - amountPaid;
+    	
+    	if (deficit != 0.0) {
+    		Debt debtEntry = new Debt();
+    		debtEntry.setCustomerId(customerId);
+    		debtEntry.setAmount(deficit);
+    		debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
+    		debtEntry.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+    		debtService.insert(debtEntry);
+    	}
+    }
+    
+    /**
+     * Saves the returned and borrowed containers into the Container table.
+     * 
+     * @param slimCount
+     * @param roundCount
+     * @param slimReturned
+     * @param roundReturned
+     * @param customerId
+     */
+    public void saveContainerActivity (int slimCount, int roundCount, int slimReturned, int roundReturned, String customerId) {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
         containerActivity.setRoundCount(roundCount);
         containerActivity.setSlimCount(slimCount);
         containerActivity.setStatus("B");
-        containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
+        containerActivity.setDate(Timestamp.valueOf(LocalDateTime.now()));
         containerService.insert(containerActivity);
         
         if (slimReturned != 0 || roundReturned != 0) {
@@ -124,7 +158,7 @@ public class OrderController {
             containerActivity.setRoundCount(roundReturned);
             containerActivity.setSlimCount(slimReturned);
             containerActivity.setStatus("R");
-            containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
+            containerActivity.setDate(Timestamp.valueOf(LocalDateTime.now()));
             containerService.insert(containerActivity);
         }
     }

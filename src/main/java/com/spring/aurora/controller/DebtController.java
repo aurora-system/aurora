@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,7 +36,7 @@ public class DebtController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newDebt(@RequestParam String cid, Model model) {
         Debt debt = new Debt();
-        debt.setCreatedAt(Date.valueOf(LocalDate.now()));
+        debt.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         debt.setCustomerId(cid);
         Customer customer = customerService.view(cid);
         model.addAttribute("debt", debt);
