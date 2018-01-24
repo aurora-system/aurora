@@ -19,7 +19,9 @@
 <spring:url value="/orders/list" var="urlOrders" />
 <spring:url value="/reports" var="urlReports" />
 <spring:url value="/customers/list" var="urlCustomers" />
-
+<spring:url value="/daily" var="urlDaily" />
+<spring:url value="/debts" var="urlDebt" />
+<spring:url value="/containers" var="urlContainer" />
 
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 
@@ -33,7 +35,9 @@
 				<li class="active"><a href="${urlOrders}">Orders</a></li>
 				<li class="active"><a href="${urlCustomers}">Customers</a></li>
 				<li class="active"><a href="${urlListExpenses}">Expenses</a></li>
-				<li class="active"><a href="${urlReports}">Reports</a>
+				<li class="active"><a href="${urlDaily}">Daily Sales</a>
+				<li class="active"><a href="${urlDebt}">Debt Summary</a>
+				<li class="active"><a href="${urlContainer}">Container Tracking</a>
 <!-- 					<ul class="submenu"> -->
 <%--             			<li><a href="${urlSearch}">Daily Sales</a></li> --%>
 <%--             			<li><a href="${urlSearch}">Debt Report</a></li> --%>
