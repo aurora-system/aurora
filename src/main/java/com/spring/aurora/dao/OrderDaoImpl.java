@@ -1,5 +1,6 @@
 package com.spring.aurora.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +67,23 @@ public class OrderDaoImpl implements OrderDao {
 		orders = session.createQuery("select o from Order o").list();
 		
 		return orders;
+	}
+
+	@Override
+	public Timestamp getMostRecentOrderDate(String customerId) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		List<Order> orderList = session.createQuery("select o from Order o where o.customerId = :customerId order by createdAt desc").setParameter("customerId", customerId).list();
+		
+		Order latestOrder = null;
+		
+		if (orderList != null && orderList.size() > 0) {
+			latestOrder = orderList.get(0);
+			return latestOrder.getCreatedAt();
+		} else {
+			return null;
+		}
+		
 	}
 }

@@ -51,11 +51,14 @@ CREATE TABLE `aurora`.`payment` (
 
 -- CONTAINER
 CREATE TABLE `aurora`.`container` (
+  `container_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `status` VARCHAR(45) NOT NULL,
   `round_count` INT NULL,
   `slim_count` INT NULL,
-  `date` DATETIME NULL);
+  `date` DATETIME NULL),
+  PRIMARY KEY (`container_id`),
+  UNIQUE INDEX `container_id_UNIQUE` (`container_id` ASC));
 
 -- Expenses
 CREATE TABLE `aurora`.`expense` (

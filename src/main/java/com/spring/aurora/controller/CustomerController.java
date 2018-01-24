@@ -1,12 +1,17 @@
 package com.spring.aurora.controller;
 
+import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Order;
+import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.OrderService;
 import com.spring.aurora.util.CustomerFormValidator;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,6 +40,9 @@ public class CustomerController {
     
     @Autowired
     private OrderService orderService;
+    
+    @Autowired
+    private ContainerService containerService;
     
     // Temporarily disabled this while new-order is not yet transferred to order controller
 //    @Autowired
@@ -69,6 +77,36 @@ public class CustomerController {
         
         model.addAttribute("customer", customerService.view(customerId));
         model.addAttribute("orders", orderList);
+        
+        Timestamp mostRecentOd = orderService.getMostRecentOrderDate(customerId);
+        
+        if (mostRecentOd != null) {
+        	Date date = new Date();
+            date.setTime(mostRecentOd.getTime());
+            String formattedDate = new SimpleDateFormat("MMM dd YYYY @ hh:mm a").format(date);
+            model.addAttribute("mostRecentOrderDate", formattedDate);
+        } else {
+        	model.addAttribute("mostRecentOrderDate", "No orders yet.");
+        }
+        
+        List<Container> containerList = new ArrayList<>();
+        containerList = containerService.findAllByCustomerId(customerId);
+        
+        int totalRoundBorrowed = 0;
+        int totalSlimBorrowed = 0;
+        
+        for (Container c : containerList) {   
+        	if (c.getStatus().equalsIgnoreCase("B")) {
+        		totalRoundBorrowed = totalRoundBorrowed +  c.getRoundCount();
+        		totalSlimBorrowed = totalSlimBorrowed + c.getSlimCount();
+        	} else {
+        		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
+        		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
+        	}
+        }
+        
+        model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
+    	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
         
         return "view-customer";
     }

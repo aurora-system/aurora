@@ -27,44 +27,77 @@
     </div>
     
     <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Orders
-                </div>
-                <div class="panel-body">
-                    <table id="myTable" class="table table-striped table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th>Order Id</th>
-                            <th>Delivery Receipt #</th>
-                            <th>Amount Paid</th>
-                            <th>Total Amount</th>
-                            <th>Slim #</th>
-                            <th>Round #</th>
-                            <th>Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="o" items="${orders}">
-                                <tr>
-                                    <td>${o.orderId}</td>
-                                    <td>${o.deliveryReceiptNum}</td>
-                                    <td>${o.amountPaid}</td>
-                                    <td>${o.totalAmount}</td>
-                                    <td>${o.slimCount}</td>
-                                    <td>${o.roundCount}</td>
-                                    <td>${o.createdAt}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-info">
+	                <div class="panel-heading">
+	                    Orders
+	                </div>
+	                <div class="panel-body">
+	                    <table id="myTable" class="table table-striped table-bordered table-hover">
+	                        <thead>
+	                          <tr>
+	                            <th>Delivery Receipt #</th>
+	                            <th>Amount Paid</th>
+	                            <th>Total Amount</th>
+	                            <th>Slim #</th>
+	                            <th>Round #</th>
+	                            <th>Date</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                            <c:forEach var="o" items="${orders}">
+	                                <tr>
+	                                    <td>${o.deliveryReceiptNum}</td>
+	                                    <td>${o.amountPaid}</td>
+	                                    <td>${o.totalAmount}</td>
+	                                    <td>${o.slimCount}</td>
+	                                    <td>${o.roundCount}</td>
+	                                    <td>${o.createdAt}</td>
+	                                </tr>
+	                            </c:forEach>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
     </div>
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading">
+                		Other Details
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Last Order Date</th>
+	                            <th>Total Borrowed Slim</th>
+	                            <th>Total Borrowed Round</th>
+	                            <th>Total Debt</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<tr>
+	                        		<td>${mostRecentOrderDate}</td>
+	                        		<td>${totalBorrowedSlim}</td>
+	                        		<td>${totalBorrowedRound}</td>
+	                        		<td></td>
+	                        	</tr>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
     </div>
+    
+    
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
