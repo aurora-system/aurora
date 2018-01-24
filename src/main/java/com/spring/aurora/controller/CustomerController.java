@@ -2,9 +2,11 @@ package com.spring.aurora.controller;
 
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
+import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.DebtService;
 import com.spring.aurora.service.OrderService;
 import com.spring.aurora.util.CustomerFormValidator;
 
@@ -43,6 +45,9 @@ public class CustomerController {
     
     @Autowired
     private ContainerService containerService;
+    
+    @Autowired
+    private DebtService debtService;
     
     // Temporarily disabled this while new-order is not yet transferred to order controller
 //    @Autowired
@@ -108,6 +113,16 @@ public class CustomerController {
         model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
     	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
         
+    	List<Debt> debtList = new ArrayList<>();
+    	debtList = debtService.findAllByCustomerId(customerId);
+    	
+    	Double totalDebt = 0.0;
+    	for (Debt d : debtList) {
+    		totalDebt += d.getAmount();
+    	}
+    	
+    	model.addAttribute("totalDebt", totalDebt);
+    	
         return "view-customer";
     }
 

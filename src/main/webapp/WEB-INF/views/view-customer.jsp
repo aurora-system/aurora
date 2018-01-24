@@ -87,7 +87,7 @@
 	                        		<td>${mostRecentOrderDate}</td>
 	                        		<td>${totalBorrowedSlim}</td>
 	                        		<td>${totalBorrowedRound}</td>
-	                        		<td></td>
+	                        		<td>${totalDebt}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
