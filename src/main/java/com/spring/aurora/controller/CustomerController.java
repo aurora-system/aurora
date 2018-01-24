@@ -88,11 +88,10 @@ public class CustomerController {
         Order order = new Order();
         order.setCustomerId(customerId);
         model.addAttribute("orderForm", order);
-        model.addAttribute("customerId", customerId); // TODO: Show the customer name but id is submitted (hidden)
+        model.addAttribute("customerId", customerId);
         
         Customer customer = customerService.view(customerId);
         model.addAttribute("customerName", customer.getName());
-        // TODO: Assign delivery receipt number 
         return "new-order";
     }
 

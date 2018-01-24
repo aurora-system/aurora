@@ -97,18 +97,35 @@ public class OrderController {
             
             orderService.insert(order);
             
-            // Borrowed containers - TODO we should put into consideration the returned containers
-            Container containerActivity = new Container();
-            containerActivity.setCustomerId(order.getCustomerId());
-            containerActivity.setRoundCount(order.getRoundCount());
-            containerActivity.setSlimCount(order.getSlimCount());
-            containerActivity.setStatus("B");
-            containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
-            containerService.insert(containerActivity);
+            saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
 
             // POST/REDIRECT/GET
             return "redirect:/customers/list";
             //return "redirect:/customers/" + customer.getCustomerId();
+        }
+    }
+    
+    public void saveContainerActivity (int slimCount, int roundCount, int slimReturned, int roundReturned, String customerId) {
+    	
+    	// Borrowed containers - TODO we should put into consideration the returned containers
+    	java.util.Date today = new java.util.Date();
+    	
+    	Container containerActivity = new Container();
+        containerActivity.setCustomerId(customerId);
+        containerActivity.setRoundCount(roundCount);
+        containerActivity.setSlimCount(slimCount);
+        containerActivity.setStatus("B");
+        containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
+        containerService.insert(containerActivity);
+        
+        if (slimReturned != 0 || roundReturned != 0) {
+        	containerActivity = new Container();
+            containerActivity.setCustomerId(customerId);
+            containerActivity.setRoundCount(roundReturned);
+            containerActivity.setSlimCount(slimReturned);
+            containerActivity.setStatus("R");
+            containerActivity.setDate(new java.sql.Timestamp(today.getTime()));
+            containerService.insert(containerActivity);
         }
     }
 }

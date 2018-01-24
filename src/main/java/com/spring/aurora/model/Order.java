@@ -38,6 +38,12 @@ public class Order {
 	@Column(name="cont_round_count")
 	private int roundCount;
 	
+	@Column(name="cont_slim_returned")
+	private int slimReturned;
+	
+	@Column(name="cont_round_returned")
+	private int roundReturned;
+	
 	@Column(name="created_at")
 	private Timestamp createdAt;
 
@@ -95,6 +101,22 @@ public class Order {
 
 	public void setRoundCount(int roundCount) {
 		this.roundCount = roundCount;
+	}
+
+	public int getSlimReturned() {
+		return slimReturned;
+	}
+
+	public void setSlimReturned(int slimReturned) {
+		this.slimReturned = slimReturned;
+	}
+
+	public int getRoundReturned() {
+		return roundReturned;
+	}
+
+	public void setRoundReturned(int roundReturned) {
+		this.roundReturned = roundReturned;
 	}
 
 	public Timestamp getCreatedAt() {

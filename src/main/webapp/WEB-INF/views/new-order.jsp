@@ -87,6 +87,26 @@
                             </div>
                         </spring:bind>
                         
+                        <spring:bind path="slimReturned">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Slim Returned:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="slimReturned" type="text" class="form-control" id="slimReturned" />
+                                    <form:errors path="slimReturned" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        
+                        <spring:bind path="roundReturned">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Round Returned:</label>
+                                <div class="col-sm-9"> 
+                                    <form:input path="roundReturned" type="text" class="form-control" id="roundReturned" />
+                                    <form:errors path="roundReturned" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        
                         <div class="col-sm-offset-3 col-sm-9"><button type="submit" class="btn btn-primary">Submit</button></div>
                     </form:form>
                 </div>

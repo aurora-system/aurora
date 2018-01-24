@@ -23,6 +23,8 @@ CREATE TABLE `aurora`.`orders` (
   `total_amount` DECIMAL(10,2) NOT NULL,
   `cont_slim_count` INT NOT NULL DEFAULT 0,
   `cont_round_count` INT NOT NULL DEFAULT 0,
+  `cont_slim_returned` INT NOT NULL DEFAULT 0,
+  `cont_round_returned` INT NOT NULL DEFAULT 0,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`order_id`),
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC));
