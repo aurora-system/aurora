@@ -30,8 +30,8 @@ public class Container {
 	@Column(name="slim_count")
 	private int slimCount;
 	
-	@Column(name="date")
-	private Timestamp date;
+	@Column(name="created_at")
+	private Timestamp createdAt;
 
 	public String getContainerId() {
 		return containerId;
@@ -73,12 +73,12 @@ public class Container {
 		this.slimCount = slimCount;
 	}
 
-	public Timestamp getDate() {
-		return date;
+	public Timestamp getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setDate(Timestamp date) {
-		this.date = date;
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
 	}
 	
 }

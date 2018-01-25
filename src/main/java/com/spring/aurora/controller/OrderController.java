@@ -149,7 +149,7 @@ public class OrderController {
         containerActivity.setRoundCount(roundCount);
         containerActivity.setSlimCount(slimCount);
         containerActivity.setStatus("B");
-        containerActivity.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         containerService.insert(containerActivity);
         
         if (slimReturned != 0 || roundReturned != 0) {
@@ -158,7 +158,7 @@ public class OrderController {
             containerActivity.setRoundCount(roundReturned);
             containerActivity.setSlimCount(slimReturned);
             containerActivity.setStatus("R");
-            containerActivity.setDate(Timestamp.valueOf(LocalDateTime.now()));
+            containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             containerService.insert(containerActivity);
         }
     }

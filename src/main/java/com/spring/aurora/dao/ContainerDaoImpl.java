@@ -18,7 +18,7 @@ import com.spring.aurora.model.Order;
 @Transactional
 public class ContainerDaoImpl implements ContainerDao {
 	
-private static final Logger logger = LoggerFactory.getLogger(OrderDaoImpl.class);
+private static final Logger logger = LoggerFactory.getLogger(ContainerDaoImpl.class);
 	
 	@Autowired
 	private SessionFactory sessionFactory;
