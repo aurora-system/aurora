@@ -1,6 +1,8 @@
 package com.spring.aurora.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.OrderCustomerEntity;
@@ -49,6 +52,24 @@ public class OrderController {
         this.orderService = orderService;
     }
     
+    @RequestMapping(value = "/daily", method = RequestMethod.GET)
+    public String dailySales(Model model, @RequestParam(value="dateParam", required=false) Date dateParam) {
+        logger.info("Daily sales report.");
+        
+        if (dateParam == null) {
+        	dateParam = Date.valueOf(LocalDate.now());
+        }
+        
+        List<Order> orderList = orderService.findAllOrdersToday(dateParam);
+        
+        for (Order o : orderList) {
+        	System.out.println(o.getDeliveryReceiptNum());
+        }
+        
+        model.addAttribute("dailySales", orderList);
+        return "daily-sales";
+    }
+    
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listOrders(Model model) {
     	logger.info("List all orders.");
@@ -62,7 +83,7 @@ public class OrderController {
         	OrderCustomerEntity oce = new OrderCustomerEntity();
         	oce.setOrder(order);
         	Customer customer = customerService.view(order.getCustomerId());
-            oce.setCustomerName(customer.getContactName());
+            oce.setCustomerName(customer.getName());
             orderCustomerEntityList.add(oce);
         }
         model.addAttribute("orders", orderCustomerEntityList);

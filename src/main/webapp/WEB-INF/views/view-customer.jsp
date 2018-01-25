@@ -4,13 +4,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
+<spring:url value="/customers/neworder" var="urlNewOrder" />
 <body>
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    Customer Information
+                <div class="panel-heading clearfix">
+                    <p class="pull-left">Customer Information</p> 
+                    
+                    <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
+
                 </div>
                 <div class="panel-body">
                     <p><b>Name:</b> ${customer.name}</p>
@@ -31,7 +35,7 @@
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
 	                <div class="panel-heading">
-	                    Orders
+	                    Order History
 	                </div>
 	                <div class="panel-body">
 	                    <table id="myTable" class="table table-striped table-bordered table-hover">
@@ -69,7 +73,7 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading">
-                		Other Details
+                		Details
                 	</div>
                 	
                 	 <div class="panel-body">
@@ -96,7 +100,6 @@
     		</div>
     	</div>
     </div>
-    
     
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
