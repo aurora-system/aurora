@@ -5,16 +5,19 @@
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
 <spring:url value="/customers/neworder" var="urlNewOrder" />
+<spring:url value="/payments/new" var="urlNewPayment" />
+<spring:url value="/debts/new" var="urlNewDebt" />
 <body>
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
-                    <p class="pull-left">Customer Information</p> 
-                    
-                    <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
-
+                    <p class="pull-left">Customer Information</p>
+                    <a href="${urlNewDebt}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">New Debt</a>
+					<a href="${urlNewPayment}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">New Payment</a>
+					<a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
+					
                 </div>
                 <div class="panel-body">
                     <p><b>Name:</b> ${customer.name}</p>
@@ -23,7 +26,8 @@
                     <p><b>Contact Person:</b> ${customer.contactName}</p>
                     <p><b>Main number:</b> ${customer.mainNumber}</p>
                     <p><b>Alternate number:</b> ${customer.alternateNumber}</p>
-                    <p><b>Email Address:</b> ${customer.emailAddress}</p>
+					<p><b>Email Address:</b> ${customer.emailAddress}</p>
+					
                 </div>
             </div>
         </div>

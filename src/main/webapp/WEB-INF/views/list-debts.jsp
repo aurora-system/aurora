@@ -22,7 +22,10 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of debts for ${customer.name}.</p>
+                        <p>
+                            <spring:url value="/customers/view?customerId=${customer.customerId}" var="urlViewCustomer" />
+                            List of debts for <a href="${urlViewCustomer}">${customer.name}.</a>
+                        </p>
                         <p>Running Total: ${debtsTotal}.
                             <spring:url value="/debts/new?cid=${customer.customerId}" var="newDebtUrl" />
                             <a href="${newDebtUrl}" class="btn btn-default pull-right" role="button">New Debt</a>

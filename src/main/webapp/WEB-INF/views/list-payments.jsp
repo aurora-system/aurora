@@ -22,7 +22,11 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of payments for ${customer.name}.</p>
+                        <p>
+                            <spring:url value="/customers/view?customerId=${customer.customerId}" var="urlViewCustomer" />
+                            List of payments for <a href="${urlViewCustomer}">${customer.name}.</a>
+
+                        </p>
                         <p>Running Total: ${paymentsTotal}.
                             <spring:url value="/payments/new?cid=${customer.customerId}" var="newPaymentUrl" />
                             <a href="${newPaymentUrl}" class="btn btn-default pull-right" role="button">New Payment</a>

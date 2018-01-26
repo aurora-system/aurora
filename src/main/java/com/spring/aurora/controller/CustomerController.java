@@ -4,11 +4,7 @@ import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
-import com.spring.aurora.service.ContainerService;
-import com.spring.aurora.service.CustomerService;
-import com.spring.aurora.service.DebtService;
-import com.spring.aurora.service.ExpenseService;
-import com.spring.aurora.service.OrderService;
+import com.spring.aurora.service.*;
 import com.spring.aurora.util.CustomerFormValidator;
 
 import java.sql.Timestamp;
@@ -49,6 +45,9 @@ public class CustomerController {
     
     @Autowired
     private DebtService debtService;
+
+    @Autowired
+    private PaymentService paymentService;
     
     @Autowired
     private ExpenseService expenseService;
@@ -117,15 +116,10 @@ public class CustomerController {
         model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
     	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
         
-    	List<Debt> debtList = new ArrayList<>();
-    	debtList = debtService.findAllByCustomerId(customerId);
-    	
-    	Double totalDebt = 0.0;
-    	for (Debt d : debtList) {
-    		totalDebt += d.getAmount();
-    	}
-    	
-    	model.addAttribute("totalDebt", totalDebt);
+    	double debtsSubTotal = debtService.findDebtsTotalByCustomerId(customerId);
+        double paymentsSubTotal = paymentService.getPaymentsTotalByCustomerId(customerId);
+        double totalDebt = debtsSubTotal - paymentsSubTotal;
+        model.addAttribute("totalDebt", totalDebt);
     	
         return "view-customer";
     }

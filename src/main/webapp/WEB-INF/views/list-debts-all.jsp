@@ -22,8 +22,9 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="entry" items="${debtsMap}">
+                                    <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
                                     <tr>
-                                        <td>${entry.value.customerName}</td>
+                                        <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
                                         <td>${entry.value.debtsTotal}</td>
                                     </tr>
                                 </c:forEach>
