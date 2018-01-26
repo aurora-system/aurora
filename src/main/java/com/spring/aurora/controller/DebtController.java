@@ -76,7 +76,6 @@ public class DebtController {
         Map<String, Object> debtsMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
                 customer -> {return new DebtCustomerEntity(
                         customer.getName(), getDebtsTotal(customer.getCustomerId()));}));
-        System.out.println(debtsMap);
         model.addAttribute("debtsMap", debtsMap);
         return "list-debts-all";
     }

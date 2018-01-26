@@ -141,6 +141,7 @@
 <!--     </div> -->
     </div>
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
