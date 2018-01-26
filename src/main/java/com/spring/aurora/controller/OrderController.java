@@ -1,6 +1,8 @@
 package com.spring.aurora.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +130,7 @@ public class OrderController {
     		debtEntry.setCustomerId(customerId);
     		debtEntry.setAmount(deficit);
     		debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
-    		debtEntry.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+    		debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
     		debtService.insert(debtEntry);
     	}
     }

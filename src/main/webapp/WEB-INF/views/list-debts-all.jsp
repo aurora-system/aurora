@@ -8,41 +8,23 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <c:if test="${not empty msg}">
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <strong>${msg}</strong>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of debts for ${customer.name}.</p>
-                        <p>Running Total: ${debtsTotal}.
-                            <spring:url value="/debts/new?cid=${customer.customerId}" var="newDebtUrl" />
-                            <a href="${newDebtUrl}" class="btn btn-default pull-right" role="button">New Debt</a>
-                        </p>
+                        <p>List of Customers' debts as of today</p>
                     </div>
                     <div class="panel-body">
                         <table id="debtsTable" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Remarks</th>
-                                    <th>Amount</th>
+                                    <th>Customer</th>
+                                    <th>Total Debts</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="debt" items="${debts}">
+                                <c:forEach var="entry" items="${debtsMap}">
                                     <tr>
-                                        <td>${debt.createdAt}</td>
-                                        <td>${debt.remarks}</td>
-                                        <td>${debt.amount}</td>
+                                        <td>${entry.value.customerName}</td>
+                                        <td>${entry.value.debtsTotal}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

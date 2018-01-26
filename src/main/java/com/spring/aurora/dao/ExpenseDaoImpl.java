@@ -25,16 +25,10 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    /*public void setSessionFactory(SessionFactory sf){
-        this.sessionFactory = sf;
-    }*/
-
     @Override
     public Expense insert(Expense expense) {
         Session session = sessionFactory.getCurrentSession();
-        //KeyHolder keyHolder = new GeneratedKeyHolder();
         session.save(expense);
-        //expense.setExpenseId(keyHolder.getKey().toString());
         return expense;
     }
 

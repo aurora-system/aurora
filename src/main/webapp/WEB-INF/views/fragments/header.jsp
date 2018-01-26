@@ -20,7 +20,7 @@
 <spring:url value="/reports" var="urlReports" />
 <spring:url value="/customers/list" var="urlCustomers" />
 <spring:url value="/daily" var="urlDaily" />
-<spring:url value="/debts" var="urlDebt" />
+<spring:url value="/debts/listAll" var="urlDebt" />
 <spring:url value="/containers" var="urlContainer" />
 
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />

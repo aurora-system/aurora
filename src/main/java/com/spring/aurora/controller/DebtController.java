@@ -1,5 +1,6 @@
 package com.spring.aurora.controller;
 
+import com.spring.aurora.entity.DebtCustomerEntity;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
 import com.spring.aurora.service.CustomerService;
@@ -22,6 +23,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/debts")
@@ -36,7 +39,7 @@ public class DebtController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newDebt(@RequestParam String cid, Model model) {
         Debt debt = new Debt();
-        debt.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        debt.setCreatedAt(Date.valueOf(LocalDate.now()));
         debt.setCustomerId(cid);
         Customer customer = customerService.view(cid);
         model.addAttribute("debt", debt);
@@ -65,6 +68,17 @@ public class DebtController {
         model.addAttribute("debtsTotal", getDebtsTotal(cid));
         model.addAttribute("customer", customer);
         return "list-debts";
+    }
+
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public String listAllDebts(Model model) {
+        List<Customer> customers = customerService.findAll();
+        Map<String, Object> debtsMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
+                customer -> {return new DebtCustomerEntity(
+                        customer.getName(), getDebtsTotal(customer.getCustomerId()));}));
+        System.out.println(debtsMap);
+        model.addAttribute("debtsMap", debtsMap);
+        return "list-debts-all";
     }
 
     private double getDebtsTotal(String customerId) {

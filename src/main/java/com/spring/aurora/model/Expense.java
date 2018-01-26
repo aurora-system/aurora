@@ -1,7 +1,6 @@
 package com.spring.aurora.model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
