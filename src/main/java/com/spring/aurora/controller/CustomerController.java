@@ -7,6 +7,7 @@ import com.spring.aurora.model.Order;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.DebtService;
+import com.spring.aurora.service.ExpenseService;
 import com.spring.aurora.service.OrderService;
 import com.spring.aurora.util.CustomerFormValidator;
 
@@ -49,6 +50,9 @@ public class CustomerController {
     @Autowired
     private DebtService debtService;
     
+    @Autowired
+    private ExpenseService expenseService;
+    
     // Temporarily disabled this while new-order is not yet transferred to order controller
 //    @Autowired
 //    CustomerFormValidator customerFormValidator;
@@ -65,7 +69,7 @@ public class CustomerController {
         //model.addAttribute("customers", customerService.findAll());
         return "customer-search-result";
     }
-
+    
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listCustomers(Model model) {
         logger.info("List all customers.");

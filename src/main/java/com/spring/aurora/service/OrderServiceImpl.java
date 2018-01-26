@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -51,5 +52,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Timestamp getMostRecentOrderDate(String customerId) {
 		return orderDao.getMostRecentOrderDate(customerId);
+	}
+
+	@Override
+	public List<Order> findAllOrdersToday(Date dateParam) {
+		return orderDao.findAllOrdersToday(dateParam);
 	}
 }

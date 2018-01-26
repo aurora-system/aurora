@@ -1,11 +1,16 @@
 package com.spring.aurora.dao;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +90,17 @@ public class OrderDaoImpl implements OrderDao {
 			return null;
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> findAllOrdersToday(Date dateParam) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		List<Order> orderList = session.createQuery("select o from Order o where DATE(o.createdAt) = :timestamp")
+				.setParameter("timestamp", dateParam).list();
+
+        return orderList;
 	}
 }
