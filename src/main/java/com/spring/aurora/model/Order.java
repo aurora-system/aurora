@@ -26,6 +26,9 @@ public class Order {
 	@Column(name="delivery_receipt_num")
 	private String deliveryReceiptNum;
 	
+	@Column(name="status")
+	private String status;
+	
 	@Column(name="amount_paid")
 	private Double amountPaid;
 	
@@ -69,6 +72,14 @@ public class Order {
 
 	public void setDeliveryReceiptNum(String deliveryReceiptNum) {
 		this.deliveryReceiptNum = deliveryReceiptNum;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Double getAmountPaid() {

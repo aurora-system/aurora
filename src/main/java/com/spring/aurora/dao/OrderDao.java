@@ -14,4 +14,5 @@ public interface OrderDao {
     List<Order> findAllOrdersToday(Date dateParam);
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
+    void cancelOrder(Order order);
 }

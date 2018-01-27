@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Slim Count:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="slimCount" type="text" class="form-control" id="slimCount" />
+                                    <form:input path="slimCount" type="text" class="form-control" id="slimCount" placeholder="0"/>
                                     <form:errors path="slimCount" class="control-label"/>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Round Count:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="roundCount" type="text" class="form-control" id="roundCount" />
+                                    <form:input path="roundCount" type="text" class="form-control" id="roundCount" placeholder="0"/>
                                     <form:errors path="roundCount" class="control-label"/>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Slim Returned:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="slimReturned" type="text" class="form-control" id="slimReturned" />
+                                    <form:input path="slimReturned" type="text" class="form-control" id="slimReturned" placeholder="0"/>
                                     <form:errors path="slimReturned" class="control-label"/>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Round Returned:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="roundReturned" type="text" class="form-control" id="roundReturned" />
+                                    <form:input path="roundReturned" type="text" class="form-control" id="roundReturned" placeholder="0"/>
                                     <form:errors path="roundReturned" class="control-label"/>
                                 </div>
                             </div>

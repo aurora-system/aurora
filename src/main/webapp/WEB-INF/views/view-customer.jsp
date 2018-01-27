@@ -7,20 +7,30 @@
 <spring:url value="/customers/neworder" var="urlNewOrder" />
 <spring:url value="/payments/new" var="urlNewPayment" />
 <spring:url value="/debts/new" var="urlNewDebt" />
+<spring:url value="/container/return" var="urlReturnContainer" />
 <body>
     <div class="container">
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <c:if test="${not empty msg}">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>${msg}</strong>
+                </div>
+            </c:if>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
-                    <p class="pull-left">Customer Information</p>
-                    <a href="${urlNewDebt}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">New Debt</a>
-					<a href="${urlNewPayment}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">New Payment</a>
-					<a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
-					
+                    <p class="pull-left">Customer Information: <b>${customer.name}</b></p>
+                    <a href="${urlEditCustomer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Edit</a>
                 </div>
                 <div class="panel-body">
-                    <p><b>Name:</b> ${customer.name}</p>
                     <p><b>Type:</b> ${customer.type}</p>
                     <p><b>Address:</b> ${customer.address}</p>
                     <p><b>Contact Person:</b> ${customer.contactName}</p>
@@ -38,8 +48,9 @@
 	    <div class="row">
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
-	                <div class="panel-heading">
+	                <div class="panel-heading clearfix">
 	                    Order History
+	                    <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
 	                </div>
 	                <div class="panel-body">
 	                    <table id="myTable" class="table table-striped table-bordered table-hover">
@@ -76,8 +87,11 @@
     	<div class="row">
     		<div class="col-lg-12">
     			<div class="panel panel-info">
-                	<div class="panel-heading">
+                	<div class="panel-heading clearfix">
                 		Details
+                		<a href="${urlReturnContainer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Return Container</a>
+                		<a href="${urlNewDebt}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Debt</a>
+						<a href="${urlNewPayment}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                 	</div>
                 	
                 	 <div class="panel-body">

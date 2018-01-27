@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -97,10 +98,22 @@ public class OrderDaoImpl implements OrderDao {
 	public List<Order> findAllOrdersToday(Date dateParam) {
 		
 		Session session = this.sessionFactory.getCurrentSession();
-		
 		List<Order> orderList = session.createQuery("select o from Order o where DATE(o.createdAt) = :timestamp")
 				.setParameter("timestamp", dateParam).list();
 
         return orderList;
+	}
+
+	@Override
+	public void cancelOrder(Order order) {
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		Query queryForDebt = session.createQuery("delete from Debt d where d.orderId = :orderId");
+		queryForDebt.setParameter("orderId", order.getOrderId());
+		queryForDebt.executeUpdate();
+		
+		Query queryForOrder = session.createQuery("delete from Order o where o.orderId = :orderId");
+		queryForOrder.setParameter("orderId", order.getOrderId());
+		queryForOrder.executeUpdate();
 	}
 }

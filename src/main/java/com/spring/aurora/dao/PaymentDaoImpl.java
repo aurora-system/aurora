@@ -35,7 +35,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public List<Payment> findAllByCustomerIdAndDate(int customerId, Date date) {
+    public List<Payment> findAllByCustomerIdAndDate(String customerId, Date date) {
         return new ArrayList<>();
     }
 }

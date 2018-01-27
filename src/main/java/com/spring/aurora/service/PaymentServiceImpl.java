@@ -28,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> findAllByCustomerIdAndDate(int customerId, Date date) {
+    public List<Payment> findAllByCustomerIdAndDate(String customerId, Date date) {
         return paymentDao.findAllByCustomerIdAndDate(customerId, date);
     }
 

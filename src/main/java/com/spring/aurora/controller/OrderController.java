@@ -2,6 +2,7 @@ package com.spring.aurora.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,15 +22,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.aurora.entity.DailySalesEntity;
 import com.spring.aurora.entity.OrderCustomerEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
+import com.spring.aurora.model.Expense;
 import com.spring.aurora.model.Order;
+import com.spring.aurora.model.Payment;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.DebtService;
+import com.spring.aurora.service.ExpenseService;
 import com.spring.aurora.service.OrderService;
+import com.spring.aurora.service.PaymentService;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -47,26 +53,55 @@ public class OrderController {
     
     @Autowired
     private DebtService debtService;
+    
+    @Autowired
+    private ExpenseService expenseService;
+    
+    @Autowired
+    private PaymentService paymentService;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
     
     @RequestMapping(value = "/daily", method = RequestMethod.GET)
-    public String dailySales(Model model, @RequestParam(value="dateParam", required=false) Date dateParam) {
+    public String dailySales(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
         logger.info("Daily sales report.");
         
-        if (dateParam == null) {
-        	dateParam = Date.valueOf(LocalDate.now());
-        }
+        List<DailySalesEntity> dseList = new ArrayList<>();
         
-        List<Order> orderList = orderService.findAllOrdersToday(dateParam);
+        Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
+        String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
+        model.addAttribute("datePicked", datePicked);
+        
+        List<Order> orderList = orderService.findAllOrdersToday(date);
         
         for (Order o : orderList) {
-        	System.out.println(o.getDeliveryReceiptNum());
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setOrder(o);
+        	
+        	Customer c = customerService.view(o.getCustomerId());
+        	dse.setCustomerName(c.getName());
+        	dse.setPaidAmount(o.getAmountPaid());
+        	dse.setBalanceAmount(o.getTotalAmount() - o.getAmountPaid());
+        	dseList.add(dse);
         }
         
-        model.addAttribute("dailySales", orderList);
+        List<Expense> expenseList = new ArrayList<>();
+        expenseList = expenseService.findAllByDate(date);
+        
+        for (Expense e : expenseList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setCustomerName(e.getDescription());
+        	dse.setExpenseAmount(e.getAmount());
+        	
+        	dseList.add(dse);
+        }
+        
+        List<Payment> paymentList = new ArrayList<>();
+        //paymentList = paymentService.
+        
+        model.addAttribute("dailySales", dseList);
         return "daily-sales";
     }
     
@@ -120,6 +155,7 @@ public class OrderController {
             }
 
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            order.setStatus("Pending");
             
             orderService.insert(order);
             

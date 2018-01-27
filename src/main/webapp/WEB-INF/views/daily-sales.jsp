@@ -4,56 +4,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
+<link href="/resources/css/main.css" rel="stylesheet">
+<spring:url value="/orders/daily" var="dailySalesUrl"/>
 <body>
     <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Daily Sales
-                </div>
-                <div class="panel-body">
-                    <table id="myTable" class="table table-striped table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th>Order Id</th>
-                            <th>Delivery Receipt #</th>
-                            <th>Amount Paid</th>
-                            <th>Total Amount</th>
-                            <th>Slim #</th>
-                            <th>Round #</th>
-                            <th>Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="o" items="${dailySales}">
-                                <tr>
-                                    <td>${o.orderId}</td>
-                                    <td>${o.deliveryReceiptNum}</td>
-                                    <td>${o.amountPaid}</td>
-                                    <td>${o.totalAmount}</td>
-                                    <td>${o.slimCount}</td>
-                                    <td>${o.roundCount}</td>
-                                    <td>${o.createdAt}</td>
-<!--                                     <td nowrap> -->
-<!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
-										<!--                                         <button class="btn btn-info">View</button> -->
-
-<%-- 										<form action="view" method="get"> --%>
-<%-- 											<input type="hidden" name="${_csrf.parameterName}" --%>
-<%-- 												value="${_csrf.token}" /> <input type="hidden" --%>
-<!-- 												name=customerId value=${c.customerId}> <input -->
-<!-- 												class="btn btn-info" type="submit" value="View"> -->
-<%-- 										</form> --%>
-<!-- 									</td> -->
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+    	<div class="row">
+            <div class="col-lg-12">
+                
+                <c:if test="${not empty msg}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>${msg}</strong>
+                    </div>
+                </c:if>
+                
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="get" action="${dailySalesUrl}">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Date: </label>
+                                <div class="col-sm-3">
+                                    <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
+                                </div>
+   								<div class="col-sm-5">
+								    <button type="submit" class="btn btn-primary">Refresh</button>
+								</div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-info">
+	                <div class="panel-heading">
+	                    Daily sales for ${datePicked}.
+	                </div>
+	                <div class="panel-body">
+	                    <table id="myTable" class="table table-striped table-bordered table-hover">
+	                        <thead>
+	                          <tr>
+	                            <th width="100">Customer Name</th>
+	                            <th>Slim Delivered</th>
+	                            <th>Round Delivered</th>
+	                            <th>Slim Returned</th>
+	                            <th>Round Returned</th>
+	                            <th>Delivery Receipt #</th>
+	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="ECFBEA">Payment</th>
+	                            <th>Balance</th>
+	                            <th width="100">Date and Time</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                            <c:forEach var="d" items="${dailySales}">
+	                                <tr>
+	                                    <td>${d.customerName}</td>
+	                                    <td>${d.order.slimCount}</td>
+	                                    <td>${d.order.roundCount}</td>
+	                                    <td>${d.order.slimReturned}</td>
+	                                    <td>${d.order.roundReturned}</td>
+	                                    <td>${d.order.deliveryReceiptNum}</td>
+	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
+	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
+	                                    <td>${d.balanceAmount}</td>
+	                                    <td>${d.order.createdAt}</td>
+	                                </tr>
+	                            </c:forEach>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>

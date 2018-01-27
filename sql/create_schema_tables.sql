@@ -19,6 +19,7 @@ CREATE TABLE `aurora`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `delivery_receipt_num` VARCHAR(45) NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
   `amount_paid` DECIMAL(10,2) NOT NULL,
   `total_amount` DECIMAL(10,2) NOT NULL,
   `cont_slim_count` INT NOT NULL DEFAULT 0,

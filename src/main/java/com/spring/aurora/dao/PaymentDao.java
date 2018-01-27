@@ -8,5 +8,5 @@ import java.util.List;
 public interface PaymentDao {
     Payment insert(Payment payment);
     List<Payment> findAllByCustomerId(String customerId);
-    List<Payment> findAllByCustomerIdAndDate(int customerId, Date date);
+    List<Payment> findAllByCustomerIdAndDate(String customerId, Date date);
 }

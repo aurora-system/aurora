@@ -23,7 +23,7 @@ public class SearchController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         logger.debug("index()");
-        return "redirect:/search";
+        return "redirect:/customers/list";
     }
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)

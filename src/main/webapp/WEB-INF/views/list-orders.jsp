@@ -16,7 +16,6 @@
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Order Id</th>
                             <th>Customer Name</th>
                             <th>Delivery Receipt #</th>
                             <th>Amount Paid</th>
@@ -24,19 +23,21 @@
                             <th>Slim #</th>
                             <th>Round #</th>
                             <th>Date</th>
+                            <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="o" items="${orders}">
+                            	<spring:url value="/customers/view?customerId=${o.order.customerId}" var="urlViewCustomer" />
                                 <tr>
-                                    <td>${o.order.orderId}</td>
-                                    <td>${o.customerName}</td>
+                                    <td><a href="${urlViewCustomer}">${o.customerName}</a></td>
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td>${o.order.amountPaid}</td>
                                     <td>${o.order.totalAmount}</td>
                                     <td>${o.order.slimCount}</td>
                                     <td>${o.order.roundCount}</td>
                                     <td>${o.order.createdAt}</td>
+                                    <td>${o.order.status}</td>
 <!--                                     <td nowrap> -->
 <!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->

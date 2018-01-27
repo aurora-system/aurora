@@ -14,6 +14,9 @@ public class DailySalesEntity {
 	private Payment payment;
 	private Expense expense;
 	private String customerName;
+	private Double expenseAmount;
+	private Double paidAmount;
+	private Double balanceAmount;
 	
 	public Order getOrder() {
 		return order;
@@ -45,4 +48,29 @@ public class DailySalesEntity {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
+	public Expense getExpense() {
+		return expense;
+	}
+	public void setExpense(Expense expense) {
+		this.expense = expense;
+	}
+	public Double getExpenseAmount() {
+		return expenseAmount;
+	}
+	public void setExpenseAmount(Double expenseAmount) {
+		this.expenseAmount = expenseAmount;
+	}
+	public Double getPaidAmount() {
+		return paidAmount;
+	}
+	public void setPaidAmount(Double paidAmount) {
+		this.paidAmount = paidAmount;
+	}
+	public Double getBalanceAmount() {
+		return balanceAmount;
+	}
+	public void setBalanceAmount(Double balanceAmount) {
+		this.balanceAmount = balanceAmount;
+	}
+	
 }

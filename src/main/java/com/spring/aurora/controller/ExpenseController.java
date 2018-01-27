@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ExpenseController {
         ModelAndView model = new ModelAndView("list-expenses");
         model.addObject("expenses", expenses);
         model.addObject("expensesTotal", expenseService.getTotalExpensesByDate(date));
-        model.addObject("date", date.toLocalDate());
+        model.addObject("date", new SimpleDateFormat("MMM dd YYYY").format(date));
         return model;
     }
 }
