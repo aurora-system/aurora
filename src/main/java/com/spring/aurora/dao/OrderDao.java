@@ -14,5 +14,7 @@ public interface OrderDao {
     List<Order> findAllOrdersToday(Date dateParam);
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
+    Order findOrderByOrderId(String orderId);
     void cancelOrder(Order order);
+    void setToDelivered(String orderId);
 }

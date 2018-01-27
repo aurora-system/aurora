@@ -1,5 +1,7 @@
 package com.spring.aurora.entity;
 
+import java.sql.Timestamp;
+
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Expense;
@@ -17,7 +19,14 @@ public class DailySalesEntity {
 	private Double expenseAmount;
 	private Double paidAmount;
 	private Double balanceAmount;
+	private Timestamp dateAndTime;
 	
+	public Timestamp getDateAndTime() {
+		return dateAndTime;
+	}
+	public void setDateAndTime(Timestamp dateAndTime) {
+		this.dateAndTime = dateAndTime;
+	}
 	public Order getOrder() {
 		return order;
 	}

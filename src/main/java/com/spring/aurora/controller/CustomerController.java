@@ -132,6 +132,18 @@ public class CustomerController {
         return "new-customer";
     }
     
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editCustomer(Model model, String customerId) {
+        logger.debug("Edit Customer form.");
+        
+        Customer customer = new Customer(); 
+        customer = customerService.view(customerId);
+        
+        model.addAttribute("customerForm", customer);
+        model.addAttribute("types",new String[]{" Business "," Residential"});
+        return "edit-customer";
+    }
+    
     // TODO: Transfer to OrderController
     @RequestMapping(value = "/neworder", method = RequestMethod.GET)
     public String newOrder(@ModelAttribute(value="customerId") String customerId, Model model) {
@@ -158,12 +170,12 @@ public class CustomerController {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
             if(customer.isNew()){
+            	customerService.insert(customer);
                 redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
             }else{
+            	customerService.update(customer);
                 redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
             }
-
-            customerService.insert(customer);
 
             // POST/REDIRECT/GET
             return "redirect:/customers/list";

@@ -38,4 +38,9 @@ public class PaymentServiceImpl implements PaymentService {
         double total = debts.stream().mapToDouble(p -> p.getAmount()).sum();
         return total;
     }
+
+	@Override
+	public List<Payment> findAllByDate(Date date) {
+		return paymentDao.findAllByDate(date);
+	}
 }

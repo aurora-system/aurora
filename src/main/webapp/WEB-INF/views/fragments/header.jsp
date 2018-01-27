@@ -22,7 +22,7 @@
 <nav class="navbar navbar-inverse ">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${urlCustomers}">Aurora Spring</a>
+			<a class="navbar-brand" href="${urlCustomers}">Crystal Clear</a>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
@@ -31,7 +31,7 @@
 				<li class="active"><a href="${urlCustomers}">Customers</a></li>
 				<li class="active"><a href="${urlListExpenses}">Expenses</a></li>
 				<li class="active"><a href="${urlDebt}">Debt Summary</a>
-				<li class="active"><a href="${urlContainer}">Container Tracking</a>
+<%-- 				<li class="active"><a href="${urlContainer}">Container Tracking</a> --%>
 <!-- 					<ul class="submenu"> -->
 <%--             			<li><a href="${urlSearch}">Daily Sales</a></li> --%>
 <%--             			<li><a href="${urlSearch}">Debt Report</a></li> --%>

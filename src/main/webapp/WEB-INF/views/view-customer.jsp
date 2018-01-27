@@ -7,6 +7,7 @@
 <spring:url value="/customers/neworder" var="urlNewOrder" />
 <spring:url value="/payments/new" var="urlNewPayment" />
 <spring:url value="/debts/new" var="urlNewDebt" />
+<spring:url value="/customers/edit" var="urlEditCustomer" />
 <spring:url value="/container/return" var="urlReturnContainer" />
 <body>
     <div class="container">
@@ -16,7 +17,7 @@
             <c:if test="${not empty msg}">
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">Ã—</span>
+                        <span aria-hidden="true">X—</span>
                     </button>
                     <strong>${msg}</strong>
                 </div>
@@ -27,8 +28,8 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
-                    <p class="pull-left">Customer Information: <b>${customer.name}</b></p>
-                    <a href="${urlEditCustomer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Edit</a>
+                    <p class="pull-left" style="font-size: 20px"><b>${customer.name}</b></p>
+                    <a href="${urlEditCustomer}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">Edit</a>
                 </div>
                 <div class="panel-body">
                     <p><b>Type:</b> ${customer.type}</p>

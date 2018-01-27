@@ -43,6 +43,12 @@ public class OrderDaoImpl implements OrderDao {
         session.saveOrUpdate(order);
         return order;
     }
+    
+    @Override
+    public void setToDelivered(String orderId) {
+    	Session session = sessionFactory.getCurrentSession();
+        session.createQuery("update Order o set o.status = 'Delivered' where o.orderId = :orderId").setParameter("orderId", orderId).executeUpdate();
+    }
 
     @SuppressWarnings("unchecked")
 	@Override
@@ -115,5 +121,16 @@ public class OrderDaoImpl implements OrderDao {
 		Query queryForOrder = session.createQuery("delete from Order o where o.orderId = :orderId");
 		queryForOrder.setParameter("orderId", order.getOrderId());
 		queryForOrder.executeUpdate();
+	}
+
+	@Override
+	public Order findOrderByOrderId(String orderId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		Order order = new Order();
+		
+		order = (Order) session.createQuery("select o from Order o where o.orderId = :orderId").setParameter("orderId", orderId).list().get(0);
+		
+		return order;
 	}
 }

@@ -29,6 +29,9 @@ public class Debt {
 	
 	@Column(name="created_at")
 	private Date createdAt;
+	
+	@Column(name="linked_order_id")
+	private String orderId;
 
 	public String getDebtId() {
 		return debtId;
@@ -68,6 +71,14 @@ public class Debt {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 	
 }

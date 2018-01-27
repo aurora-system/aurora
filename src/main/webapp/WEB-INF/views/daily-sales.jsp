@@ -56,7 +56,7 @@
 	                            <th>Delivery Receipt #</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
-	                            <th>Balance</th>
+	                            <th bgcolor="F7E8D0">Balance</th>
 	                            <th width="100">Date and Time</th>
 	                          </tr>
 	                        </thead>
@@ -71,8 +71,8 @@
 	                                    <td>${d.order.deliveryReceiptNum}</td>
 	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
 	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
-	                                    <td>${d.balanceAmount}</td>
-	                                    <td>${d.order.createdAt}</td>
+	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
+	                                    <td>${d.dateAndTime}</td>
 	                                </tr>
 	                            </c:forEach>
 	                        </tbody>
@@ -81,6 +81,43 @@
 	            </div>
 	        </div>
 	    </div>
+	    
+	    <div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
+                		Totals
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Slim Delivered</th>
+	                            <th>Round Delivered</th>
+	                            <th>Slim Returned</th>
+	                            <th>Round Returned</th>
+	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="ECFBEA">Payment</th>
+	                            <th bgcolor="F7E8D0">Balance</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<tr>
+	                        		<td>${totalSlimDelivered}</td>
+	                        		<td>${totalRoundDelivered}</td>
+	                        		<td>${totalSlimReturned}</td>
+	                        		<td>${totalRoundReturned}</td>
+	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
+	                        		<td bgcolor="ECFBEA">${totalPayments}</td>
+	                        		<td bgcolor="F7E8D0">${totalBalance}</td>
+	                        	</tr>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>

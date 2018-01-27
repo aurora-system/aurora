@@ -8,6 +8,27 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            <c:if test="${not empty msg}">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        X
+                    </button>
+                    <strong>${msg}</strong>
+                </div>
+            </c:if>
+            
+            <c:if test="${not empty failmsg}">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        X
+                    </button>
+                    <strong>${failmsg}</strong>
+                </div>
+            </c:if>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     List of Orders
@@ -24,6 +45,7 @@
                             <th>Round #</th>
                             <th>Date</th>
                             <th>Status</th>
+                            <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -38,17 +60,26 @@
                                     <td>${o.order.roundCount}</td>
                                     <td>${o.order.createdAt}</td>
                                     <td>${o.order.status}</td>
-<!--                                     <td nowrap> -->
-<!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
-										<!--                                         <button class="btn btn-info">View</button> -->
-
-<%-- 										<form action="view" method="get"> --%>
-<%-- 											<input type="hidden" name="${_csrf.parameterName}" --%>
-<%-- 												value="${_csrf.token}" /> <input type="hidden" --%>
-<!-- 												name=customerId value=${c.customerId}> <input -->
-<!-- 												class="btn btn-info" type="submit" value="View"> -->
+                                    <td nowrap>
+<%--                                     	<form action="edit" method="get" style="display: inline-block;"> --%>
+<%-- 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />  --%>
+<!-- 											<input type="hidden" name=orderId value=${o.order.orderId}>  -->
+<%-- 											<input class="btn btn-default" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered'}"><c:out value="disabled='disabled'"/></c:if>> --%>
 <%-- 										</form> --%>
-<!-- 									</td> -->
+										<form action="deliver" method="get" style="display: inline-block;">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+											<input type="hidden" name=orderId value=${o.order.orderId}> 
+											<input class="btn btn-success" type="submit" value="Tag As Delivered"
+												<c:if test="${o.order.status == 'Delivered'}">
+												<c:out value="disabled='disabled'"/></c:if>>
+										</form>
+										<form action="cancel" method="get" style="display: inline-block;">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+											<input type="hidden" name=orderId value=${o.order.orderId}> 
+											<input class="btn btn-danger" type="submit" value="Cancel" <c:if test="${o.order.status == 'Delivered'}">
+												<c:out value="disabled='disabled'"/></c:if>>
+										</form>
+									</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -66,8 +97,11 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#myTable').DataTable()
-        })
+            $('#myTable').DataTable({
+            	"order" : [[ 6, "desc"]]
+            	
+            });
+        });
     </script>
 
 </body>

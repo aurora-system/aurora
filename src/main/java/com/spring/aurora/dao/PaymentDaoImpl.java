@@ -38,4 +38,12 @@ public class PaymentDaoImpl implements PaymentDao {
     public List<Payment> findAllByCustomerIdAndDate(String customerId, Date date) {
         return new ArrayList<>();
     }
+
+	@Override
+	public List<Payment> findAllByDate(Date date) {
+		 Session session = sessionFactory.getCurrentSession();
+	        List<Payment> payments = session.createCriteria(Payment.class)
+	                .add(Restrictions.eq("createdAt", date)).list();
+	        return payments;
+	}
 }

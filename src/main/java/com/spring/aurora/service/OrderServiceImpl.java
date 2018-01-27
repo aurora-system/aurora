@@ -58,4 +58,19 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> findAllOrdersToday(Date dateParam) {
 		return orderDao.findAllOrdersToday(dateParam);
 	}
+
+	@Override
+	public void cancelOrder(Order order) {
+		orderDao.cancelOrder(order);
+	}
+
+	@Override
+	public void setToDelivered(String orderId) {
+		orderDao.setToDelivered(orderId);
+	}
+
+	@Override
+	public Order findOrderByOrderId(String orderId) {
+		return orderDao.findOrderByOrderId(orderId);
+	}
 }

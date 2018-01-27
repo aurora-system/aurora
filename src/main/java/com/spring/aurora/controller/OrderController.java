@@ -68,6 +68,14 @@ public class OrderController {
     public String dailySales(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
         logger.info("Daily sales report.");
         
+        int totalSlimDelivered = 0;
+        int totalRoundDelivered = 0;
+        int totalSlimReturned = 0;
+        int totalRoundReturned = 0;
+        Double totalExpenses = 0.0;
+        Double totalPayments = 0.0;
+        Double totalBalance = 0.0;
+        
         List<DailySalesEntity> dseList = new ArrayList<>();
         
         Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
@@ -82,8 +90,18 @@ public class OrderController {
         	
         	Customer c = customerService.view(o.getCustomerId());
         	dse.setCustomerName(c.getName());
+        	totalPayments += o.getAmountPaid();
         	dse.setPaidAmount(o.getAmountPaid());
-        	dse.setBalanceAmount(o.getTotalAmount() - o.getAmountPaid());
+        	
+        	totalSlimDelivered += o.getSlimCount();
+        	totalRoundDelivered += o.getRoundCount();
+        	totalSlimReturned += o.getSlimReturned();
+        	totalRoundReturned += o.getRoundReturned();
+        	
+        	Double balance = o.getTotalAmount() - o.getAmountPaid();
+        	totalBalance += balance;
+        	dse.setBalanceAmount(balance);
+        	dse.setDateAndTime(o.getCreatedAt());
         	dseList.add(dse);
         }
         
@@ -93,15 +111,32 @@ public class OrderController {
         for (Expense e : expenseList) {
         	DailySalesEntity dse = new DailySalesEntity();
         	dse.setCustomerName(e.getDescription());
+        	totalExpenses += e.getAmount();
         	dse.setExpenseAmount(e.getAmount());
-        	
         	dseList.add(dse);
         }
         
         List<Payment> paymentList = new ArrayList<>();
-        //paymentList = paymentService.
+        paymentList = paymentService.findAllByDate(date);
+        
+        for (Payment p : paymentList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setCustomerName(p.getRemarks());
+        	totalPayments += p.getAmount();
+        	dse.setPaidAmount(p.getAmount());
+        	dseList.add(dse);
+        }
         
         model.addAttribute("dailySales", dseList);
+        
+        model.addAttribute("totalSlimDelivered", totalSlimDelivered);
+        model.addAttribute("totalRoundDelivered", totalRoundDelivered);
+        model.addAttribute("totalSlimReturned", totalSlimReturned);
+        model.addAttribute("totalRoundReturned", totalRoundReturned);
+        
+        model.addAttribute("totalExpenses", totalExpenses);
+        model.addAttribute("totalPayments", totalPayments);
+        model.addAttribute("totalBalance", totalBalance);
         return "daily-sales";
     }
     
@@ -137,6 +172,38 @@ public class OrderController {
         return order;
     }
     
+    @RequestMapping("/cancel")
+	public String cancelOrder(Order order, BindingResult result, @RequestParam String orderId,
+			final RedirectAttributes redirectAttributes) {
+
+    	if (result.hasErrors()) {
+            return "list-orders";
+        } else {
+        	orderService.cancelOrder(order);
+        	redirectAttributes.addFlashAttribute("msg", "Order has been cancelled.");
+        }
+    	
+    	return "redirect:/orders/list";
+    }
+    
+    @RequestMapping("/deliver")
+	public String deliverOrder(Order order, BindingResult result, @RequestParam String orderId,
+			final RedirectAttributes redirectAttributes) {
+
+    	if (result.hasErrors()) {
+            return "list-orders";
+        } else {
+        	
+        	order = orderService.findOrderByOrderId(orderId);
+        	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
+        	
+        	orderService.setToDelivered(orderId);
+        	redirectAttributes.addFlashAttribute("msg", "Order has been set to delivered.");
+        }
+    	
+    	return "redirect:/orders/list";
+    }
+    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveOrder(@ModelAttribute("orderForm") @Validated Order order,
                                BindingResult result, Model model,
@@ -159,10 +226,8 @@ public class OrderController {
             
             orderService.insert(order);
             
-            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId());
+            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
             
-            saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
-
             // POST/REDIRECT/GET
             return "redirect:/customers/list";
             //return "redirect:/customers/" + customer.getCustomerId();
@@ -176,7 +241,7 @@ public class OrderController {
      * @param totalAmount
      * @param customerId
      */
-    public void saveDebt (double amountPaid, double totalAmount, String customerId) {
+    public void saveDebt (double amountPaid, double totalAmount, String customerId, String orderId) {
     	
     	double deficit = totalAmount - amountPaid;
     	
@@ -186,6 +251,7 @@ public class OrderController {
     		debtEntry.setAmount(deficit);
     		debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
     		debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
+    		debtEntry.setOrderId(orderId);
     		debtService.insert(debtEntry);
     	}
     }
