@@ -1,0 +1,4 @@
+1. new order, save, redirects to Orders page
+2. how to show/know the total payment of a customer? where to show?
+3. add new payment button to debts summary.
+4. redirect message of return containers has messed up close button.

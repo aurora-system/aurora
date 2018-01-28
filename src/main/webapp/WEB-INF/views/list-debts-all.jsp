@@ -18,14 +18,17 @@
                                 <tr>
                                     <th>Customer</th>
                                     <th>Total Debts</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="entry" items="${debtsMap}">
                                     <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
+                                    <spring:url value="/payments/new?cid=${entry.key}" var="urlNewPayment" />
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
                                         <td>${entry.value.debtsTotal}</td>
+                                        <td><a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
