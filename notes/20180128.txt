@@ -1,4 +1,6 @@
 1. new order, save, redirects to Orders page
 2. how to show/know the total payment of a customer? where to show?
-3. add new payment button to debts summary.
+DONE 3. add new payment button to debts summary. Add history button to debts summary.
 4. redirect message of return containers has messed up close button.
+5. debts list shows payment history and debt history columns
+6. Daily sales page show discrepancy in Balance amount

@@ -25,10 +25,14 @@
                                 <c:forEach var="entry" items="${debtsMap}">
                                     <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
                                     <spring:url value="/payments/new?cid=${entry.key}" var="urlNewPayment" />
+                                    <spring:url value="/debts/list?cid=${entry.key}" var="urlListDebts" />
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
                                         <td>${entry.value.debtsTotal}</td>
-                                        <td><a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a></td>
+                                        <td>
+                                            <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
+                                            <a href="${urlListDebts}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">History</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
