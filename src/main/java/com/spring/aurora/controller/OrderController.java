@@ -74,7 +74,7 @@ public class OrderController {
         int totalRoundReturned = 0;
         Double totalExpenses = 0.0;
         Double totalPayments = 0.0;
-        Double totalBalance = 0.0;
+        Double totalDebt = 0.0;
         
         List<DailySalesEntity> dseList = new ArrayList<>();
         
@@ -98,9 +98,9 @@ public class OrderController {
         	totalSlimReturned += o.getSlimReturned();
         	totalRoundReturned += o.getRoundReturned();
         	
-        	Double balance = o.getTotalAmount() - o.getAmountPaid();
-        	totalBalance += balance;
-        	dse.setBalanceAmount(balance);
+        	Double debt = o.getTotalAmount() - o.getAmountPaid();
+        	totalDebt += debt;
+        	dse.setBalanceAmount(debt);
         	dse.setDateAndTime(o.getCreatedAt());
         	dseList.add(dse);
         }
@@ -136,7 +136,9 @@ public class OrderController {
         
         model.addAttribute("totalExpenses", totalExpenses);
         model.addAttribute("totalPayments", totalPayments);
-        model.addAttribute("totalBalance", totalBalance);
+        model.addAttribute("totalDebt", totalDebt);
+        
+        model.addAttribute("ar", totalPayments - totalExpenses);
         return "daily-sales";
     }
     

@@ -42,6 +42,13 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/help", method = RequestMethod.GET)
+	public String help(Model model) {
+		
+		
+		return "help-page";
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLoginPage(@RequestParam(value="error", required=false) boolean error, 
 			Model model) {

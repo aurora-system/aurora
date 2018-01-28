@@ -54,10 +54,11 @@
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
 	                            <th>Delivery Receipt #</th>
-	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="F7E8D0">Debt</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
-	                            <th bgcolor="F7E8D0">Balance</th>
+	                            <th bgcolor="FBEAEA">Expense</th>
 	                            <th width="100">Date and Time</th>
+	                            
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -69,9 +70,9 @@
 	                                    <td>${d.order.slimReturned}</td>
 	                                    <td>${d.order.roundReturned}</td>
 	                                    <td>${d.order.deliveryReceiptNum}</td>
-	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
-	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
 	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
+	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
+	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
 	                                    <td>${d.dateAndTime}</td>
 	                                </tr>
 	                            </c:forEach>
@@ -97,9 +98,10 @@
 	                            <th>Round Delivered</th>
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
-	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="F7E8D0">Debt</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
-	                            <th bgcolor="F7E8D0">Balance</th>
+	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="D0E6F7">A/R</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -108,9 +110,10 @@
 	                        		<td>${totalRoundDelivered}</td>
 	                        		<td>${totalSlimReturned}</td>
 	                        		<td>${totalRoundReturned}</td>
-	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
+	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
 	                        		<td bgcolor="ECFBEA">${totalPayments}</td>
-	                        		<td bgcolor="F7E8D0">${totalBalance}</td>
+	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
+	                        		<td bgcolor="D0E6F7">${ar}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
