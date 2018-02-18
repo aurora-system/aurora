@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,11 @@ public class OrderController {
         	Double debt = o.getTotalAmount() - o.getAmountPaid();
         	totalDebt += debt;
         	dse.setBalanceAmount(debt);
-        	dse.setDateAndTime(o.getCreatedAt());
+        	
+        	Timestamp dateTime = o.getCreatedAt();
+        	String formattedDate = new SimpleDateFormat("MMM dd yyyy h:mm:ss a").format(dateTime);
+        	
+        	dse.setDateAndTime(formattedDate);
         	dseList.add(dse);
         }
         
@@ -156,6 +161,8 @@ public class OrderController {
         	oce.setOrder(order);
         	Customer customer = customerService.view(order.getCustomerId());
             oce.setCustomerName(customer.getName());
+            String formattedDate = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a").format(order.getCreatedAt());
+            oce.setFormattedDate(formattedDate);
             orderCustomerEntityList.add(oce);
         }
         model.addAttribute("orders", orderCustomerEntityList);
@@ -181,7 +188,7 @@ public class OrderController {
     	if (result.hasErrors()) {
             return "list-orders";
         } else {
-        	orderService.cancelOrder(order);
+        	orderService.cancelOrder(orderId);
         	redirectAttributes.addFlashAttribute("msg", "Order has been cancelled.");
         }
     	
@@ -197,6 +204,7 @@ public class OrderController {
         } else {
         	
         	order = orderService.findOrderByOrderId(orderId);
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
         	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
         	
         	orderService.setToDelivered(orderId);
@@ -222,13 +230,14 @@ public class OrderController {
             }else{
                 redirectAttributes.addFlashAttribute("msg", "Order updated successfully!");
             }
-
+            
+            order.setDeliveryReceiptNum(orderService.getNewDrNumber());
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             order.setStatus("Pending");
             
             orderService.insert(order);
             
-            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+            //saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
             
             // POST/REDIRECT/GET
             return "redirect:/customers/list";

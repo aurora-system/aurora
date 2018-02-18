@@ -6,6 +6,7 @@ public class OrderCustomerEntity {
 
 	private Order order;
 	private String CustomerName;
+	private String formattedDate;
 	
 	public Order getOrder() {
 		return order;
@@ -18,6 +19,12 @@ public class OrderCustomerEntity {
 	}
 	public void setCustomerName(String customerName) {
 		CustomerName = customerName;
+	}
+	public String getFormattedDate() {
+		return formattedDate;
+	}
+	public void setFormattedDate(String formattedDate) {
+		this.formattedDate = formattedDate;
 	}
 	
 }

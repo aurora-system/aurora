@@ -19,12 +19,12 @@ public class DailySalesEntity {
 	private Double expenseAmount;
 	private Double paidAmount;
 	private Double balanceAmount;
-	private Timestamp dateAndTime;
+	private String dateAndTime;
 	
-	public Timestamp getDateAndTime() {
+	public String getDateAndTime() {
 		return dateAndTime;
 	}
-	public void setDateAndTime(Timestamp dateAndTime) {
+	public void setDateAndTime(String dateAndTime) {
 		this.dateAndTime = dateAndTime;
 	}
 	public Order getOrder() {

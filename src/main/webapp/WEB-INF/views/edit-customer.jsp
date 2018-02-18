@@ -13,7 +13,7 @@
                     Edit Customer
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/customers/save" var="saveCustomerUrl"/>
+                    <spring:url value="/customers/update" var="saveCustomerUrl"/>
                     <form:form class="form-horizontal" action="${saveCustomerUrl}" method="post" modelAttribute="customerForm">
                         <form:hidden path="customerId"/>
                         <spring:bind path="name">

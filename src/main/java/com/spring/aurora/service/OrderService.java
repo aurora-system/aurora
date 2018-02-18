@@ -15,6 +15,7 @@ public interface OrderService {
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
     Order findOrderByOrderId(String orderId);
-    void cancelOrder(Order order);
+    void cancelOrder(String orderId);
     void setToDelivered(String orderId);
+    String getNewDrNumber();
 }

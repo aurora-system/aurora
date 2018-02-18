@@ -58,6 +58,7 @@
 	                        <thead>
 	                          <tr>
 	                            <th>Delivery Receipt #</th>
+	                            <th>Status</th>
 	                            <th>Amount Paid</th>
 	                            <th>Total Amount</th>
 	                            <th>Slim #</th>
@@ -69,6 +70,7 @@
 	                            <c:forEach var="o" items="${orders}">
 	                                <tr>
 	                                    <td>${o.deliveryReceiptNum}</td>
+	                                    <td>${o.status}</td>
 	                                    <td>${o.amountPaid}</td>
 	                                    <td>${o.totalAmount}</td>
 	                                    <td>${o.slimCount}</td>

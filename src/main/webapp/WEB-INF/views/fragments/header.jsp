@@ -31,7 +31,7 @@
 				<li class="active"><a href="${urlDaily}">Daily Sales</a>
 				<li class="active"><a href="${urlCustomers}">Customers</a></li>
 				<li class="active"><a href="${urlListExpenses}">Expenses</a></li>
-				<li class="active"><a href="${urlDebt}">Debt Summary</a>
+				<li class="active"><a href="${urlDebt}">A/R Summary</a>
 				<li class="active"><a href="${urlHelp}">Help</a>
 <%-- 				<li class="active"><a href="${urlContainer}">Container Tracking</a> --%>
 <!-- 					<ul class="submenu"> -->

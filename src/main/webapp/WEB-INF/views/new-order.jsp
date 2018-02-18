@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" placeholder="Delivery Receipt Number"/>
+                                    <form:input path="deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" placeholder="${newDrNumber}" disabled="true"/>
                                     <form:errors path="deliveryReceiptNum" class="control-label"/>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                         
                          <spring:bind path="slimCount">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Slim Count:</label>
+                                <label class="col-sm-3 control-label" for="type">Slim Order:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="slimCount" type="text" class="form-control" id="slimCount" placeholder="0"/>
                                     <form:errors path="slimCount" class="control-label"/>
@@ -79,7 +79,7 @@
                         
                         <spring:bind path="roundCount">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Round Count:</label>
+                                <label class="col-sm-3 control-label" for="type">Round Order:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="roundCount" type="text" class="form-control" id="roundCount" placeholder="0"/>
                                     <form:errors path="roundCount" class="control-label"/>
@@ -103,6 +103,16 @@
                                 <div class="col-sm-9"> 
                                     <form:input path="roundReturned" type="text" class="form-control" id="roundReturned" placeholder="0"/>
                                     <form:errors path="roundReturned" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        
+                        <spring:bind path="remarks">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="type">Remarks:</label>
+                                <div class="col-sm-9"> 
+                                    <form:textarea path="remarks" type="text" class="form-control" id="remarks" />
+                                    <form:errors path="remarks" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>

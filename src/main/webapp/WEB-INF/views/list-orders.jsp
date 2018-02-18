@@ -58,7 +58,7 @@
                                     <td>${o.order.totalAmount}</td>
                                     <td>${o.order.slimCount}</td>
                                     <td>${o.order.roundCount}</td>
-                                    <td>${o.order.createdAt}</td>
+                                    <td>${o.formattedDate}</td>
                                     <td>${o.order.status}</td>
                                     <td nowrap>
 <%--                                     	<form action="edit" method="get" style="display: inline-block;"> --%>
@@ -70,13 +70,13 @@
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
 											<input class="btn btn-success" type="submit" value="Tag As Delivered"
-												<c:if test="${o.order.status == 'Delivered'}">
+												<c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
 										<form action="cancel" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-danger" type="submit" value="Cancel" <c:if test="${o.order.status == 'Delivered'}">
+											<input class="btn btn-danger" type="submit" value="Cancel" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
 									</td>

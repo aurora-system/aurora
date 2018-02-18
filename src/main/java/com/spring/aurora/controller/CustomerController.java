@@ -127,7 +127,9 @@ public class CustomerController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newCustomer(Model model) {
         logger.debug("New Customer form.");
-        model.addAttribute("customerForm", new Customer());
+        Customer customer = new Customer();
+        customer.setType("Business");
+        model.addAttribute("customerForm", customer);
         model.addAttribute("types",new String[]{" Business "," Residential "});
         return "new-customer";
     }
@@ -138,7 +140,6 @@ public class CustomerController {
         
         Customer customer = new Customer(); 
         customer = customerService.view(customerId);
-        
         model.addAttribute("customerForm", customer);
         model.addAttribute("types",new String[]{" Business "," Residential"});
         return "edit-customer";
@@ -152,6 +153,7 @@ public class CustomerController {
         order.setCustomerId(customerId);
         model.addAttribute("orderForm", order);
         model.addAttribute("customerId", customerId);
+        model.addAttribute("newDrNumber", orderService.getNewDrNumber());
         
         Customer customer = customerService.view(customerId);
         model.addAttribute("customerName", customer.getName());
@@ -169,13 +171,33 @@ public class CustomerController {
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
-            if(customer.isNew()){
-            	customerService.insert(customer);
-                redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
-            }else{
-            	customerService.update(customer);
-                redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
-            }
+            
+            customerService.insert(customer);
+            redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
+            
+//            	customerService.update(customer);
+//                redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
+
+            // POST/REDIRECT/GET
+            return "redirect:/customers/list";
+            //return "redirect:/customers/" + customer.getCustomerId();
+        }
+    }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
+                               BindingResult result, Model model,
+                               final RedirectAttributes redirectAttributes) {
+        logger.debug("Update customer.");
+        if (result.hasErrors()) {
+            //populateDefaultModel(model);
+            return "new-customer";
+        } else {
+            // Add message to flash scope
+            redirectAttributes.addFlashAttribute("css", "success");
+
+            customerService.update(customer);
+			redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
 
             // POST/REDIRECT/GET
             return "redirect:/customers/list";

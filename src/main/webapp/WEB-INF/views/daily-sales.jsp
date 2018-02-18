@@ -54,7 +54,7 @@
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
 	                            <th>Delivery Receipt #</th>
-	                            <th bgcolor="F7E8D0">Debt</th>
+	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
 	                            <th width="100">Date and Time</th>
@@ -98,10 +98,10 @@
 	                            <th>Round Delivered</th>
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
-	                            <th bgcolor="F7E8D0">Debt</th>
+	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th bgcolor="D0E6F7">A/R</th>
+	                            <th bgcolor="D0E6F7">Net Cash</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -129,7 +129,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#myTable').DataTable()
+            $('#myTable').DataTable( {
+                "order": [[ 5, "asc" ]]
+            } );
         })
     </script>
 

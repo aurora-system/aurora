@@ -60,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void cancelOrder(Order order) {
-		orderDao.cancelOrder(order);
+	public void cancelOrder(String orderId) {
+		orderDao.cancelOrder(orderId);
 	}
 
 	@Override
@@ -72,5 +72,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order findOrderByOrderId(String orderId) {
 		return orderDao.findOrderByOrderId(orderId);
+	}
+
+	@Override
+	public String getNewDrNumber() {
+		return orderDao.getNewDrNumber();
 	}
 }

@@ -49,6 +49,9 @@ public class Order {
 	
 	@Column(name="created_at")
 	private Timestamp createdAt;
+	
+	@Column(name="remarks")
+	private String remarks;
 
 	public String getOrderId() {
 		return orderId;
@@ -140,5 +143,13 @@ public class Order {
 
 	public boolean isNew() {
 		return (this.orderId == null);
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 }

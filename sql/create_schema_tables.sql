@@ -27,6 +27,7 @@ CREATE TABLE `aurora`.`orders` (
   `cont_slim_returned` INT NOT NULL DEFAULT 0,
   `cont_round_returned` INT NOT NULL DEFAULT 0,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  `remarks` VARCHAR(500) NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC));
   

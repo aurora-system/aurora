@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -23,114 +24,146 @@ import com.spring.aurora.model.Order;
 @Repository
 @Transactional
 public class OrderDaoImpl implements OrderDao {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OrderDaoImpl.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-    @Override
-    public Order insert(Order order) {
-    	Session session = sessionFactory.getCurrentSession();
-        logger.debug("Order ID:" + order.getOrderId());
-        session.save(order);
-        return order;
-    }
 
-    @Override
-    public Order update(Order order) {
-    	Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(order);
-        return order;
-    }
-    
-    @Override
-    public void setToDelivered(String orderId) {
-    	Session session = sessionFactory.getCurrentSession();
-        session.createQuery("update Order o set o.status = 'Delivered' where o.orderId = :orderId").setParameter("orderId", orderId).executeUpdate();
-    }
-
-    @SuppressWarnings("unchecked")
 	@Override
-    public List<Order> findAllByCustomerId(String customerId) {
-        
-    	Session session = this.sessionFactory.getCurrentSession();
-		
-		List<Order> orders = new ArrayList<>();
-    	
-		orders = session.createQuery("select o from Order o where o.customerId = :customerId").setParameter("customerId", customerId).list();
-		
-		return orders;
-    }
+	public Order insert(Order order) {
+		Session session = sessionFactory.getCurrentSession();
+		logger.debug("Order ID:" + order.getOrderId());
+		session.save(order);
+		return order;
+	}
 
-    @Override
-    public List<Order> findAllByDeliveryReceiptNumber(int drNumber) {
-        return null;
-    }
+	@Override
+	public Order update(Order order) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(order);
+		return order;
+	}
+
+	@Override
+	public void setToDelivered(String orderId) {
+		Session session = sessionFactory.getCurrentSession();
+		session.createQuery(
+				"update Order o set o.status = 'Delivered', o.createdAt = :createdAt where o.orderId = :orderId")
+				.setParameter("orderId", orderId).setParameter("createdAt", Timestamp.valueOf(LocalDateTime.now()))
+				.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> findAllByCustomerId(String customerId) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		List<Order> orders = new ArrayList<>();
+
+		orders = session.createQuery("select o from Order o where o.customerId = :customerId")
+				.setParameter("customerId", customerId).list();
+
+		return orders;
+	}
+
+	@Override
+	public List<Order> findAllByDeliveryReceiptNumber(int drNumber) {
+		return null;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> findAll() {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
-		
+
 		List<Order> orders = new ArrayList<>();
-		
+
 		orders = session.createQuery("select o from Order o").list();
-		
+
 		return orders;
 	}
 
 	@Override
 	public Timestamp getMostRecentOrderDate(String customerId) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
-		
-		List<Order> orderList = session.createQuery("select o from Order o where o.customerId = :customerId order by createdAt desc").setParameter("customerId", customerId).list();
-		
+
+		List<Order> orderList = session
+				.createQuery("select o from Order o where o.customerId = :customerId order by createdAt desc")
+				.setParameter("customerId", customerId).list();
+
 		Order latestOrder = null;
-		
+
 		if (orderList != null && orderList.size() > 0) {
 			latestOrder = orderList.get(0);
 			return latestOrder.getCreatedAt();
 		} else {
 			return null;
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> findAllOrdersToday(Date dateParam) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Order> orderList = session.createQuery("select o from Order o where DATE(o.createdAt) = :timestamp")
 				.setParameter("timestamp", dateParam).list();
 
-        return orderList;
+		return orderList;
 	}
 
 	@Override
-	public void cancelOrder(Order order) {
+	public void cancelOrder(String orderId) {
 		Session session = this.sessionFactory.getCurrentSession();
+
+		session.createQuery(
+				"update Order o set o.status = 'Cancelled' where o.orderId = :orderId")
+				.setParameter("orderId", orderId).executeUpdate();
 		
-		Query queryForDebt = session.createQuery("delete from Debt d where d.orderId = :orderId");
-		queryForDebt.setParameter("orderId", order.getOrderId());
-		queryForDebt.executeUpdate();
-		
-		Query queryForOrder = session.createQuery("delete from Order o where o.orderId = :orderId");
-		queryForOrder.setParameter("orderId", order.getOrderId());
-		queryForOrder.executeUpdate();
+//		Query queryForDebt = session.createQuery("delete from Debt d where d.orderId = :orderId");
+//		queryForDebt.setParameter("orderId", order.getOrderId());
+//		queryForDebt.executeUpdate();
+//
+//		Query queryForOrder = session.createQuery("delete from Order o where o.orderId = :orderId");
+//		queryForOrder.setParameter("orderId", order.getOrderId());
+//		queryForOrder.executeUpdate();
 	}
 
 	@Override
 	public Order findOrderByOrderId(String orderId) {
 		Session session = this.sessionFactory.getCurrentSession();
-		
+
 		Order order = new Order();
-		
-		order = (Order) session.createQuery("select o from Order o where o.orderId = :orderId").setParameter("orderId", orderId).list().get(0);
-		
+
+		order = (Order) session.createQuery("select o from Order o where o.orderId = :orderId")
+				.setParameter("orderId", orderId).list().get(0);
+
 		return order;
+	}
+
+	@Override
+	public String getNewDrNumber() {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		String newDrNumber = "";
+
+		List<Order> orderList = this.findAll();
+		List<Integer> drList = new ArrayList<>();
+
+		for (Order order : orderList) {
+			drList.add(Integer.valueOf(order.getDeliveryReceiptNum()));
+		}
+
+		Integer temp = Collections.max(drList) + 1;
+		newDrNumber = temp.toString();
+
+		System.out.println("New DR Number is: " + newDrNumber);
+		return newDrNumber;
 	}
 }
