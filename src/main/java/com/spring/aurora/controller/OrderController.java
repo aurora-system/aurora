@@ -86,28 +86,31 @@ public class OrderController {
         List<Order> orderList = orderService.findAllOrdersToday(date);
         
         for (Order o : orderList) {
-        	DailySalesEntity dse = new DailySalesEntity();
-        	dse.setOrder(o);
-        	
-        	Customer c = customerService.view(o.getCustomerId());
-        	dse.setCustomerName(c.getName());
-        	totalPayments += o.getAmountPaid();
-        	dse.setPaidAmount(o.getAmountPaid());
-        	
-        	totalSlimDelivered += o.getSlimCount();
-        	totalRoundDelivered += o.getRoundCount();
-        	totalSlimReturned += o.getSlimReturned();
-        	totalRoundReturned += o.getRoundReturned();
-        	
-        	Double debt = o.getTotalAmount() - o.getAmountPaid();
-        	totalDebt += debt;
-        	dse.setBalanceAmount(debt);
-        	
-        	Timestamp dateTime = o.getCreatedAt();
-        	String formattedDate = new SimpleDateFormat("MMM dd yyyy h:mm:ss a").format(dateTime);
-        	
-        	dse.setDateAndTime(formattedDate);
-        	dseList.add(dse);
+        	if (o.getStatus().equalsIgnoreCase("Delivered")) {
+        		DailySalesEntity dse = new DailySalesEntity();
+            	dse.setOrder(o);
+            	
+            	Customer c = customerService.view(o.getCustomerId());
+            	dse.setCustomerName(c.getName());
+            	totalPayments += o.getAmountPaid();
+            	dse.setPaidAmount(o.getAmountPaid());
+            	
+            	totalSlimDelivered += o.getSlimCount();
+            	totalRoundDelivered += o.getRoundCount();
+            	totalSlimReturned += o.getSlimReturned();
+            	totalRoundReturned += o.getRoundReturned();
+            	
+            	Double debt = o.getTotalAmount() - o.getAmountPaid();
+            	totalDebt += debt;
+            	dse.setBalanceAmount(debt);
+            	
+            	Timestamp dateTime = o.getCreatedAt();
+            	String formattedDate = new SimpleDateFormat("MMM dd yyyy h:mm:ss a").format(dateTime);
+            	
+            	dse.setRemarks(o.getRemarks());
+            	dse.setDateAndTime(formattedDate);
+            	dseList.add(dse);
+        	}
         }
         
         List<Expense> expenseList = new ArrayList<>();
@@ -115,7 +118,7 @@ public class OrderController {
         
         for (Expense e : expenseList) {
         	DailySalesEntity dse = new DailySalesEntity();
-        	dse.setCustomerName(e.getDescription());
+        	dse.setRemarks(e.getDescription());
         	totalExpenses += e.getAmount();
         	dse.setExpenseAmount(e.getAmount());
         	dseList.add(dse);
@@ -126,7 +129,8 @@ public class OrderController {
         
         for (Payment p : paymentList) {
         	DailySalesEntity dse = new DailySalesEntity();
-        	dse.setCustomerName(p.getRemarks());
+        	dse.setCustomerName(customerService.view(p.getCustomerId()).getName());
+        	dse.setRemarks(p.getRemarks());
         	totalPayments += p.getAmount();
         	dse.setPaidAmount(p.getAmount());
         	dseList.add(dse);

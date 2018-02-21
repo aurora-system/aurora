@@ -19,6 +19,7 @@ public class DailySalesEntity {
 	private Double expenseAmount;
 	private Double paidAmount;
 	private Double balanceAmount;
+	private String remarks;
 	private String dateAndTime;
 	
 	public String getDateAndTime() {
@@ -80,6 +81,12 @@ public class DailySalesEntity {
 	}
 	public void setBalanceAmount(Double balanceAmount) {
 		this.balanceAmount = balanceAmount;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 }

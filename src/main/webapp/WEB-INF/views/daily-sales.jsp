@@ -53,11 +53,12 @@
 	                            <th>Round Delivered</th>
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
-	                            <th>Delivery Receipt #</th>
+	                            <th>DR#</th>
+	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th width="100">Date and Time</th>
+	                            <th width="100">Date</th>
 	                            
 	                          </tr>
 	                        </thead>
@@ -70,6 +71,7 @@
 	                                    <td>${d.order.slimReturned}</td>
 	                                    <td>${d.order.roundReturned}</td>
 	                                    <td>${d.order.deliveryReceiptNum}</td>
+	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
 	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
 	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
