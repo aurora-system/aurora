@@ -8,6 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -50,7 +54,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String getLoginPage(@RequestParam(value="error", required=false) boolean error, 
+	public String getLoginPage(@RequestParam(value="error", required=false) boolean error,
+			@RequestParam boolean logout,
 			Model model) {
 		logger.debug("Received request to show login page");
 
@@ -66,20 +71,25 @@ public class HomeController {
 		if (error == true) {
 			// Assign an error message
 			model.addAttribute("error", "You have entered an invalid username or password");
-		} else {
-			model.addAttribute("error", "");
+		}
+		if (logout == true) {
+			model.addAttribute("msg", "You've been logged out successfully.");
 		}
 		
-		// This will resolve to /WEB-INF/jsp/loginpage.jsp
-		return "loginpage";
+		// This will resolve to /WEB-INF/jsp/login.jsp
+		return "login";
 	}
      
-	@RequestMapping(value = "/denied", method = RequestMethod.GET)
- 	public String getDeniedPage() {
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+ 	public String getDeniedPage(Model model) {
 		logger.debug("Received request to show denied page");
-		
-		// This will resolve to /WEB-INF/jsp/denied.jsp
-		return "deniedpage";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			model.addAttribute("username", userDetail.getUsername());
+		}
+		// This will resolve to /WEB-INF/jsp/403.jsp
+		return "403";
 	}
 	
 //    @RequestMapping(value = "/home", method = RequestMethod.POST)

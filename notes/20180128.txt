@@ -4,3 +4,14 @@ DONE 3. add new payment button to debts summary. Add history button to debts sum
 4. redirect message of return containers has messed up close button.
 5. debts list shows payment history and debt history columns
 6. Daily sales page show discrepancy in Balance amount
+
+
+7. Make amount 2 decimal places.
+8. Replace A/R in daily sales with Net Cash
+
+9. batch file to start the application
+call startTomcat.cmd
+chrome http://localhost:8080/aurora/ -maximize
+
+
+10. Edit customer, default to business

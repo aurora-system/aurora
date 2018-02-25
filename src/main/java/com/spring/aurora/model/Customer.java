@@ -102,6 +102,6 @@ public class Customer {
 	}
 
 	public boolean isNew() {
-		return (this.customerId == null);
+		return (this.customerId == null || this.customerId.isEmpty());
 	}
 }
