@@ -42,11 +42,23 @@ CREATE TABLE `aurora`.`debt` (
   PRIMARY KEY (`debt_id`),
   UNIQUE INDEX `debt_id_UNIQUE` (`debt_id` ASC));
 
+-- ACCOUNTS_RECEIVABLES replaces the DEBTS table above
+CREATE TABLE `aurora`.`accounts_receivables` (
+  `ar_id` INT NOT NULL AUTO_INCREMENT,
+  `customer_id` INT NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `remarks` VARCHAR(255) NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  `linked_order_id` INT NULL,
+  PRIMARY KEY (`ar_id`),
+  UNIQUE INDEX `ar_id_UNIQUE` (`ar_id` ASC));
+
 -- PAYMENT
 CREATE TABLE `aurora`.`payment` (
   `payment_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `amount` DECIMAL(10,2) NOT NULL,
+  `payment_type` VARCHAR(45) NOT NULL,
   `remarks` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`payment_id`),
@@ -71,3 +83,23 @@ CREATE TABLE `aurora`.`expense` (
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`expense_id`),
   UNIQUE INDEX `expense_id_UNIQUE` (`expense_id` ASC));
+
+-- PRODUCTS
+CREATE TABLE `aurora`.`products` (
+  `product_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(100) NULL,
+  `initial_price` DECIMAL(10,2) NOT NULL,
+  `selling_price` DECIMAL(10,2) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  `updated_at` DATETIME NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`product_id`),
+  UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC));
+
+-- CUSTOMER_PRICE
+CREATE TABLE `aurora`.`customer_price` (
+  `customer_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `selling_price` DECIMAL(10,2) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  `updated_at` DATETIME NOT NULL DEFAULT NOW());
