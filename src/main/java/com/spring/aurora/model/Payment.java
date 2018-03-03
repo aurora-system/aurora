@@ -22,7 +22,10 @@ public class Payment {
 	
 	@Column(name="amount")
 	private Double amount;
-	
+
+	@Column(name="payment_type")
+	private String paymentType;
+
 	@Column(name="remarks")
 	private String remarks;
 	
@@ -51,6 +54,14 @@ public class Payment {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String type) {
+		this.paymentType = type;
 	}
 
 	public String getRemarks() {

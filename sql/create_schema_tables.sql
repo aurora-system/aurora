@@ -58,7 +58,7 @@ CREATE TABLE `aurora`.`payment` (
   `payment_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `amount` DECIMAL(10,2) NOT NULL,
-  `payment_type` VARCHAR(45) NOT NULL,
+  `payment_type` VARCHAR(45) NOT NULL DEFAULT 'CASH',
   `remarks` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`payment_id`),
