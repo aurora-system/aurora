@@ -48,6 +48,8 @@
                 <beans:value>com.spring.aurora.model.Order</beans:value>
                 <beans:value>com.spring.aurora.model.Payment</beans:value>
                 <beans:value>com.spring.aurora.model.Expense</beans:value>
+                <beans:value>com.spring.aurora.model.Product</beans:value>
+                <beans:value>com.spring.aurora.model.CustomerPrice</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">

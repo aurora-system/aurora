@@ -1,6 +1,5 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.CustomerPrice;
 
 import java.util.List;

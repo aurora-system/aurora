@@ -6,7 +6,9 @@ import java.sql.Date;
 @Entity
 @Table(name = "CUSTOMER_PRICE")
 public class CustomerPrice {
-    @Column(name = "customer_id")
+    
+	@Id
+	@Column(name = "customer_id")
     private String customerId;
 
     @Column(name = "product_id")
