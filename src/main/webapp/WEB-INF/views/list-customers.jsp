@@ -3,10 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
 <spring:url value="/resources/css/main.css" var="mainCss" />
 <spring:url value="/customers/new" var="urlAddCustomer" />
 <body>
+	<jsp:include page="fragments/header.jsp" />
     <div class="container">
     
     <div class="row">
@@ -87,8 +87,13 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#myTable').DataTable()
-        })
+            $('#myTable').DataTable();
+            
+            $('#headerNav a').click(function(e) {
+    			$('#headerNav a').removeClass('active');
+    			$(this).addClass('active');
+    		});
+        });
     </script>
 
 </body>

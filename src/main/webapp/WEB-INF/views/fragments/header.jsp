@@ -16,32 +16,33 @@
 <spring:url value="/debts/listAll" var="urlDebt" />
 <spring:url value="/orders/daily?d=today" var="urlDaily" />
 <spring:url value="/orders/monthly?m=2&y=2018" var="urlMonthly" />
-<spring:url value="/containers" var="urlContainer" />
+<spring:url value="/container/listAll" var="urlContainer" />
 <spring:url value="/help" var="urlHelp" />
-
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 
-<nav class="navbar navbar-inverse ">
+<nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="${urlCustomers}">Crystal Clear</a>
 		</div>
 		<div id="navbar">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlOrders}">Orders</a></li>
-				<li class="active"><a href="${urlDaily}">Daily Sales</a>
-				<li class="active"><a href="${urlMonthly}">Monthly Summary</a>
-				<li class="active"><a href="${urlCustomers}">Customers</a></li>
-				<li class="active"><a href="${urlListExpenses}">Expenses</a></li>
-				<li class="active"><a href="${urlDebt}">A/R Summary</a>
-				<li class="active"><a href="${urlHelp}">Help</a>
-<%-- 				<li class="active"><a href="${urlContainer}">Container Tracking</a> --%>
-<!-- 					<ul class="submenu"> -->
-<%--             			<li><a href="${urlSearch}">Daily Sales</a></li> --%>
-<%--             			<li><a href="${urlSearch}">Debt Report</a></li> --%>
+			<ul class="nav navbar-nav navbar-right" id="headerNav">
+				<li><a href="${urlOrders}">Orders</a></li>
+				<li><a href="${urlDaily}">Daily Sales</a>
+				<li><a href="${urlMonthly}">Monthly Summary</a>
+				<li><a href="${urlContainer}">Container Tracking</a>
+				<li><a href="${urlCustomers}">Customers</a></li>
+				<li><a href="${urlListExpenses}">Expenses</a></li>
+				<li><a href="${urlDebt}">A/R Summary</a></li>
+<!-- 				<li class="dropdown"> -->
+<!-- 					<a href="#">Reports</a> -->
+<!-- 					<span class="caret"></span> -->
+<!-- 					<ul class="dropdown-menu"> -->
+<%--             			<li><a href="${urlDaily}">Daily Sales</a></li> --%>
+<%--             			<li><a href="${urlMonthly}">Monthly Sales</a></li> --%>
 <%--             			<li><a href="${urlSearch}">Containers Summary</a></li> --%>
 <!--         			</ul> -->
-				</li>
+<!-- 				</li> -->
 			</ul>
 		</div>
 	</div>

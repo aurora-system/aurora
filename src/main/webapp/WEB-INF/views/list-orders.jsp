@@ -3,8 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
 <body>
+<jsp:include page="fragments/header.jsp" />
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -101,6 +101,11 @@
             	"order" : [[ 6, "desc"]]
             	
             });
+            
+            $('#headerNav a').click(function(e) {
+    			$('#headerNav a').removeClass('active');
+    			$(this).addClass('active');
+    		});
         });
     </script>
 

@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.aurora.entity.ContainerCustomerEntity;
+import com.spring.aurora.entity.DebtCustomerEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
@@ -61,13 +66,49 @@ public class ContainerController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listDebts(@RequestParam String cid, Model model) {
        
-        return "list-debts";
+       return "list-debts";
     }
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     public String listAllDebts(Model model) {
-      
-        return "list-debts-all";
+    	List<Customer> customers = customerService.findAll();
+        Map<String, Object> containersMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
+                customer -> {return new ContainerCustomerEntity(
+                        customer.getName(), getSlimTotal(customer.getCustomerId()), getRoundTotal(customer.getCustomerId()));}));
+        model.addAttribute("containersMap", containersMap);
+        
+        return "container-totals";
     }
 
+    public int getSlimTotal (String cid) {
+    	
+    	List<Container> containers = containerService.findAllByCustomerId(cid);
+    	int total = 0;
+    	
+    	for (Container c : containers) {
+    		if (c.getStatus().equalsIgnoreCase("B")) {
+    			total += c.getSlimCount();
+    		} else {
+    			total -= c.getSlimCount();
+    		}
+    	}
+    	
+    	return total;
+    }
+    
+    public int getRoundTotal (String cid) {
+    	
+    	List<Container> containers = containerService.findAllByCustomerId(cid);
+    	int total = 0;
+    	
+    	for (Container c : containers) {
+    		if (c.getStatus().equalsIgnoreCase("B")) {
+    			total += c.getRoundCount();
+    		} else {
+    			total -= c.getRoundCount();
+    		}
+    	}
+    	
+    	return total;
+    }
 }

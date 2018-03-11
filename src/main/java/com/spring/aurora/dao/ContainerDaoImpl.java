@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.aurora.model.Container;
+import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
 
 @Repository
@@ -44,6 +46,13 @@ private static final Logger logger = LoggerFactory.getLogger(ContainerDaoImpl.cl
 		containers = session.createQuery("select c from Container c where c.customerId = :customerId").setParameter("customerId", customerId).list();
 		
 		return containers;
+	}
+
+	@Override
+	public List<Container> findAll() {
+		Session session = sessionFactory.getCurrentSession();
+        List<Container> containers = session.createCriteria(Container.class).list();
+        return containers;
 	}
 	
 	

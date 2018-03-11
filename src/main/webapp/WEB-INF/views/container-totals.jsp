@@ -5,33 +5,33 @@
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
 <body>
-    <div class="container" style="width: 700px">
+    <div class="container" style="width: 800px">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of Customers' debts as of today</p>
+                        <p>Total Balance of Borrowed Containers as of Today</p>
                     </div>
                     <div class="panel-body">
-                        <table id="debtsTable" class="table table-striped table-bordered table-hover">
+                        <table id="containersTable" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Customer</th>
-                                    <th width="100" bgcolor="F7E8D0">Total A/R</th>
-                                    <th width="180">Actions</th>
+                                    <th width="50">Slim Total Balance</th>
+                                    <th width="50">Round Total Balance</th>
+                                    <th width="50">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="entry" items="${debtsMap}">
-                                    <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
-                                    <spring:url value="/payments/new?cid=${entry.key}" var="urlNewPayment" />
-                                    <spring:url value="/debts/list?cid=${entry.key}" var="urlListDebts" />
+                                <c:forEach var="c" items="${containersMap}">
+                                    <spring:url value="/customers/view?customerId=${c.key}" var="urlViewCustomer" />
+                                    <spring:url value="/container/return?cid=${c.key}" var="urlReturnContainer" />
                                     <tr>
-                                        <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
-                                        <td bgcolor="F7E8D0">${entry.value.debtsTotal}</td>
+                                        <td><a href="${urlViewCustomer}">${c.value.customerName}</a></td>
+                                        <td>${c.value.slimTotal}</td>
+                                        <td>${c.value.roundTotal}</td>
                                         <td>
-                                            <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
-                                            <a href="${urlListDebts}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">History</a>
+                                            <a href="${urlReturnContainer}" style="text-align: center;" class="btn btn-default" role="button">Return</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#debtsTable').DataTable()
+            $('#containersTable').DataTable()
         })
     </script>
 </body>

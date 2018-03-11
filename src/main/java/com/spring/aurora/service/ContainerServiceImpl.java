@@ -27,4 +27,9 @@ public class ContainerServiceImpl implements ContainerService {
     public List<Container> findAllByCustomerId(String customerId) {
         return containerDao.findAllByCustomerId(customerId);
     }
+
+	@Override
+	public List<Container> findAll() {
+		return containerDao.findAll();
+	}
 }
