@@ -15,6 +15,7 @@
 <spring:url value="/customers/list" var="urlCustomers" />
 <spring:url value="/debts/listAll" var="urlDebt" />
 <spring:url value="/orders/daily?d=today" var="urlDaily" />
+<spring:url value="/orders/monthly?m=2&y=2018" var="urlMonthly" />
 <spring:url value="/containers" var="urlContainer" />
 <spring:url value="/help" var="urlHelp" />
 
@@ -29,6 +30,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="${urlOrders}">Orders</a></li>
 				<li class="active"><a href="${urlDaily}">Daily Sales</a>
+				<li class="active"><a href="${urlMonthly}">Monthly Summary</a>
 				<li class="active"><a href="${urlCustomers}">Customers</a></li>
 				<li class="active"><a href="${urlListExpenses}">Expenses</a></li>
 				<li class="active"><a href="${urlDebt}">A/R Summary</a>

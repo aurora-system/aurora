@@ -48,35 +48,34 @@
 	                    <table id="myTable" class="table table-striped table-bordered table-hover">
 	                        <thead>
 	                          <tr>
-	                          	<th>DR#</th>
-	                          	<th width="100">Time</th>
 	                            <th width="100">Customer Name</th>
-								<th>Round Delivered</th>
 	                            <th>Slim Delivered</th>
-	                            <th>Price</th>
+	                            <th>Round Delivered</th>
+	                            <th>Slim Returned</th>
+	                            <th>Round Returned</th>
+	                            <th>DR#</th>
 	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th>Slim Returned</th>
-	                            <th>Round Returned</th>
+	                            <th width="100">Date</th>
+	                            
 	                          </tr>
 	                        </thead>
 	                        <tbody>
 	                            <c:forEach var="d" items="${dailySales}">
 	                                <tr>
-	                                	<td>${d.order.deliveryReceiptNum}</td>
-	                                	<td>${d.dateAndTime}</td>
 	                                    <td>${d.customerName}</td>
-	                                    <td>${d.order.roundCount}</td>
 	                                    <td>${d.order.slimCount}</td>
-	                                    <td></td>
+	                                    <td>${d.order.roundCount}</td>
+	                                    <td>${d.order.slimReturned}</td>
+	                                    <td>${d.order.roundReturned}</td>
+	                                    <td>${d.order.deliveryReceiptNum}</td>
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
 	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
 	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
-	                                    <td>${d.order.slimReturned}</td>
-	                                    <td>${d.order.roundReturned}</td>
+	                                    <td>${d.dateAndTime}</td>
 	                                </tr>
 	                            </c:forEach>
 	                        </tbody>
@@ -136,7 +135,6 @@
                 "order": [[ 5, "asc" ]]
             } );
         })
-        
     </script>
 
 </body>
