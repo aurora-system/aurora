@@ -45,6 +45,12 @@
                                 </div>
                             </spring:bind>
                             <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <form:radiobutton path="paymentType" value="CASH"/>Cash &nbsp;
+                                    <form:radiobutton path="paymentType" value="CHECK"/>Check
+                                </div>
+                            </div>
+                            <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
 		                      	    <button type="submit" class="btn btn-primary">Log Payment</button>
 		                        </div>

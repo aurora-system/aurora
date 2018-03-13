@@ -30,6 +30,7 @@ public class PaymentController {
         Payment payment = new Payment();
         payment.setCreatedAt(Date.valueOf(LocalDate.now()));
         payment.setCustomerId(cid);
+        payment.setPaymentType("CASH");
         Customer customer = customerService.view(cid);
         model.addAttribute("payment", payment);
         model.addAttribute("customer", customer);
