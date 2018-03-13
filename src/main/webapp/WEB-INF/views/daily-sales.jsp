@@ -3,10 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/orders/daily" var="dailySalesUrl"/>
 <body>
+	<jsp:include page="fragments/header.jsp" />
     <div class="container">
     	<div class="row">
             <div class="col-lg-12">

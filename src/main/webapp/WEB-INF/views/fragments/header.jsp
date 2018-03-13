@@ -27,13 +27,22 @@
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right" id="headerNav">
-				<li><a href="${urlOrders}">Orders</a></li>
-				<li><a href="${urlDaily}">Daily Sales</a>
-				<li><a href="${urlMonthly}">Monthly Summary</a>
-				<li><a href="${urlContainer}">Container Tracking</a>
 				<li><a href="${urlCustomers}">Customers</a></li>
+				<li><a href="${urlOrders}">Orders</a></li>
 				<li><a href="${urlListExpenses}">Expenses</a></li>
 				<li><a href="${urlDebt}">A/R Summary</a></li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Reports</a>
+					<ul class="dropdown-menu">
+						<li><a href="${urlDaily}">Daily Sales</a></li>
+						<li><a href="${urlMonthly}">Monthly Summary</a></li>
+					</ul>
+				</li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>
+					<ul class="dropdown-menu">
+						<li><a href="${urlContainer}">Total Balances</a></li>
+						<li><a href="${urlContainer}">History</a></li>
+					</ul>
+				</li>
 <!-- 				<li class="dropdown"> -->
 <!-- 					<a href="#">Reports</a> -->
 <!-- 					<span class="caret"></span> -->
