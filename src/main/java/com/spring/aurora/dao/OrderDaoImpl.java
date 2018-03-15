@@ -160,10 +160,15 @@ public class OrderDaoImpl implements OrderDao {
 			drList.add(Integer.valueOf(order.getDeliveryReceiptNum()));
 		}
 
-		Integer temp = Collections.max(drList) + 1;
-		newDrNumber = temp.toString();
+		if (drList == null || drList.size() == 0) {
+			newDrNumber = "";
+		} else {
+			Integer temp = Collections.max(drList) + 1;
+			newDrNumber = temp.toString();
 
-		System.out.println("New DR Number is: " + newDrNumber);
+			System.out.println("New DR Number is: " + newDrNumber);
+		}
+		
 		return newDrNumber;
 	}
 }
