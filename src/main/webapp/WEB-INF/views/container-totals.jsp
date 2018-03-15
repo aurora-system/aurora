@@ -17,8 +17,8 @@
                             <thead>
                                 <tr>
                                     <th>Customer</th>
-                                    <th width="50">Slim Total Balance</th>
                                     <th width="50">Round Total Balance</th>
+                                    <th width="50">Slim Total Balance</th>
                                     <th width="50">Action</th>
                                 </tr>
                             </thead>
@@ -28,8 +28,8 @@
                                     <spring:url value="/container/return?cid=${c.key}" var="urlReturnContainer" />
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${c.value.customerName}</a></td>
-                                        <td>${c.value.slimTotal}</td>
                                         <td>${c.value.roundTotal}</td>
+                                        <td>${c.value.slimTotal}</td>
                                         <td>
                                             <a href="${urlReturnContainer}" style="text-align: center;" class="btn btn-default" role="button">Return</a>
                                         </td>

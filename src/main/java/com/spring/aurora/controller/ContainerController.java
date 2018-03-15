@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -67,6 +68,30 @@ public class ContainerController {
     public String listDebts(@RequestParam String cid, Model model) {
        
        return "list-debts";
+    }
+    
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    public String getHistory(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
+    	
+    	List<ContainerCustomerEntity> cceList = new ArrayList<>();
+    	List<Customer> customerList = customerService.findAll();
+    	int deliveredRoundCount = 0;
+    	int returnedRoundCount = 0;
+    	int deliveredSlimCount = 0;
+    	int returnedSlimCount = 0;
+    	
+    	for (Customer customer : customerList) {
+    		List<Container> containerHistory = containerService.findAllByCustomerId(customer.getCustomerId());
+    		
+    		
+    		for (Container container : containerHistory) {
+    			
+    		}
+    		
+    		//ContainerCustomerEntity cce = new ContainerCustomerEntity(customer.getName(), , roundTotal) 
+    	}
+    	
+    	return "container-history";
     }
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
