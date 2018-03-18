@@ -1,5 +1,6 @@
 package com.spring.aurora.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	public List<Container> findAll() {
 		return containerDao.findAll();
+	}
+
+	@Override
+	public List<Container> findContainerActivityByDate(Date date) {
+		return containerDao.findContainerActivityByDate(date);
 	}
 }

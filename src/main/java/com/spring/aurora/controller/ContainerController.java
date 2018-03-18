@@ -2,6 +2,7 @@ package com.spring.aurora.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -74,28 +75,59 @@ public class ContainerController {
     public String getHistory(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
     	
     	List<ContainerCustomerEntity> cceList = new ArrayList<>();
-    	List<Customer> customerList = customerService.findAll();
-    	int deliveredRoundCount = 0;
-    	int returnedRoundCount = 0;
-    	int deliveredSlimCount = 0;
-    	int returnedSlimCount = 0;
     	
-    	for (Customer customer : customerList) {
-    		List<Container> containerHistory = containerService.findAllByCustomerId(customer.getCustomerId());
+    	Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
+        String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
+        model.addAttribute("datePicked", datePicked);
+        
+        List<Container> containersList = containerService.findContainerActivityByDate(date);
+        
+        System.out.println("Containers List: " + containersList);
+    	
+        List<String> custIds = new ArrayList<>();
+        
+    	for (Container containerActivity : containersList) {
     		
+    		if (!custIds.contains(containerActivity.getCustomerId())) {
+    			custIds.add(containerActivity.getCustomerId());
+    		}
+    	}
+    	
+    	for (String custId : custIds) {
     		
-    		for (Container container : containerHistory) {
-    			
+    		Customer customer = customerService.view(custId);
+    		
+    		int deliveredRoundCount = 0;
+        	int returnedRoundCount = 0;
+        	int deliveredSlimCount = 0;
+        	int returnedSlimCount = 0;
+    		
+    		for (Container container : containersList) {
+    			if (container.getCustomerId().equalsIgnoreCase(custId)) {
+    				
+    				if (container.getStatus().equalsIgnoreCase("B")) {
+    					deliveredRoundCount += container.getRoundCount();
+    					deliveredSlimCount += container.getSlimCount();
+    				} else {
+    					returnedRoundCount += container.getRoundCount();
+    					returnedSlimCount += container.getSlimCount();
+    				}
+    			}
     		}
     		
-    		//ContainerCustomerEntity cce = new ContainerCustomerEntity(customer.getName(), , roundTotal) 
+			ContainerCustomerEntity cce = new ContainerCustomerEntity(customer.getName(), deliveredRoundCount,
+					deliveredSlimCount, returnedRoundCount, returnedSlimCount);
+			
+			cceList.add(cce);
     	}
+    	
+    	model.addAttribute("containerDaily", cceList);
     	
     	return "container-history";
     }
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    public String listAllDebts(Model model) {
+    public String listAllContainers(Model model) {
     	List<Customer> customers = customerService.findAll();
         Map<String, Object> containersMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
                 customer -> {return new ContainerCustomerEntity(

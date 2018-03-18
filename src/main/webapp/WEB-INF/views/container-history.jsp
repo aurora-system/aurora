@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <link href="/resources/css/main.css" rel="stylesheet">
-<spring:url value="/orders/daily" var="dailySalesUrl"/>
+<spring:url value="/container/history" var="containerHistoryUrl"/>
 <body>
 	<jsp:include page="fragments/header.jsp" />
     <div class="container">
@@ -22,7 +22,7 @@
                 
                 <div class="panel panel-info">
                     <div class="panel-body">
-                        <form class="form-horizontal" method="get" action="${dailySalesUrl}">
+                        <form class="form-horizontal" method="get" action="${containerHistoryUrl}">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Date: </label>
                                 <div class="col-sm-3">
@@ -58,11 +58,11 @@
 	                        <tbody>
 	                            <c:forEach var="cd" items="${containerDaily}">
 	                                <tr>
-	                                	<td>${cd.}</td>
-	                                	<td>${cd.}</td>
-	                                	<td>${cd.}</td>
-	                                	<td>${cd.}</td>
-	                                	<td>${cd.}</td>
+	                                	<td>${cd.customerName}</td>
+	                                	<td>${cd.roundTotalDelivered}</td>
+	                                	<td>${cd.slimTotalDelivered}</td>
+	                                	<td>${cd.roundTotalReturned}</td>
+	                                	<td>${cd.slimTotalReturned}</td>
 	                                </tr>
 	                            </c:forEach>
 	                        </tbody>
@@ -76,7 +76,7 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
-                		Totals
+                		Daily Totals
                 	</div>
                 	
                 	 <div class="panel-body">
@@ -87,10 +87,6 @@
 	                            <th>Slim Delivered</th>
 	                            <th>Round Returned</th>
 	                            <th>Slim Returned</th>
-<!-- 	                            <th bgcolor="F7E8D0">A/R</th> -->
-<!-- 	                            <th bgcolor="ECFBEA">Payment</th> -->
-<!-- 	                            <th bgcolor="FBEAEA">Expense</th> -->
-<!-- 	                            <th bgcolor="D0E6F7">Net Cash</th> -->
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -99,10 +95,6 @@
 	                        		<td>${totalRoundDelivered}</td>
 	                        		<td>${totalSlimReturned}</td>
 	                        		<td>${totalRoundReturned}</td>
-	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
-	                        		<td bgcolor="ECFBEA">${totalPayments}</td>
-	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
-	                        		<td bgcolor="D0E6F7">${ar}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
@@ -119,7 +111,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable( {
-                "order": [[ 5, "asc" ]]
+               // "order": [[ 5, "asc" ]]
             } );
         })
         

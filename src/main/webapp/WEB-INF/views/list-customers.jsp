@@ -41,7 +41,7 @@
                             <th>Contact Person</th>
                             <th>Contact Number</th>
 <!--                             <th>Alt Number</th> -->
-                            <th>Actions</th>
+                            <th width="100">Actions</th>
                           </tr>
                         </thead>
                         <tbody>

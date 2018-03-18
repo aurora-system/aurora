@@ -16,7 +16,8 @@
 <spring:url value="/debts/listAll" var="urlDebt" />
 <spring:url value="/orders/daily?d=today" var="urlDaily" />
 <spring:url value="/orders/monthly?m=2&y=2018" var="urlMonthly" />
-<spring:url value="/container/listAll" var="urlContainer" />
+<spring:url value="/container/listAll" var="urlContainerBalance" />
+<spring:url value="/container/history?d=today" var="urlContainerHistory" />
 <spring:url value="/help" var="urlHelp" />
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 
@@ -39,8 +40,8 @@
 				</li>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>
 					<ul class="dropdown-menu">
-						<li><a href="${urlContainer}">Total Balances</a></li>
-						<li><a href="${urlContainer}">History</a></li>
+						<li><a href="${urlContainerBalance}">Total Balances</a></li>
+						<li><a href="${urlContainerHistory}">History</a></li>
 					</ul>
 				</li>
 <!-- 				<li class="dropdown"> -->
