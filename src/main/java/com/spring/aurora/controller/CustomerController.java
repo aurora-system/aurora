@@ -51,16 +51,13 @@ public class CustomerController {
     
     @Autowired
     private ExpenseService expenseService;
-    
-    // Temporarily disabled this while new-order is not yet transferred to order controller
-//    @Autowired
-//    CustomerFormValidator customerFormValidator;
-    
-    //Set a form validator
-//    @InitBinder
-//    protected void initBinder(WebDataBinder binder) {
-//        binder.setValidator(customerFormValidator);
-//    }
+
+    @Autowired
+    CustomerFormValidator customerFormValidator;
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(customerFormValidator);
+    }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchCustomer(Model model) {
@@ -130,7 +127,7 @@ public class CustomerController {
         Customer customer = new Customer();
         customer.setType("Business");
         model.addAttribute("customerForm", customer);
-        model.addAttribute("types",new String[]{" Business "," Residential "});
+        model.addAttribute("types",new String[]{"Business","Residential"});
         return "new-customer";
     }
     
@@ -141,7 +138,7 @@ public class CustomerController {
         Customer customer = new Customer(); 
         customer = customerService.view(customerId);
         model.addAttribute("customerForm", customer);
-        model.addAttribute("types",new String[]{" Business "," Residential"});
+        model.addAttribute("types",new String[]{"Business","Residential"});
         return "edit-customer";
     }
     
@@ -167,6 +164,7 @@ public class CustomerController {
         logger.debug("Save customer.");
         if (result.hasErrors()) {
             //populateDefaultModel(model);
+            model.addAttribute("types", new String[] {"Business","Residential"});
             return "new-customer";
         } else {
             // Add message to flash scope
@@ -174,9 +172,6 @@ public class CustomerController {
             
             customerService.insert(customer);
             redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
-            
-//            	customerService.update(customer);
-//                redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
 
             // POST/REDIRECT/GET
             return "redirect:/customers/list";

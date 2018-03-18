@@ -29,9 +29,9 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Customer type:</label>
                                 <div class="col-sm-9">
-<%--                                     <form:radiobuttons path="type" items="${types}" value="Business"/> --%>
-                                    <form:radiobutton path="type" value="Business" label="Business"/>
-                                    <form:radiobutton path="type" value="Residential" label="Residential"/>
+                                    <form:radiobuttons path="type" items="${types}"/>
+                                    <!--<form:radiobutton path="type" value="Business" label="Business"/>
+                                    <form:radiobutton path="type" value="Residential" label="Residential"/>-->
                                 </div>
                             </div>
                         </spring:bind>
