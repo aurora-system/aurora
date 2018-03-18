@@ -341,7 +341,14 @@ public class OrderController {
     		Debt debtEntry = new Debt();
     		debtEntry.setCustomerId(customerId);
     		debtEntry.setAmount(deficit);
-    		debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
+    		
+    		if (amountPaid == 0) {
+    			debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the customer hasn't paid yet");
+    		} else {
+    			debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
+    		}
+    		
+    		
     		debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
     		debtEntry.setOrderId(orderId);
     		debtService.insert(debtEntry);

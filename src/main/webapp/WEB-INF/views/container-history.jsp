@@ -49,7 +49,7 @@
 	                        <thead>
 	                          <tr>
 	                          	<th width=300>Customer</th>
-	                          	<th width=200>Address</th>
+	                          	<th width=150>Address</th>
 	                          	<th>Delivered Round</th>
 	                          	<th>Delivered Slim</th>
 	                          	<th>Returned Round</th>

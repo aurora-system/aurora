@@ -93,6 +93,11 @@ public class ContainerController {
     		}
     	}
     	
+    	int grandTotalDeliveredRound = 0;
+    	int grandTotalDeliveredSlim = 0;
+    	int grandTotalReturnedRound = 0;
+    	int grandTotalReturnedSlim = 0;
+    	
     	for (String custId : custIds) {
     		
     		Customer customer = customerService.view(custId);
@@ -101,7 +106,7 @@ public class ContainerController {
         	int returnedRoundCount = 0;
         	int deliveredSlimCount = 0;
         	int returnedSlimCount = 0;
-    		
+        	
     		for (Container container : containersList) {
     			if (container.getCustomerId().equalsIgnoreCase(custId)) {
     				
@@ -113,16 +118,26 @@ public class ContainerController {
     					returnedSlimCount += container.getSlimCount();
     				}
     			}
+    			
+    			
     		}
     		
 			ContainerCustomerEntity cce = new ContainerCustomerEntity(customer, deliveredRoundCount,
 					deliveredSlimCount, returnedRoundCount, returnedSlimCount);
 			
+			grandTotalDeliveredRound += deliveredRoundCount;
+			grandTotalDeliveredSlim += deliveredSlimCount;
+			grandTotalReturnedRound += returnedRoundCount;
+			grandTotalReturnedSlim += returnedSlimCount;
+			
 			cceList.add(cce);
     	}
     	
     	model.addAttribute("containerDaily", cceList);
-    	
+    	model.addAttribute("totalRoundDelivered", grandTotalDeliveredRound);
+    	model.addAttribute("totalSlimDelivered", grandTotalDeliveredSlim);
+    	model.addAttribute("totalRoundReturned", grandTotalReturnedRound);
+    	model.addAttribute("totalSlimReturned", grandTotalReturnedSlim);
     	
     	return "container-history";
     }
