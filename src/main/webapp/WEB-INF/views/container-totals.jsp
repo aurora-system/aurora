@@ -27,7 +27,7 @@
                                     <spring:url value="/customers/view?customerId=${c.key}" var="urlViewCustomer" />
                                     <spring:url value="/container/return?cid=${c.key}" var="urlReturnContainer" />
                                     <tr>
-                                        <td><a href="${urlViewCustomer}">${c.value.customerName}</a></td>
+                                        <td><a href="${urlViewCustomer}">${c.value.customer.name}</a></td>
                                         <td>${c.value.roundTotal}</td>
                                         <td>${c.value.slimTotal}</td>
                                         <td>

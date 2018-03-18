@@ -48,7 +48,8 @@
 	                    <table id="myTable" class="table table-striped table-bordered table-hover">
 	                        <thead>
 	                          <tr>
-	                          	<th>Customer</th>
+	                          	<th width=300>Customer</th>
+	                          	<th width=200>Address</th>
 	                          	<th>Delivered Round</th>
 	                          	<th>Delivered Slim</th>
 	                          	<th>Returned Round</th>
@@ -57,8 +58,10 @@
 	                        </thead>
 	                        <tbody>
 	                            <c:forEach var="cd" items="${containerDaily}">
+	                            	<spring:url value="/customers/view?customerId=${c.key}" var="urlViewCustomer" />
 	                                <tr>
-	                                	<td>${cd.customerName}</td>
+	                                	<td><a href="${urlViewCustomer}">${cd.customer.name}</a></td>
+	                                	<td>${cd.customer.address}</td>
 	                                	<td>${cd.roundTotalDelivered}</td>
 	                                	<td>${cd.slimTotalDelivered}</td>
 	                                	<td>${cd.roundTotalReturned}</td>
@@ -83,18 +86,18 @@
                 	 	<table id="myTable" class="table table-striped table-bordered table-hover">
                 	 		<thead>
 	                          <tr>
-								<th>Round Delivered</th>
-	                            <th>Slim Delivered</th>
-	                            <th>Round Returned</th>
-	                            <th>Slim Returned</th>
+								<th>Delivered Round</th>
+	                            <th>Delivered Slim</th>
+	                            <th>Returned Round</th>
+	                            <th>Returned Slim</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
 	                        	<tr>
-	                        		<td>${totalSlimDelivered}</td>
 	                        		<td>${totalRoundDelivered}</td>
-	                        		<td>${totalSlimReturned}</td>
+	                        		<td>${totalSlimDelivered}</td>
 	                        		<td>${totalRoundReturned}</td>
+	                        		<td>${totalSlimReturned}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
@@ -111,7 +114,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable( {
-               // "order": [[ 5, "asc" ]]
+                "order": [[ 0, "asc" ]]
             } );
         })
         

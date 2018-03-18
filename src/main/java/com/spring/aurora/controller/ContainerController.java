@@ -115,13 +115,14 @@ public class ContainerController {
     			}
     		}
     		
-			ContainerCustomerEntity cce = new ContainerCustomerEntity(customer.getName(), deliveredRoundCount,
+			ContainerCustomerEntity cce = new ContainerCustomerEntity(customer, deliveredRoundCount,
 					deliveredSlimCount, returnedRoundCount, returnedSlimCount);
 			
 			cceList.add(cce);
     	}
     	
     	model.addAttribute("containerDaily", cceList);
+    	
     	
     	return "container-history";
     }
@@ -131,7 +132,7 @@ public class ContainerController {
     	List<Customer> customers = customerService.findAll();
         Map<String, Object> containersMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
                 customer -> {return new ContainerCustomerEntity(
-                        customer.getName(), getSlimTotal(customer.getCustomerId()), getRoundTotal(customer.getCustomerId()));}));
+                        customer, getSlimTotal(customer.getCustomerId()), getRoundTotal(customer.getCustomerId()));}));
         model.addAttribute("containersMap", containersMap);
         
         return "container-totals";

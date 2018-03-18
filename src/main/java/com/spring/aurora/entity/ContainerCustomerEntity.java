@@ -1,8 +1,10 @@
 package com.spring.aurora.entity;
 
+import com.spring.aurora.model.Customer;
+
 public class ContainerCustomerEntity {
     
-	private String customerName;
+	private Customer customer;
     private int slimTotal;
     private int roundTotal;
     private int roundTotalDelivered;
@@ -10,30 +12,30 @@ public class ContainerCustomerEntity {
     private int roundTotalReturned;
     private int slimTotalReturned;
 
-    public ContainerCustomerEntity(String customerName, int slimTotal, int roundTotal) {
+    public ContainerCustomerEntity(Customer customer, int slimTotal, int roundTotal) {
 		super();
-		this.customerName = customerName;
+		this.customer = customer;
 		this.slimTotal = slimTotal;
 		this.roundTotal = roundTotal;
 	}
 
-	public ContainerCustomerEntity(String customerName, int roundTotalDelivered, int slimTotalDelivered,
+	public ContainerCustomerEntity(Customer customer, int roundTotalDelivered, int slimTotalDelivered,
 			int roundTotalReturned, int slimTotalReturned) {
 		super();
-		this.customerName = customerName;
+		this.customer = customer;
 		this.roundTotalDelivered = roundTotalDelivered;
 		this.slimTotalDelivered = slimTotalDelivered;
 		this.roundTotalReturned = roundTotalReturned;
 		this.slimTotalReturned = slimTotalReturned;
 	}
 
-	public String getCustomerName() {
-        return customerName;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public int getSlimTotal() {
 		return slimTotal;

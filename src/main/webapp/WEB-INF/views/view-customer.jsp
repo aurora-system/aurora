@@ -61,8 +61,8 @@
 	                            <th>Status</th>
 	                            <th>Amount Paid</th>
 	                            <th>Total Amount</th>
-	                            <th>Slim #</th>
 	                            <th>Round #</th>
+	                            <th>Slim #</th>
 	                            <th>Date</th>
 	                          </tr>
 	                        </thead>
@@ -73,8 +73,8 @@
 	                                    <td>${o.status}</td>
 	                                    <td>${o.amountPaid}</td>
 	                                    <td>${o.totalAmount}</td>
-	                                    <td>${o.slimCount}</td>
 	                                    <td>${o.roundCount}</td>
+	                                    <td>${o.slimCount}</td>
 	                                    <td>${o.createdAt}</td>
 	                                </tr>
 	                            </c:forEach>
@@ -102,16 +102,16 @@
                 	 		<thead>
 	                          <tr>
 	                            <th>Last Order Date</th>
-	                            <th>Total Borrowed Slim</th>
 	                            <th>Total Borrowed Round</th>
+	                            <th>Total Borrowed Slim</th>
 	                            <th>Total Debt</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
 	                        	<tr>
 	                        		<td>${mostRecentOrderDate}</td>
-	                        		<td>${totalBorrowedSlim}</td>
 	                        		<td>${totalBorrowedRound}</td>
+	                        		<td>${totalBorrowedSlim}</td>
 	                        		<td>${totalDebt}</td>
 	                        	</tr>
 	                        </tbody>
