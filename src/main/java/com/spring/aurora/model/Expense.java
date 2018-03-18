@@ -20,7 +20,7 @@ public class Expense {
 
     @Column(name="created_at")
     //@Convert(converter = com.spring.aurora.util.LocalDateAttributeConverter.class)
-    private Date created_at;
+    private Date createdAt;
 
     public String getExpenseId() {
         return expenseId;
@@ -46,11 +46,11 @@ public class Expense {
         this.amount = amount;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

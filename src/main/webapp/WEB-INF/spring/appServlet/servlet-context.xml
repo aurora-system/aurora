@@ -83,5 +83,10 @@
     <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-	    
+
+    <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <beans:property name="basename">
+            <beans:value>validation</beans:value>
+        </beans:property>
+    </beans:bean>
 </beans:beans>

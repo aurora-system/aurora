@@ -2,6 +2,7 @@ package com.spring.aurora.controller;
 
 import com.spring.aurora.model.Expense;
 import com.spring.aurora.service.ExpenseService;
+import com.spring.aurora.util.ExpenseFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,12 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
 
+    @Autowired
+    ExpenseFormValidator expenseFormValidator;
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-
+        binder.setValidator(expenseFormValidator);
     }
 
     @RequestMapping(value = "/expenses", method = RequestMethod.GET)
@@ -41,13 +45,13 @@ public class ExpenseController {
     public String newExpenseForm(Model model) {
         logger.debug("show new expense form.");
         Expense expense = new Expense();
-        expense.setCreated_at(Date.valueOf(LocalDate.now()));
+        expense.setCreatedAt(Date.valueOf(LocalDate.now()));
         model.addAttribute("expense", expense);
         return "new-expense";
     }
 
     @RequestMapping(value = "/expenses/save", method = RequestMethod.POST)
-    public String saveExpense(@ModelAttribute("expense") Expense expense,
+    public String saveExpense(@ModelAttribute("expense") @Validated Expense expense,
                               BindingResult result, Model model,
                               final RedirectAttributes redirect) {
         logger.debug("saving expense");

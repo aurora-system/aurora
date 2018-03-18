@@ -16,12 +16,12 @@
                         <spring:url value="/expenses/save" var="saveExpenseUrl"/>
                         <form:form class="form-horizontal" method="post" modelAttribute="expense" action="${saveExpenseUrl}">
                             <form:hidden path="expenseId"/>
-                            <spring:bind path="created_at">
+                            <spring:bind path="createdAt">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <label class="col-sm-3 control-label">Date: </label>
                                     <div class="col-sm-9">
-                                        <form:input path="created_at" type="date" class="form-control" id="created_at" placeholder="Date"/>
-                                        <form:errors path="created_at" class="control-label"/>
+                                        <form:input path="createdAt" type="date" class="form-control" id="createdAt" placeholder="Date"/>
+                                        <form:errors path="createdAt" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
