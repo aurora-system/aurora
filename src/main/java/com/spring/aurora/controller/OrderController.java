@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -82,9 +83,9 @@ public class OrderController {
         int totalRoundDelivered = 0;
         int totalSlimReturned = 0;
         int totalRoundReturned = 0;
-        Double totalExpenses = 0.0;
-        Double totalPayments = 0.0;
-        Double totalDebt = 0.0;
+        Double totalExpenses = 0.00;
+        Double totalPayments = 0.00;
+        Double totalDebt = 0.00;
         
         List<DailySalesEntity> dseList = new ArrayList<>();
         
@@ -152,11 +153,12 @@ public class OrderController {
         model.addAttribute("totalSlimReturned", totalSlimReturned);
         model.addAttribute("totalRoundReturned", totalRoundReturned);
         
-        model.addAttribute("totalExpenses", totalExpenses);
-        model.addAttribute("totalPayments", totalPayments);
-        model.addAttribute("totalDebt", totalDebt);
+        model.addAttribute("totalExpenses", ReportUtil.applyCurrencyFormat("" + totalExpenses));
+        model.addAttribute("totalPayments", ReportUtil.applyCurrencyFormat("" + totalPayments));
+        model.addAttribute("totalDebt", ReportUtil.applyCurrencyFormat("" + totalDebt));
         
-        model.addAttribute("ar", totalPayments - totalExpenses);
+        double ar = totalPayments - totalExpenses;
+        model.addAttribute("ar", ReportUtil.applyCurrencyFormat("" + ar));
         return "daily-sales";
     }
     
