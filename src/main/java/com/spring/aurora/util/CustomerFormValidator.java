@@ -1,7 +1,7 @@
 package com.spring.aurora.util;
 
 import com.spring.aurora.model.Customer;
-import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,12 +17,9 @@ public class CustomerFormValidator implements Validator {
     @Qualifier("emailValidator")
     EmailValidator emailValidator;
 
-    @Autowired
-    CustomerService customerService;
-
     @Override
     public boolean supports(Class<?> aClass) {
-        return Customer.class.equals(aClass);
+        return Customer.class.equals(aClass) || Order.class.equals(aClass);
     }
 
     @Override

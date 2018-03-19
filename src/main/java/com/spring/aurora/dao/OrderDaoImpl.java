@@ -161,7 +161,7 @@ public class OrderDaoImpl implements OrderDao {
 		}
 
 		if (drList == null || drList.size() == 0) {
-			newDrNumber = "";
+			newDrNumber = "1";
 		} else {
 			Integer temp = Collections.max(drList) + 1;
 			newDrNumber = temp.toString();

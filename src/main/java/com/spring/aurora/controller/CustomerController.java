@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.spring.aurora.util.OrderFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,13 @@ public class CustomerController {
 
     @Autowired
     CustomerFormValidator customerFormValidator;
+    @Autowired
+    OrderFormValidator orderFormValidator;
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(customerFormValidator);
+        //binder.setValidator(customerFormValidator);
+        //change back to setValidator above when the View and New Order button is changed to <a> from <form>
+        binder.addValidators(customerFormValidator, orderFormValidator);
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -70,6 +75,7 @@ public class CustomerController {
     public String listCustomers(Model model) {
         logger.info("List all customers.");
         model.addAttribute("customers", customerService.findAll());
+        //model.addAttribute("orderForm", new Order());
         return "list-customers";
     }
     
@@ -143,7 +149,7 @@ public class CustomerController {
     }
     
     // TODO: Transfer to OrderController
-    @RequestMapping(value = "/neworder", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/neworder", method = RequestMethod.GET)
     public String newOrder(@ModelAttribute(value="customerId") String customerId, Model model) {
         logger.debug("New Order form for customer: " + customerId);
         Order order = new Order();
@@ -156,7 +162,7 @@ public class CustomerController {
         model.addAttribute("customerName", customer.getName());
         return "new-order";
     }
-
+*/
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
                                BindingResult result, Model model,
@@ -186,7 +192,8 @@ public class CustomerController {
         logger.debug("Update customer.");
         if (result.hasErrors()) {
             //populateDefaultModel(model);
-            return "new-customer";
+            model.addAttribute("types", new String[] {"Business","Residential"});
+            return "edit-customer";
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
