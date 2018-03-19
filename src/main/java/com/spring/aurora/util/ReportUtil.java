@@ -60,4 +60,27 @@ public class ReportUtil {
 			return false;
 		}
 	}
+	
+	public static String applyCurrencyFormat (String value) {
+		
+		String[] splitValue = {};
+		splitValue = value.split(".");
+		
+		StringBuffer formattedStr = new StringBuffer();
+		
+		if (splitValue.length == 2) {
+			formattedStr.append(splitValue[0]);
+			if (splitValue[1].length() == 2) {
+				return value;
+			} else if (splitValue[1].length() == 1) {
+				formattedStr.append(".");
+				formattedStr.append(splitValue[1]);
+				formattedStr.append("0");
+			}
+		} else {
+			formattedStr.append(".00");
+		}
+		
+		return formattedStr.toString();
+	}
 }
