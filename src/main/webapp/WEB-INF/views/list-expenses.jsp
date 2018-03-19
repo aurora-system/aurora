@@ -57,7 +57,7 @@
                             <tbody>
                                 <c:forEach var="exp" items="${expenses}">
                                     <tr>
-                                        <td>${exp.created_at}</td>
+                                        <td>${exp.createdAt}</td>
                                         <td>${exp.description}</td>
                                         <td>${exp.amount}</td>
                                     </tr>

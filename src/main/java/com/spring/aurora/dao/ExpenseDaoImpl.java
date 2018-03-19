@@ -36,7 +36,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
     public List<Expense> findAllByDate(Date date) {
         Session session = sessionFactory.getCurrentSession();
         List<Expense> expenses = session.createCriteria(Expense.class)
-                .add(Restrictions.eq("created_at", date)).list();
+                .add(Restrictions.eq("createdAt", date)).list();
         return expenses;
     }
 }

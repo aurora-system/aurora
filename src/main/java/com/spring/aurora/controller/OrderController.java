@@ -1,52 +1,44 @@
 package com.spring.aurora.controller;
 
+import com.spring.aurora.entity.DailySalesEntity;
+import com.spring.aurora.entity.DailyTotalsEntity;
+import com.spring.aurora.entity.OrderCustomerEntity;
+import com.spring.aurora.model.*;
+import com.spring.aurora.service.*;
+import com.spring.aurora.util.OrderFormValidator;
+import com.spring.aurora.util.ReportUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.IsolationLevelDataSourceAdapter;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.spring.aurora.entity.DailySalesEntity;
-import com.spring.aurora.entity.DailyTotalsEntity;
-import com.spring.aurora.entity.OrderCustomerEntity;
-import com.spring.aurora.model.Container;
-import com.spring.aurora.model.Customer;
-import com.spring.aurora.model.Debt;
-import com.spring.aurora.model.Expense;
-import com.spring.aurora.model.Order;
-import com.spring.aurora.model.Payment;
-import com.spring.aurora.service.ContainerService;
-import com.spring.aurora.service.CustomerService;
-import com.spring.aurora.service.DebtService;
-import com.spring.aurora.service.ExpenseService;
-import com.spring.aurora.service.OrderService;
-import com.spring.aurora.service.PaymentService;
-import com.spring.aurora.util.ReportUtil;
 
 @Controller
 @RequestMapping(value = "/orders")
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
-    @Autowired
+	@Autowired
+	OrderFormValidator orderFormValidator;
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(orderFormValidator);
+	}
+
+	@Autowired
     private OrderService orderService;
     
     @Autowired
@@ -67,8 +59,22 @@ public class OrderController {
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
-    
-    @RequestMapping(value = "/daily", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/neworder", method = RequestMethod.GET)
+	public String newOrder(@RequestParam String customerId, Model model) {
+		logger.debug("New Order form for customer: " + customerId);
+		Order order = new Order();
+		order.setCustomerId(customerId);
+		model.addAttribute("orderForm", order);
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+
+		Customer customer = customerService.view(customerId);
+		model.addAttribute("customerName", customer.getName());
+		return "new-order";
+	}
+
+	@RequestMapping(value = "/daily", method = RequestMethod.GET)
     public String dailySales(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
         logger.info("Daily sales report.");
         
@@ -301,7 +307,11 @@ public class OrderController {
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Save order.");
         if (result.hasErrors()) {
-            //populateDefaultModel(model);
+            model.addAttribute("customerId", order.getCustomerId());
+            model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+
+            Customer customer = customerService.view(order.getCustomerId());
+            model.addAttribute("customerName", customer.getName());
             return "new-order";
         } else {
             // Add message to flash scope
@@ -321,7 +331,7 @@ public class OrderController {
             //saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
             
             // POST/REDIRECT/GET
-            return "redirect:/customers/list";
+            return "redirect:/orders/list";
             //return "redirect:/customers/" + customer.getCustomerId();
         }
     }

@@ -14,7 +14,7 @@
                 </div>
                 <div class="panel-body">
                     <spring:url value="/orders/save" var="saveOrderUrl"/>
-                    <form:form class="form-horizontal" action="${saveOrderUrl}" method="post" modelAttribute="orderForm">
+                    <form:form class="form-horizontal" action="${saveOrderUrl}" method="post" modelAttribute="orderForm" id="orderForm">
                         <form:hidden path="orderId"/>
 <%--                         <spring:bind path="name"> --%>
 <%--                             <div class="form-group ${status.error ? 'has-error' : ''}"> --%>
@@ -38,17 +38,18 @@
 <%--                         </spring:bind> --%>
 
 						<spring:bind path="deliveryReceiptNum">
-                            <div class="form-group">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" placeholder="${newDrNumber}" disabled="true"/>
+                                    <input name="deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${newDrNumber}" disabled="true"/>
+                                    <%--<form:input path="deliveryReceiptNum" type="hidden" class="form-control" value="${newDrNumber}" />--%>
                                     <form:errors path="deliveryReceiptNum" class="control-label"/>
                                 </div>
                             </div>
                         </spring:bind>
 
                         <spring:bind path="amountPaid">
-                            <div class="form-group">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Amount Paid:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"/>
@@ -58,7 +59,7 @@
                         </spring:bind>
                         
                         <spring:bind path="totalAmount">
-                            <div class="form-group">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Total Amount:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="totalAmount" type="text" class="form-control" id="totalAmount" placeholder="Total Amount"/>
@@ -158,6 +159,9 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable()
+            $('#orderForm').on('submit', () => {
+                $('#deliveryReceiptNum').prop('disabled', false);
+            })
         })
     </script>
 

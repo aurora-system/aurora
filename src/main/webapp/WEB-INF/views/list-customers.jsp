@@ -63,11 +63,11 @@
 											<input type="hidden" name=customerId value=${c.customerId}> 
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
-										
-										<form action="neworder" method="get" style="display: inline-block;">
+										<spring:url value="/orders/neworder" var="newOrderUrl"/>
+										<form action="${newOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=customerId value=${c.customerId}> 
-											<input class="btn btn-default" type="submit" value="New Order">
+											<input type="hidden" name="customerId" value="${c.customerId}"/> 
+											<input class="btn btn-default" type="submit" value="New Order"/>
 										</form>
 									</td>
                                 </tr>

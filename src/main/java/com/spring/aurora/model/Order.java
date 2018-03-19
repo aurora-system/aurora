@@ -142,7 +142,7 @@ public class Order {
 	}
 
 	public boolean isNew() {
-		return (this.orderId == null);
+		return (this.orderId == null || this.orderId.isEmpty());
 	}
 
 	public String getRemarks() {
