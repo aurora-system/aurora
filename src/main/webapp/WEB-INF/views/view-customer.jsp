@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
-<spring:url value="/customers/neworder" var="urlNewOrder" />
+<spring:url value="/orders/neworder" var="urlNewOrder" />
 <spring:url value="/payments/new" var="urlNewPayment" />
 <spring:url value="/debts/new" var="urlNewDebt" />
 <spring:url value="/customers/edit" var="urlEditCustomer" />
@@ -17,7 +17,7 @@
             <c:if test="${not empty msg}">
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">X—</span>
+                        <span aria-hidden="true">Xï¿½</span>
                     </button>
                     <strong>${msg}</strong>
                 </div>
