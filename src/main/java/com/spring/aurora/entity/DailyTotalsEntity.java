@@ -6,6 +6,7 @@ public class DailyTotalsEntity {
 
 	private Date date;
 	private Double totalCash;
+	private Double totalAr;
 	private Double totalExpenses;
 	private Double totalPayments;
 	private int totalDeliveredRound;
@@ -23,6 +24,12 @@ public class DailyTotalsEntity {
 	}
 	public void setTotalCash(Double totalCash) {
 		this.totalCash = totalCash;
+	}
+	public Double getTotalAr() {
+		return totalAr;
+	}
+	public void setTotalAr(Double totalAr) {
+		this.totalAr = totalAr;
 	}
 	public Double getTotalExpenses() {
 		return totalExpenses;

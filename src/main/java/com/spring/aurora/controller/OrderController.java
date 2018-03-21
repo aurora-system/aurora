@@ -31,6 +31,8 @@ import java.util.List;
 @RequestMapping(value = "/orders")
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+    
+    private static DecimalFormat df2 = new DecimalFormat("#.00");
 
 	@Autowired
 	OrderFormValidator orderFormValidator;
@@ -110,9 +112,10 @@ public class OrderController {
             	totalSlimReturned += o.getSlimReturned();
             	totalRoundReturned += o.getRoundReturned();
             	
+            	
             	Double debt = o.getTotalAmount() - o.getAmountPaid();
             	totalDebt += debt;
-            	dse.setBalanceAmount(debt);
+            	dse.setBalanceAmount(Double.parseDouble(df2.format(debt)));
             	
             	Timestamp dateTime = o.getCreatedAt();
             	String formattedDate = new SimpleDateFormat("h:mm a").format(dateTime);
@@ -130,7 +133,7 @@ public class OrderController {
         	DailySalesEntity dse = new DailySalesEntity();
         	dse.setRemarks(e.getDescription());
         	totalExpenses += e.getAmount();
-        	dse.setExpenseAmount(e.getAmount());
+        	dse.setExpenseAmount(Double.parseDouble(df2.format(e.getAmount())));
         	dseList.add(dse);
         }
         
@@ -142,7 +145,7 @@ public class OrderController {
         	dse.setCustomerName(customerService.view(p.getCustomerId()).getName());
         	dse.setRemarks(p.getRemarks());
         	totalPayments += p.getAmount();
-        	dse.setPaidAmount(p.getAmount());
+        	dse.setPaidAmount(Double.parseDouble(df2.format(p.getAmount())));
         	dseList.add(dse);
         }
         
@@ -163,15 +166,46 @@ public class OrderController {
     }
     
 	@RequestMapping(value = "/monthly", method = RequestMethod.GET)
-	public String monthlyTotals(Model model, @RequestParam(value = "m", required = false) String m,
-			@RequestParam(value = "y", required = false) String y) {
+	public String monthlyTotals(Model model, @RequestParam(value = "d", required = false) String datePicked) {
 		
 		List<DailyTotalsEntity> dteList = new ArrayList<>();
 		int days = 31;
+		String m = "";
+		String y = "";
+		
+		Double grandTotalCash = 0.00;
+		Double grandTotalAr = 0.00;
+		Double grandTotalPayment = 0.00;
+		Double grandTotalExpense = 0.00;
+		int grandTotalRound = 0;
+		int grandTotalSlim = 0;
+		int grandTotalContainers = 0;
+		
+		if (datePicked == null || datePicked.equalsIgnoreCase("today")) {
+			
+			LocalDateTime now = LocalDateTime.now();
+			
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			
+			System.out.println(month);
+			System.out.println(year);
+			
+			if (month<10) {
+				m = "0" + month;
+			} else {
+				m = "" + month;
+			}
+			
+			y = "" + year;
+		} else {
+			String[] splitDate = datePicked.split("-");
+			m = splitDate[0];
+			y = splitDate[1];
+		}
 		
 		if (Integer.valueOf(m) % 2 == 0) {
 			if (Integer.valueOf(m) == 2) {
-				
 				if (ReportUtil.isLeapYear(Integer.parseInt(y))) {
 					days = 29;
 				} else {
@@ -183,12 +217,12 @@ public class OrderController {
 		}
 		
 		for (int i = 1; i <= days; i++) {
-//			String dateStr = y + "-" + m + "-" + i;
 			
 			DailyTotalsEntity dte = new DailyTotalsEntity();
-			Double totalCash = 0.0;
-			Double totalPayment = 0.0;
-			Double totalExpense = 0.0;
+			Double totalCash = 0.00;
+			Double totalAr = 0.00;
+			Double totalPayment = 0.00;
+			Double totalExpense = 0.00;
 			int totalRoundDelivered = 0;
 			int totalSlimDelivered = 0;
 			
@@ -201,19 +235,15 @@ public class OrderController {
 				day = "" + i;
 			}
 			
-			if (Integer.parseInt(m)<10) {
-				month = "0" + m;
-			} else {
-				month = "" + m;
-			}
+			month = "" + m;
 			
 			String dateStr = y + "-" + month + "-" + day;
 			Date date = (Date.valueOf(LocalDate.parse(dateStr)));
 			List<Order> orderList = orderService.findAllOrdersToday(date);
-			System.out.println("Date: " + date + " : " + orderList.size());
 			
 			for (Order o : orderList) {
 				totalCash += o.getAmountPaid();
+				totalAr += (o.getTotalAmount() - o.getAmountPaid());
 			}
 			
 			totalPayment = ReportUtil.getPaymentTotal(paymentService.findAllByDate(date));
@@ -223,16 +253,34 @@ public class OrderController {
 
 			dte.setDate(date);
 			dte.setTotalCash(totalCash);
+			dte.setTotalAr(totalAr);
 			dte.setTotalPayments(totalPayment);
 			dte.setTotalExpenses(totalExpense);
 			dte.setTotalDeliveredRound(totalRoundDelivered);
 			dte.setTotalDeliveredSlim(totalSlimDelivered);
 			dte.setTotalDeliveredContainers(totalRoundDelivered + totalSlimDelivered);
 			
+			grandTotalCash += totalCash;
+			grandTotalAr += totalAr;
+			grandTotalPayment += totalPayment;
+			grandTotalExpense += totalExpense;
+			grandTotalRound += totalRoundDelivered;
+			grandTotalSlim += totalSlimDelivered;
 			dteList.add(dte);
 		}
 		
+		grandTotalContainers = grandTotalRound + grandTotalSlim;
+		
 		model.addAttribute("dailyTotals", dteList);
+		model.addAttribute("grandTotalCash", grandTotalCash);
+		model.addAttribute("grandTotalAr", grandTotalAr);
+		model.addAttribute("grandTotalPayment", grandTotalPayment);
+		model.addAttribute("grandTotalExpense", grandTotalExpense);
+		model.addAttribute("grandTotalRound", grandTotalRound);
+		model.addAttribute("grandTotalSlim", grandTotalSlim);
+		model.addAttribute("grandTotalContainers", grandTotalContainers);
+		
+		model.addAttribute("monthYear", m + " " + y);
     	return "monthly-totals";
     }
     

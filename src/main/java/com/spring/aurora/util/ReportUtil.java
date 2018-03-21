@@ -63,13 +63,10 @@ public class ReportUtil {
 	
 	public static String applyCurrencyFormat (String value) {
 		
-		System.out.println("Original value: " + value);
 		String[] splitValue = value.split("\\.");
 		
 		StringBuffer formattedStr = new StringBuffer();
-		System.out.println("0: " + splitValue[0]);
-		System.out.println("1: " + splitValue[1]);
-		System.out.println("Length: " + splitValue.length);
+
 		if (splitValue.length == 2) {
 			
 			formattedStr.append(splitValue[0]);
@@ -84,7 +81,6 @@ public class ReportUtil {
 			formattedStr.append(".00");
 		}
 		
-		System.out.println("Formatted: " + formattedStr.toString());
 		return formattedStr.toString();
 	}
 }
