@@ -11,6 +11,7 @@ CREATE TABLE `aurora`.`customer` (
   `main_number` VARCHAR(45) NULL,
   `alternate_number` VARCHAR(45) NULL,
   `email_address` VARCHAR(45) NULL,
+  `order_interval` INT NULL,
   PRIMARY KEY (`customer_id`))
 COMMENT = 'Customer details';
 
