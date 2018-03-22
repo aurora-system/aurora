@@ -9,6 +9,9 @@ import com.spring.aurora.util.CustomerFormValidator;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +64,7 @@ public class CustomerController {
     protected void initBinder(WebDataBinder binder) {
         //binder.setValidator(customerFormValidator);
         //change back to setValidator above when the View and New Order button is changed to <a> from <form>
-        binder.addValidators(customerFormValidator, orderFormValidator);
+        //binder.addValidators(customerFormValidator, orderFormValidator);
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -86,10 +89,26 @@ public class CustomerController {
         List<Order> orderList = new ArrayList<>();
         orderList = orderService.findAllByCustomerId(customerId);
         
-        model.addAttribute("customer", customerService.view(customerId));
+        Customer customer = customerService.view(customerId);
+        
+        model.addAttribute("customer", customer);
         model.addAttribute("orders", orderList);
         
         Timestamp mostRecentOd = orderService.getMostRecentOrderDate(customerId);
+        
+        if (mostRecentOd != null) {
+        	LocalDate dueDate = mostRecentOd.toLocalDateTime().toLocalDate();
+            dueDate = dueDate.plusDays(customer.getOrderInterval());
+            Date dueDateConverted = Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            String formattedDueDate = new SimpleDateFormat("MMM dd YYYY").format(dueDateConverted);
+            long daysBeforeDueDate = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+            
+            model.addAttribute("dueDate", formattedDueDate);
+            model.addAttribute("daysBeforeDueDate", daysBeforeDueDate);
+        } else {
+        	model.addAttribute("dueDate", "N/A");
+        	model.addAttribute("daysBeforeDueDate", 0);
+        }
         
         if (mostRecentOd != null) {
         	Date date = new Date();
@@ -163,6 +182,17 @@ public class CustomerController {
         return "new-order";
     }
 */
+    
+    @RequestMapping(value = "/duedates", method = RequestMethod.GET)
+    public String viewDueDates(Model model) {
+        
+    	logger.info("List all customers.");
+        
+        model.addAttribute("customers", customerService.findAll());
+        
+        return "list-duedates";
+    }
+    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
                                BindingResult result, Model model,

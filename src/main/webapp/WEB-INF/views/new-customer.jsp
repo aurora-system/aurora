@@ -80,6 +80,15 @@
                                 </div>
                             </div>
                         </spring:bind>
+                        <spring:bind path="orderInterval">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <label class="col-sm-3 control-label">Order Interval: </label>
+                                <div class="col-sm-9">
+                                    <form:input path="orderInterval" type="text" class="form-control" id="orderInterval" placeholder="Number of days"/>
+                                    <form:errors path="orderInterval" class="control-label"/>
+                                </div>
+                            </div>
+                        </spring:bind>
                         <div class="col-sm-offset-3 col-sm-9"><button type="submit" class="btn btn-primary">Submit</button></div>
                     </form:form>
                 </div>

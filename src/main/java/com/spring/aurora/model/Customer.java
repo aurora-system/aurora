@@ -36,6 +36,9 @@ public class Customer {
 	
 	@Column(name="email_address")
 	private String emailAddress;
+	
+	@Column(name="order_interval")
+	private int orderInterval;
 
 	public String getCustomerId() {
 		return customerId;
@@ -99,6 +102,14 @@ public class Customer {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+	
+	public int getOrderInterval() {
+		return orderInterval;
+	}
+
+	public void setOrderInterval(int orderInterval) {
+		this.orderInterval = orderInterval;
 	}
 
 	public boolean isNew() {

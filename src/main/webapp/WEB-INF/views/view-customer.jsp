@@ -38,7 +38,7 @@
                     <p><b>Main number:</b> ${customer.mainNumber}</p>
                     <p><b>Alternate number:</b> ${customer.alternateNumber}</p>
 					<p><b>Email Address:</b> ${customer.emailAddress}</p>
-					
+					<span class="label label-danger pull-right"><h6>Due in ${daysBeforeDueDate} days</h6></span>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 	                        <thead>
 	                          <tr>
 	                            <th>Delivery Receipt #</th>
-	                            <th>Status</th>
+	                            <th width="50">Status</th>
 	                            <th>Amount Paid</th>
 	                            <th>Total Amount</th>
 	                            <th>Round #</th>
@@ -70,7 +70,7 @@
 	                            <c:forEach var="o" items="${orders}">
 	                                <tr>
 	                                    <td>${o.deliveryReceiptNum}</td>
-	                                    <td>${o.status}</td>
+	                                    <td><center><span class="label label-primary">${o.status}</span></center></td>
 	                                    <td>${o.amountPaid}</td>
 	                                    <td>${o.totalAmount}</td>
 	                                    <td>${o.roundCount}</td>
@@ -102,14 +102,16 @@
                 	 		<thead>
 	                          <tr>
 	                            <th>Last Order Date</th>
+	                            <th>Due Date</th>
 	                            <th>Total Borrowed Round</th>
 	                            <th>Total Borrowed Slim</th>
-	                            <th>Total Debt</th>
+	                            <th>Total A/R</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
 	                        	<tr>
 	                        		<td>${mostRecentOrderDate}</td>
+	                        		<td>${dueDate}</td>
 	                        		<td>${totalBorrowedRound}</td>
 	                        		<td>${totalBorrowedSlim}</td>
 	                        		<td>${totalDebt}</td>
