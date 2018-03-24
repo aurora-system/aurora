@@ -13,6 +13,7 @@
 <spring:url value="/orders/list" var="urlOrders" />
 <spring:url value="/reports" var="urlReports" />
 <spring:url value="/customers/list" var="urlCustomers" />
+<spring:url value="/customers/duedates" var="urlDueDates" />
 <spring:url value="/debts/listAll" var="urlDebt" />
 <spring:url value="/orders/daily?d=today" var="urlDaily" />
 <spring:url value="/orders/daily?d=today" var="urlDaily" />
@@ -37,6 +38,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="${urlDaily}">Daily Sales</a></li>
 						<li><a href="${urlMonthly}">Monthly Summary</a></li>
+						<li><a href="${urlDueDates}">Due Dates</a></li>
 					</ul>
 				</li>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>

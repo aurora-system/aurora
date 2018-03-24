@@ -130,6 +130,9 @@
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable( {
