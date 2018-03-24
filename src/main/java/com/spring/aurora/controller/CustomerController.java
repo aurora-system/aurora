@@ -1,5 +1,6 @@
 package com.spring.aurora.controller;
 
+import com.spring.aurora.entity.CustomerDueDateEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
@@ -186,9 +187,21 @@ public class CustomerController {
     @RequestMapping(value = "/duedates", method = RequestMethod.GET)
     public String viewDueDates(Model model) {
         
-    	logger.info("List all customers.");
-        
-        model.addAttribute("customers", customerService.findAll());
+    	logger.info("List all due dates.");
+    	List<CustomerDueDateEntity> cddList = new ArrayList<>();
+    	List<Customer> customerList = customerService.findAll();
+    	
+    	for (Customer c : customerList) {
+    		
+    		LocalDate lastOrderDate = orderService.getMostRecentOrderDate(c.getCustomerId()).toLocalDateTime().toLocalDate();
+    		LocalDate dueDate = lastOrderDate.plusDays(c.getOrderInterval());
+    		long daysRemaining = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+    		
+    		CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, lastOrderDate, dueDate, daysRemaining);
+    		cddList.add(cdd);
+    	}
+    	
+        model.addAttribute("dueDates", cddList);
         
         return "list-duedates";
     }

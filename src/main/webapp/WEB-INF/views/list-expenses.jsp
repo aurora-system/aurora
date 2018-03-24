@@ -38,12 +38,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <p>List of expenses for ${date}.</p>
-                        <p>Running Total: ${expensesTotal}.
-                            <spring:url value="/expenses/new" var="newExpenseUrl"/>
+                    <div class="panel-heading" style="padding-bottom: 20px;">
+                        <p style="margin-bottom: 0px;">List of expenses for ${date}.</p>
+                        <spring:url value="/expenses/new" var="newExpenseUrl"/>
                             <a href="${newExpenseUrl}" class="btn btn-default pull-right" role="button">Add Expense</a>
-                        </p>
+                        <div class="label label-danger" >Running Total: ${expensesTotal}</div>
                     </div>
                     <div class="panel-body">
                         <table id="expensesTable" class="table table-striped table-bordered table-hover">
