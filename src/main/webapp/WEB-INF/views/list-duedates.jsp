@@ -26,13 +26,14 @@
                             <tbody>
                                 <c:forEach var="c" items="${dueDates}">
                                     <spring:url value="/customers/view?customerId=${c.customer.customerId}" var="urlViewCustomer" />
+                                    <spring:url value="/orders/neworder?customerId=${c.customer.customerId}" var="newOrderUrl"/>
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${c.customer.name}</a></td>
                                         <td>${c.lastOrderDate}</td>
                                         <td>${c.dueDate}</td>
                                         <td>${c.daysRemaining}</td>
                                         <td>
-                                            <a href="${urlReturnContainer}" style="text-align: center;" class="btn btn-default" role="button">New Order</a>
+                                            <a href="${newOrderUrl}" style="text-align: center;" class="btn btn-default" role="button">New Order</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

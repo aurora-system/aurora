@@ -17,7 +17,8 @@ public class DailySalesEntity {
 	private Expense expense;
 	private String customerName;
 	private Double expenseAmount;
-	private Double paidAmount;
+	private Double paidCash;
+	private Double paidCheck;
 	private Double balanceAmount;
 	private String remarks;
 	private String dateAndTime;
@@ -70,11 +71,17 @@ public class DailySalesEntity {
 	public void setExpenseAmount(Double expenseAmount) {
 		this.expenseAmount = expenseAmount;
 	}
-	public Double getPaidAmount() {
-		return paidAmount;
+	public Double getPaidCash() {
+		return paidCash;
 	}
-	public void setPaidAmount(Double paidAmount) {
-		this.paidAmount = paidAmount;
+	public void setPaidCash(Double paidCash) {
+		this.paidCash = paidCash;
+	}
+	public Double getPaidCheck() {
+		return paidCheck;
+	}
+	public void setPaidCheck(Double paidCheck) {
+		this.paidCheck = paidCheck;
 	}
 	public Double getBalanceAmount() {
 		return balanceAmount;

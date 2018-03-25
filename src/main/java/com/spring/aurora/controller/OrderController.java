@@ -86,7 +86,8 @@ public class OrderController {
         int totalSlimReturned = 0;
         int totalRoundReturned = 0;
         Double totalExpenses = 0.00;
-        Double totalPayments = 0.00;
+        Double totalCashPayments = 0.00;
+        Double totalCheckPayments = 0.00;
         Double totalDebt = 0.00;
         
         List<DailySalesEntity> dseList = new ArrayList<>();
@@ -104,8 +105,8 @@ public class OrderController {
             	
             	Customer c = customerService.view(o.getCustomerId());
             	dse.setCustomerName(c.getName());
-            	totalPayments += o.getAmountPaid();
-            	dse.setPaidAmount(o.getAmountPaid());
+            	totalCashPayments += o.getAmountPaid();
+            	dse.setPaidCash(o.getAmountPaid());
             	
             	totalSlimDelivered += o.getSlimCount();
             	totalRoundDelivered += o.getRoundCount();
@@ -113,9 +114,9 @@ public class OrderController {
             	totalRoundReturned += o.getRoundReturned();
             	
             	
-            	Double debt = o.getTotalAmount() - o.getAmountPaid();
-            	totalDebt += debt;
-            	dse.setBalanceAmount(Double.parseDouble(df2.format(debt)));
+            	Double ar = o.getTotalAmount() - o.getAmountPaid();
+            	totalDebt += ar;
+            	dse.setBalanceAmount(Double.parseDouble(df2.format(ar)));
             	
             	Timestamp dateTime = o.getCreatedAt();
             	String formattedDate = new SimpleDateFormat("h:mm a").format(dateTime);
@@ -144,8 +145,14 @@ public class OrderController {
         	DailySalesEntity dse = new DailySalesEntity();
         	dse.setCustomerName(customerService.view(p.getCustomerId()).getName());
         	dse.setRemarks(p.getRemarks());
-        	totalPayments += p.getAmount();
-        	dse.setPaidAmount(Double.parseDouble(df2.format(p.getAmount())));
+        	
+        	if (p.getPaymentType().equalsIgnoreCase("CASH")) {
+        		dse.setPaidCash(Double.parseDouble(df2.format(p.getAmount())));
+        		totalCashPayments += p.getAmount();
+        	} else {
+        		dse.setPaidCheck(Double.parseDouble(df2.format(p.getAmount())));
+        		totalCheckPayments += p.getAmount();
+        	}
         	dseList.add(dse);
         }
         
@@ -157,11 +164,12 @@ public class OrderController {
         model.addAttribute("totalRoundReturned", totalRoundReturned);
         
         model.addAttribute("totalExpenses", ReportUtil.applyCurrencyFormat("" + totalExpenses));
-        model.addAttribute("totalPayments", ReportUtil.applyCurrencyFormat("" + totalPayments));
+        model.addAttribute("totalCashPayments", ReportUtil.applyCurrencyFormat("" + totalCashPayments));
+        model.addAttribute("totalCheckPayments", ReportUtil.applyCurrencyFormat("" + totalCheckPayments));
         model.addAttribute("totalDebt", ReportUtil.applyCurrencyFormat("" + totalDebt));
         
-        double ar = totalPayments - totalExpenses;
-        model.addAttribute("ar", ReportUtil.applyCurrencyFormat("" + ar));
+        double netCash = totalCashPayments - totalExpenses;
+        model.addAttribute("netCash", ReportUtil.applyCurrencyFormat("" + netCash));
         return "daily-sales";
     }
     
@@ -342,6 +350,8 @@ public class OrderController {
         	
         	order = orderService.findOrderByOrderId(orderId);
         	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+        	
+        	// Get OrderProduct.quantity if type slim/round
         	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
         	
         	orderService.setToDelivered(orderId);

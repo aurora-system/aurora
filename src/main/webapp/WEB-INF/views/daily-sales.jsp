@@ -50,16 +50,17 @@
 	                          <tr>
 	                          	<th>DR#</th>
 	                          	<th width="100">Time</th>
-	                            <th width="100">Customer Name</th>
-								<th>Round Delivered</th>
-	                            <th>Slim Delivered</th>
+	                            <th width="100">Customer</th>
+								<th>RD</th>
+	                            <th>SD</th>
 	                            <th>Price</th>
 	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
-	                            <th bgcolor="ECFBEA">Payment</th>
+	                            <th bgcolor="ECFBEA">Cash</th>
+	                            <th bgcolor="BBC2FB">Check</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th>Slim Returned</th>
-	                            <th>Round Returned</th>
+	                            <th>RR</th>
+	                            <th>SR</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -73,10 +74,11 @@
 	                                    <td></td>
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
-	                                    <td bgcolor="ECFBEA">${d.paidAmount}</td>
+	                                    <td bgcolor="ECFBEA">${d.paidCash}</td>
+	                                    <td bgcolor="BBC2FB">${d.paidCheck}</td>
 	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
-	                                    <td>${d.order.slimReturned}</td>
 	                                    <td>${d.order.roundReturned}</td>
+	                                    <td>${d.order.slimReturned}</td>
 	                                </tr>
 	                            </c:forEach>
 	                        </tbody>
@@ -102,8 +104,10 @@
 	                            <th>Slim Returned</th>
 	                            <th>Round Returned</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
-	                            <th bgcolor="ECFBEA">Payment</th>
+	                            <th bgcolor="ECFBEA">Cash Payment</th>
+	                            <th bgcolor="BBC2FB">Check Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="F7E8D0">Net A/R</th>
 	                            <th bgcolor="D0E6F7">Net Cash</th>
 	                          </tr>
 	                        </thead>
@@ -114,9 +118,11 @@
 	                        		<td>${totalSlimReturned}</td>
 	                        		<td>${totalRoundReturned}</td>
 	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
-	                        		<td bgcolor="ECFBEA">${totalPayments}</td>
+	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
+	                        		<td bgcolor="BBC2FB">${totalCheckPayments}</td>
 	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
-	                        		<td bgcolor="D0E6F7">${ar}</td>
+	                        		<td bgcolor="F7E8D0">A/R - Payments</td>
+	                        		<td bgcolor="D0E6F7">${netCash}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
@@ -124,6 +130,11 @@
                 </div>
     		</div>
     	</div>
+    	
+    	<span class="label label-default">RD - Round Delivered</span>
+    	<span class="label label-default">SD - Slim Delivered</span>
+    	<span class="label label-default">RR - Round Returned</span>
+    	<span class="label label-default">SR - Round Returned</span>
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
