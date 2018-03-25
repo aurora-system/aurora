@@ -2,6 +2,7 @@ package com.spring.aurora.controller;
 
 import com.spring.aurora.model.Product;
 import com.spring.aurora.service.ProductService;
+import com.spring.aurora.util.ProductFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired private ProductService productService;
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    ProductFormValidator productFormValidator;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAll(Model model) {
@@ -35,23 +42,27 @@ public class ProductController {
         return productService.findAll();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String addNewProductForm(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
         return "new-product";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveNewProductForm(@ModelAttribute("product") Product product,
                                      BindingResult result, Model model,
                                      final RedirectAttributes redirect){
+        productFormValidator.validate(product, result);
         if (result.hasErrors()) {
             return "new-product";
         } else {
-            redirect.addFlashAttribute("msg", "Payment logged successfully!");
+            redirect.addFlashAttribute("msg", "Product added successfully!");
         }
-        productService.saveOrUpdate(product);
+        product.setInitialPrice(product.getSellingPrice());
+        product.setCreatedAt(Date.valueOf(LocalDate.now()));
+        product.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        productService.save(product);
         return "redirect:/products/list";
     }
 }

@@ -5,6 +5,7 @@ import com.spring.aurora.model.Product;
 import java.util.List;
 
 public interface ProductDao {
-    Product saveOrUpdate(Product product);
+    Product save(Product product);
     List<Product> findAll();
+    Product findByProductId(String productId);
 }

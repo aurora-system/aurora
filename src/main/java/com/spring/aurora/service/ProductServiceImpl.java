@@ -5,7 +5,6 @@ import com.spring.aurora.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service("productService")
@@ -15,13 +14,18 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public Product saveOrUpdate(Product product) {
-        return productDao.saveOrUpdate(product);
+    public Product save(Product product) {
+        return productDao.save(product);
     }
 
     @Override
     public List<Product> findAll() {
         return productDao.findAll();
         //return Collections.emptyList();
+    }
+
+    @Override
+    public Product findByProductId(String productId) {
+        return productDao.findByProductId(productId);
     }
 }

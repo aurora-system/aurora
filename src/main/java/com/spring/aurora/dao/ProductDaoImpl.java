@@ -17,9 +17,9 @@ public class ProductDaoImpl implements ProductDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Product saveOrUpdate(Product product) {
+    public Product save(Product product) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(product);
+        session.save(product);
         return product;
     }
 
@@ -28,5 +28,12 @@ public class ProductDaoImpl implements ProductDao {
         Session session = sessionFactory.getCurrentSession();
         List<Product> products = session.createCriteria(Product.class).list();
         return products;
+    }
+
+    @Override
+    public Product findByProductId(String productId) {
+        Session session = sessionFactory.getCurrentSession();
+        Product product = (Product) session.get(Product.class, productId);
+        return product;
     }
 }

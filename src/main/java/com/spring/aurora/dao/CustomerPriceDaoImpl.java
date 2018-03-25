@@ -3,6 +3,7 @@ package com.spring.aurora.dao;
 import com.spring.aurora.model.CustomerPrice;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,10 @@ public class CustomerPriceDaoImpl implements CustomerPriceDao {
 
     @Override
     public List<CustomerPrice> findAllByCustomerId(String customerId) {
-        return Collections.emptyList();
+        Session session = sessionFactory.getCurrentSession();
+        List<CustomerPrice> prices = session.createCriteria(CustomerPrice.class)
+                .add(Restrictions.eq("customerId", customerId)).list();
+        return prices;
     }
 
     @Override

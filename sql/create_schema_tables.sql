@@ -99,8 +99,23 @@ CREATE TABLE `aurora`.`products` (
 
 -- CUSTOMER_PRICE
 CREATE TABLE `aurora`.`customer_price` (
+  `price_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   `selling_price` DECIMAL(10,2) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
-  `updated_at` DATETIME NOT NULL DEFAULT NOW());
+  `updated_at` DATETIME NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`price_id`),
+  UNIQUE INDEX `price_id_UNIQUE` (`price_id` ASC));
+
+-- CASH_TRANSACTIONS
+CREATE TABLE `aurora`.`cash_transactions` (
+  `transaction_id` INT NOT NULL AUTO_INCREMENT,
+  `transaction_type` VARCHAR(10) NOT NULL,
+  `customer_id` INT NULL,
+  `description` VARCHAR(50) NOT NULL,
+  `other_description` VARCHAR(50) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`transaction_id`),
+  UNIQUE INDEX `transaction_id_UNIQUE` (`transaction_id` ASC));

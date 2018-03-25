@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
-		                      	    <button type="submit" class="btn btn-primary">Log Payment</button>
+		                      	    <button type="submit" class="btn btn-primary">Save Payment</button>
 		                        </div>
 		                    </div>
                         </form:form>

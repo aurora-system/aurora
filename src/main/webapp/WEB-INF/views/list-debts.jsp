@@ -28,7 +28,7 @@
                         </p>
                         <p>Running Total: ${debtsTotal}.
                             <spring:url value="/debts/new?cid=${customer.customerId}" var="newDebtUrl" />
-                            <a href="${newDebtUrl}" class="btn btn-default pull-right" role="button">New Debt</a>
+                            <a href="${newDebtUrl}" class="btn btn-default pull-right" role="button">New A/R Entry</a>
                         </p>
                     </div>
                     <div class="panel-body">

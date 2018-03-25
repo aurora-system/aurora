@@ -18,7 +18,7 @@
                                 <tr>
                                     <th>Customer</th>
                                     <th width="100" bgcolor="F7E8D0">Total A/R</th>
-                                    <th width="180">Actions</th>
+                                    <th width="220">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,7 +31,7 @@
                                         <td bgcolor="F7E8D0">${entry.value.debtsTotal}</td>
                                         <td>
                                             <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
-                                            <a href="${urlListDebts}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">History</a>
+                                            <a href="${urlListDebts}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">New A/R Entry</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

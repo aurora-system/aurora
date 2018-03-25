@@ -46,7 +46,7 @@
                             </spring:bind>
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
-		                      	    <button type="submit" class="btn btn-primary">Log Debt</button>
+		                      	    <button type="submit" class="btn btn-primary">Save A/R Entry</button>
 		                        </div>
 		                    </div>
                         </form:form>

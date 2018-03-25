@@ -10,43 +10,41 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        New Payment for Customer: ${customer.name}
+                        Add new product
                     </div>
                     <div class="panel-body">
-                        <spring:url value="/payments/save" var="savePaymentUrl"/>
-                        <form:form class="form-horizontal" method="post" modelAttribute="payment" action="${savePaymentUrl}">
-                            <form:hidden path="paymentId"/>
-                            <form:hidden path="customerId"/>
-                            <spring:bind path="createdAt">
+                        <spring:url value="/products/save" var="saveProductUrl"/>
+                        <form:form class="form-horizontal" method="post" modelAttribute="product" action="${saveProductUrl}">
+                            <spring:bind path="name">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-3 control-label">Date: </label>
+                                    <label class="col-sm-3 control-label">Product name: </label>
                                     <div class="col-sm-9">
-                                        <form:input path="createdAt" type="date" class="form-control" id="createdAt" placeholder="Date"/>
-                                        <form:errors path="createdAt" class="control-label"/>
+                                        <form:input path="name" type="text" class="form-control" id="name" placeholder="Product name"/>
+                                        <form:errors path="name" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
-                            <spring:bind path="remarks">
+                            <spring:bind path="description">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-3 control-label">Remarks: </label>
+                                    <label class="col-sm-3 control-label">Description: </label>
                                     <div class="col-sm-9">
-                                        <form:input path="remarks" type="text" class="form-control" id="remarks" placeholder="Description"/>
-                                        <form:errors path="remarks" class="control-label"/>
+                                        <form:input path="description" type="text" class="form-control" id="description" placeholder="Description"/>
+                                        <form:errors path="description" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
-                            <spring:bind path="amount">
+                            <spring:bind path="sellingPrice">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <label class="col-sm-3 control-label">Amount in Php: </label>
+                                    <label class="col-sm-3 control-label">Selling price in Php: </label>
                                     <div class="col-sm-9">
-                                        <form:input path="amount" type="text" class="form-control" id="amount" placeholder="Amount"/>
-                                        <form:errors path="amount" class="control-label"/>
+                                        <form:input path="sellingPrice" type="text" class="form-control" id="sellingPrice" placeholder="0.00"/>
+                                        <form:errors path="sellingPrice" class="control-label"/>
                                     </div>
                                 </div>
                             </spring:bind>
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
-		                      	    <button type="submit" class="btn btn-primary">Log Payment</button>
+		                      	    <button type="submit" class="btn btn-primary">Save Product</button>
 		                        </div>
 		                    </div>
                         </form:form>

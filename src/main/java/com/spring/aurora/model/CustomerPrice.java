@@ -8,6 +8,10 @@ import java.sql.Date;
 public class CustomerPrice {
     
 	@Id
+    @GeneratedValue
+    @Column(name = "price_id")
+    private String priceId;
+
 	@Column(name = "customer_id")
     private String customerId;
 
@@ -22,6 +26,14 @@ public class CustomerPrice {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    public String getPriceId() {
+        return priceId;
+    }
+
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
+    }
 
     public String getCustomerId() {
         return customerId;

@@ -22,9 +22,11 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>
-                            List of products
-                        </p>
+                        <p style="margin-bottom: 0px;">
+                            <strong>List of products</strong>
+                            <spring:url value="/products/new" var="newProductUrl"/>
+                            <a href="${newProductUrl}" class="btn btn-default pull-right" role="button">Add New Product</a>
+                        </p>                        
                     </div>
                     <div class="panel-body">
                         <table id="productsTable" class="table table-striped table-bordered table-hover">
@@ -38,9 +40,9 @@
                             <tbody>
                                 <c:forEach var="product" items="${products}">
                                     <tr>
-                                        <td>${product.createdAt}</td>
-                                        <td>${product.remarks}</td>
-                                        <td>${product.amount}</td>
+                                        <td>${product.name}</td>
+                                        <td>${product.description}</td>
+                                        <td>${product.sellingPrice}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
