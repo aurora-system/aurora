@@ -161,8 +161,7 @@ public class CustomerController {
     public String editCustomer(Model model, String customerId) {
         logger.debug("Edit Customer form.");
         
-        Customer customer = new Customer(); 
-        customer = customerService.view(customerId);
+        Customer customer = customerService.view(customerId);
         model.addAttribute("customerForm", customer);
         model.addAttribute("types",new String[]{"Business","Residential"});
         return "edit-customer";
