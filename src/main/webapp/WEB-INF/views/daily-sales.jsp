@@ -107,7 +107,6 @@
 	                            <th bgcolor="ECFBEA">Cash Payment</th>
 	                            <th bgcolor="BBC2FB">Check Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th bgcolor="F7E8D0">Net A/R</th>
 	                            <th bgcolor="D0E6F7">Net Cash</th>
 	                          </tr>
 	                        </thead>
@@ -121,7 +120,6 @@
 	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
 	                        		<td bgcolor="BBC2FB">${totalCheckPayments}</td>
 	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
-	                        		<td bgcolor="F7E8D0">A/R - Payments</td>
 	                        		<td bgcolor="D0E6F7">${netCash}</td>
 	                        	</tr>
 	                        </tbody>

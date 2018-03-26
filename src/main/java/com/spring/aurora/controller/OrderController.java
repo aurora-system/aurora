@@ -76,6 +76,16 @@ public class OrderController {
 		model.addAttribute("customerName", customer.getName());
 		return "new-order";
 	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editOrder(Model model, String orderId) {
+        logger.debug("Edit Order form.");
+        
+        //Customer customer = customerService.view(orderId);
+        Order order = orderService.findOrderByOrderId(orderId);
+        model.addAttribute("orderForm", order);
+        return "edit-order";
+    }
 
 	@RequestMapping(value = "/daily", method = RequestMethod.GET)
     public String dailySales(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
@@ -376,19 +386,40 @@ public class OrderController {
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
-            if(order.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
-            }else{
-                redirectAttributes.addFlashAttribute("msg", "Order updated successfully!");
-            }
-            
             order.setDeliveryReceiptNum(orderService.getNewDrNumber());
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             order.setStatus("Pending");
             
             orderService.insert(order);
+            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
             
-            //saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+            // POST/REDIRECT/GET
+            return "redirect:/orders/list";
+            //return "redirect:/customers/" + customer.getCustomerId();
+        }
+    }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateOrder(@ModelAttribute("orderForm") @Validated Order order,
+                               BindingResult result, Model model,
+                               final RedirectAttributes redirectAttributes) {
+        logger.debug("Update order.");
+        if (result.hasErrors()) {
+            model.addAttribute("customerId", order.getCustomerId());
+            model.addAttribute("drNumber", orderService.getNewDrNumber());
+
+            Customer customer = customerService.view(order.getCustomerId());
+            model.addAttribute("customerName", customer.getName());
+            return "new-order";
+        } else {
+            // Add message to flash scope
+            redirectAttributes.addFlashAttribute("css", "success");
+            //order.setDeliveryReceiptNum(orderService.getNewDrNumber());
+            //order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            //order.setStatus("Pending");
+            
+            orderService.insert(order);
+            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
             
             // POST/REDIRECT/GET
             return "redirect:/orders/list";
