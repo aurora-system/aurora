@@ -119,3 +119,13 @@ CREATE TABLE `aurora`.`cash_transactions` (
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`transaction_id`),
   UNIQUE INDEX `transaction_id_UNIQUE` (`transaction_id` ASC));
+ 
+  
+ CREATE TABLE `aurora`.`order_product` (
+  `order_product_id` INT NOT NULL AUTO_INCREMENT,
+  `order_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  PRIMARY KEY (`order_product_id`),
+  UNIQUE INDEX `order_product_id_UNIQUE` (`order_product_id` ASC));
+  
