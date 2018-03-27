@@ -19,7 +19,7 @@
                                     <th>Customer</th>
                                     <th width="120">Last Order Date</th>
                                     <th width="120">Due Date</th>
-                                    <th width="60">Days Remaining</th>
+                                    <th width="60" bgcolor="FBEAEA">Days Remaining</th>
                                     <th width="50">Action</th>
                                 </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                         <td><a href="${urlViewCustomer}">${c.customer.name}</a></td>
                                         <td>${c.lastOrderDate}</td>
                                         <td>${c.dueDate}</td>
-                                        <td>${c.daysRemaining}</td>
+                                        <td bgcolor="FBEAEA">${c.daysRemaining}</td>
                                         <td>
                                             <a href="${newOrderUrl}" style="text-align: center;" class="btn btn-default" role="button">New Order</a>
                                         </td>
@@ -52,7 +52,15 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#containersTable').DataTable()
+            $('#containersTable').DataTable({
+            	"columns": [
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    { "orderable": false }
+            	  ]
+            })
         })
     </script>
 </body>

@@ -37,30 +37,23 @@
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
+                          	<th>Actions</th>
                             <th>Customer Name</th>
-                            <th>Delivery Receipt #</th>
+                            <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
                             <th>Slim #</th>
                             <th>Round #</th>
                             <th>Date</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th>Edit</th>
                           </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="o" items="${orders}">
                             	<spring:url value="/customers/view?customerId=${o.order.customerId}" var="urlViewCustomer" />
                                 <tr>
-                                    <td><a href="${urlViewCustomer}">${o.customerName}</a></td>
-                                    <td>${o.order.deliveryReceiptNum}</td>
-                                    <td>${o.order.amountPaid}</td>
-                                    <td>${o.order.totalAmount}</td>
-                                    <td>${o.order.slimCount}</td>
-                                    <td>${o.order.roundCount}</td>
-                                    <td>${o.formattedDate}</td>
-                                    <td>${o.order.status}</td>
-                                    <td nowrap>
+                                	<td nowrap>
 <%--                                     	<form action="edit" method="get" style="display: inline-block;"> --%>
 <%-- 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />  --%>
 <!-- 											<input type="hidden" name=orderId value=${o.order.orderId}>  -->
@@ -69,7 +62,7 @@
 										<form action="deliver" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-success" type="submit" value="Tag As Delivered"
+											<input class="btn btn-success" type="submit" value="Deliver"
 												<c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
@@ -79,14 +72,24 @@
 											<input class="btn btn-danger" type="submit" value="Cancel" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
-										<spring:url value="/orders/edit" var="editOrderUrl"/>
+									</td>
+                                    <td><a href="${urlViewCustomer}">${o.customerName}</a></td>
+                                    <td>${o.order.deliveryReceiptNum}</td>
+                                    <td>${o.order.amountPaid}</td>
+                                    <td>${o.order.totalAmount}</td>
+                                    <td>${o.order.slimCount}</td>
+                                    <td>${o.order.roundCount}</td>
+                                    <td>${o.formattedDate}</td>
+                                    <td>${o.order.status}</td>
+                                    <td>
+                                    	<spring:url value="/orders/edit" var="editOrderUrl"/>
 										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-primary" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
+											<input class="btn btn-default" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
-									</td>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -105,8 +108,19 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({
-            	"order" : [[ 6, "desc"]]
-            	
+            	"order" : [[ 7, "desc"]],
+            	"columns": [
+            	    { "orderable": false },
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    { "orderable": false }
+            	  ]
             });
             
             $('#headerNav a').click(function(e) {

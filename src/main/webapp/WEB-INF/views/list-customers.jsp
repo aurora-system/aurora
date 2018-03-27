@@ -87,7 +87,17 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+            	"columns": [
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    null,
+            	    { "orderable": false }
+            	  ]
+            	
+            });
             
             $('#headerNav a').click(function(e) {
     			$('#headerNav a').removeClass('active');
