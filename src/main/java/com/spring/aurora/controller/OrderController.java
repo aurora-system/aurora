@@ -83,6 +83,9 @@ public class OrderController {
         
         //Customer customer = customerService.view(orderId);
         Order order = orderService.findOrderByOrderId(orderId);
+        Customer customer = customerService.view(order.getCustomerId());
+		model.addAttribute("customerName", customer.getName());
+		model.addAttribute("drNumber", order.getDeliveryReceiptNum());
         model.addAttribute("orderForm", order);
         return "edit-order";
     }
@@ -414,11 +417,11 @@ public class OrderController {
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
-            //order.setDeliveryReceiptNum(orderService.getNewDrNumber());
-            //order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-            //order.setStatus("Pending");
+            order.setDeliveryReceiptNum(order.getDeliveryReceiptNum());
+            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            order.setStatus("Pending");
             
-            orderService.insert(order);
+            orderService.update(order);
             redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
             
             // POST/REDIRECT/GET

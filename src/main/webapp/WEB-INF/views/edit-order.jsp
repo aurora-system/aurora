@@ -13,7 +13,7 @@
                     Edit Order
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/orders/save" var="saveOrderUrl"/>
+                    <spring:url value="/orders/update" var="saveOrderUrl"/>
                     <form:form class="form-horizontal" action="${saveOrderUrl}" method="post" modelAttribute="orderForm" id="orderForm">
                         <form:hidden path="orderId"/>
 <%--                         <spring:bind path="name"> --%>
