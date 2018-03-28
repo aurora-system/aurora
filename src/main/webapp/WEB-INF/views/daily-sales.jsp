@@ -145,7 +145,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable( {
-                "order": [[ 5, "asc" ]]
+                "order": [[ 0, "desc" ]]
             } );
         })
         

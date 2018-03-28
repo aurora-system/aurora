@@ -25,14 +25,14 @@
                 <div class="panel panel-info">
                     <div class="panel-body">
                         <form class="form-horizontal" method="get" action="${monthlyTotalsUrl}">
-                            <div class="form-group">
-									<div class="col-sm-2 input-append date" id="datepicker" data-date="03-2018" 
-									     data-date-format="mm-yyyy">
-									 	<input class="form-control" type="text" readonly="readonly" name="date" placeholder="select month">
-									 	<span class="add-on" style="padding-top: 5px;"><i class="icon-calendar"></i></span>
+                            <div class="form-group col-sm-6">
+								<div class="col-sm-6 input-append date" id="datepicker" data-date="03-2018" 
+								     data-date-format="mm-yyyy">
+								 	<input class="form-control" type="text" readonly="readonly" name="d" placeholder="select month">
+								 	<span class="glyphicon glyphicon-calendar add-on" style="padding-top: 5px;"></span>
 <!-- 									 	<button class="btn btn-primary">+</button>     -->
-									</div>  
-								<div class="col-sm-4">
+								</div>  
+								<div class="col-sm-6">
 								    <button type="submit" class="btn btn-primary">Generate Report</button>
 								</div>
                             </div>
@@ -105,7 +105,7 @@
 	                        	<tr>
 	                        		<td>${grandTotalCash}</td>
 	                        		<td>${grandTotalAr}</td>
-	                        		<td>${grandTotalExpenses}</td>
+	                        		<td>${grandTotalExpense}</td>
 	                        		<td>${grandTotalRound}</td>
 	                        		<td>${grandTotalSlim}</td>
 	                        		<td>${grandTotalContainers}</td>

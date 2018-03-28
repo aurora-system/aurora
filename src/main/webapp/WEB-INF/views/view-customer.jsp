@@ -132,7 +132,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
-            $('#myTable').DataTable()
+            $('#myTable').DataTable({
+            	"order" : [[ 0, "desc"]]
+            })
         })
     </script>
 

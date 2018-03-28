@@ -108,7 +108,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({
-            	"order" : [[ 7, "desc"]],
+            	"order" : [[ 2, "desc"]],
             	"columns": [
             	    { "orderable": false },
             	    null,
