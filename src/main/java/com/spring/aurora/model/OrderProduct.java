@@ -25,7 +25,7 @@ public class OrderProduct {
 	private String productId;
 	
 	@Column(name="quantity")
-	private int quantity;
+	private String quantity;
 
 	public String getOrderProductId() {
 		return orderProductId;
@@ -51,11 +51,11 @@ public class OrderProduct {
 		this.productId = productId;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	

@@ -23,7 +23,7 @@ public class OrderFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "deliveryReceiptNum", "NotEmpty.orderForm.deliveryReceiptNum");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "amountPaid", "NotEmpty.orderForm.amountPaid");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "totalAmount", "NotEmpty.orderForm.totalAmount");
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "totalAmount", "NotEmpty.orderForm.totalAmount");
         Order order = (Order) target;
         if (order.getTotalAmount() == null || order.getTotalAmount() <= 0){
             errors.rejectValue("totalAmount", "Valid.orderForm.totalAmount");

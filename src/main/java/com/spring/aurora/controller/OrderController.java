@@ -3,6 +3,7 @@ package com.spring.aurora.controller;
 import com.spring.aurora.entity.DailySalesEntity;
 import com.spring.aurora.entity.DailyTotalsEntity;
 import com.spring.aurora.entity.OrderCustomerEntity;
+import com.spring.aurora.entity.OrderProductEntity;
 import com.spring.aurora.model.*;
 import com.spring.aurora.service.*;
 import com.spring.aurora.util.OrderFormValidator;
@@ -34,12 +35,12 @@ public class OrderController {
     
     private static DecimalFormat df2 = new DecimalFormat("#.00");
 
-	@Autowired
-	OrderFormValidator orderFormValidator;
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.setValidator(orderFormValidator);
-	}
+//	@Autowired
+//	OrderFormValidator orderFormValidator;
+//	@InitBinder
+//	protected void initBinder(WebDataBinder binder) {
+//		binder.setValidator(orderFormValidator);
+//	}
 
 	@Autowired
     private OrderService orderService;
@@ -58,24 +59,103 @@ public class OrderController {
     
     @Autowired
     private PaymentService paymentService;
+    
+    @Autowired
+    private ProductService productService;
+    
+    @Autowired
+    private OrderProductService orderProductService;
+    
+    @Autowired
+    private CustomerPriceService customerPriceService;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
 
-	@RequestMapping(value = "/neworder", method = RequestMethod.GET)
+    @RequestMapping(value = "/neworder", method = RequestMethod.GET)
 	public String newOrder(@RequestParam String customerId, Model model) {
 		logger.debug("New Order form for customer: " + customerId);
+		OrderProductEntity ope = new OrderProductEntity();
 		Order order = new Order();
 		order.setCustomerId(customerId);
-		model.addAttribute("orderForm", order);
+		
+		ope.setOrder(order);
+		
+		List<Product> productList = productService.findAll();
+		List<CustomerPrice> cpList = customerPriceService.findAllByCustomerId(customerId);
+		System.out.println("Customer Prices: " + cpList);
+		
+		List<Product> overridenProductList = new ArrayList<>();
+		boolean overriden = false;
+		
+		for (Product p : productList) {
+			
+			overriden = false;
+			
+			for (CustomerPrice cp : cpList) {
+				if (p.getProductId().equalsIgnoreCase(cp.getProductId())) {
+					Product overridenProduct = p;
+					p.setSellingPrice(cp.getSellingPrice());
+					overridenProductList.add(overridenProduct);
+					overriden = true;
+					break;
+				}
+			}
+			
+			if (!overriden) {
+				overridenProductList.add(p);
+			}
+		}
+		
+		if (overridenProductList.size() > 0) {
+			model.addAttribute("productList", overridenProductList);
+		} else {
+			model.addAttribute("productList", productList);
+		}
+		
+		List<OrderProduct> opList = new ArrayList<>();
+		for (Product p : productList) {
+			OrderProduct op = new OrderProduct();
+			op.setOrderId(order.getOrderId());
+			op.setProductId(p.getProductId());
+			opList.add(op);
+		}
+		
+		// Use this for update
+		// List<OrderProduct> opList = orderProductService.findAllByOrderId(order.getOrderId());
+		ope.setOpList(opList);
+		
+		model.addAttribute("opeForm", ope);
 		model.addAttribute("customerId", customerId);
 		model.addAttribute("newDrNumber", orderService.getNewDrNumber());
-
+		
+		
+		//List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(customerId);
+		
 		Customer customer = customerService.view(customerId);
 		model.addAttribute("customerName", customer.getName());
 		return "new-order";
 	}
+    
+//	@RequestMapping(value = "/neworder", method = RequestMethod.GET)
+//	public String newOrder(@RequestParam String customerId, Model model) {
+//		logger.debug("New Order form for customer: " + customerId);
+//		Order order = new Order();
+//		order.setCustomerId(customerId);
+//		model.addAttribute("orderForm", order);
+//		model.addAttribute("customerId", customerId);
+//		model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+//		
+//		List<Product> productList = productService.findAll();
+//		model.addAttribute("products", productList);
+//		
+//		//List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(customerId);
+//		
+//		Customer customer = customerService.view(customerId);
+//		model.addAttribute("customerName", customer.getName());
+//		return "new-order";
+//	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editOrder(Model model, String orderId) {
@@ -202,6 +282,8 @@ public class OrderController {
 		int grandTotalSlim = 0;
 		int grandTotalContainers = 0;
 		
+		System.out.println("Date Picked: " + datePicked);
+		
 		if (datePicked == null || datePicked.equalsIgnoreCase("today")) {
 			
 			LocalDateTime now = LocalDateTime.now();
@@ -257,6 +339,7 @@ public class OrderController {
 			}
 			
 			month = "" + m;
+			System.out.println(">>>>" + month);
 			
 			String dateStr = y + "-" + month + "-" + day;
 			Date date = (Date.valueOf(LocalDate.parse(dateStr)));
@@ -374,11 +457,42 @@ public class OrderController {
     	return "redirect:/orders/list";
     }
     
+//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+//    public String saveOrder(@ModelAttribute("orderForm") @Validated Order order,
+//                               BindingResult result, Model model,
+//                               final RedirectAttributes redirectAttributes) {
+//        logger.debug("Save order.");
+//        if (result.hasErrors()) {
+//            model.addAttribute("customerId", order.getCustomerId());
+//            model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+//
+//            Customer customer = customerService.view(order.getCustomerId());
+//            model.addAttribute("customerName", customer.getName());
+//            return "new-order";
+//        } else {
+//            // Add message to flash scope
+//            redirectAttributes.addFlashAttribute("css", "success");
+//            order.setDeliveryReceiptNum(orderService.getNewDrNumber());
+//            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+//            order.setStatus("Pending");
+//            
+//            orderService.insert(order);
+//            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
+//            
+//            // POST/REDIRECT/GET
+//            return "redirect:/orders/list";
+//            //return "redirect:/customers/" + customer.getCustomerId();
+//        }
+//    }
+    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveOrder(@ModelAttribute("orderForm") @Validated Order order,
+    public String saveOrderProductEntity(@ModelAttribute("opeForm") @Validated OrderProductEntity orderProductEntity,
                                BindingResult result, Model model,
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Save order.");
+        
+        Order order = orderProductEntity.getOrder();
+        
         if (result.hasErrors()) {
             model.addAttribute("customerId", order.getCustomerId());
             model.addAttribute("newDrNumber", orderService.getNewDrNumber());
@@ -393,7 +507,19 @@ public class OrderController {
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             order.setStatus("Pending");
             
-            orderService.insert(order);
+            Order insertedOrder = orderService.insert(order);
+            
+            System.out.println("Order ID: " + insertedOrder.getOrderId());
+            
+            for (OrderProduct op : orderProductEntity.getOpList()) {
+            	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
+            		// Do not save
+            	} else {
+            		op.setOrderId(insertedOrder.getOrderId());
+            		orderProductService.insert(op);
+            	}
+            }
+            
             redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
             
             // POST/REDIRECT/GET
