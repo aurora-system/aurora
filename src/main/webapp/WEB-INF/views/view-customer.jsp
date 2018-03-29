@@ -91,6 +91,37 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+                		Prices
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Product Name</th>
+	                            <th>Price</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<c:forEach var="p" items="${prices}">
+	                        		<tr>
+	                        		<td>${p.productName}</td>
+	                        		<td>${p.sellingPrice}</td>
+	                        	</tr>
+	                        	</c:forEach>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
                 		Details
                 		<a href="${urlReturnContainer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Return Container</a>
                 		<a href="${urlNewDebt}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New A/R Entry</a>
