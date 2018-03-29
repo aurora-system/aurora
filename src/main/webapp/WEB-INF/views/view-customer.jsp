@@ -105,7 +105,7 @@
 	                        <tbody>
 	                        	<c:forEach var="p" items="${prices}">
 	                        		<tr>
-	                        		<td>${p.productName}</td>
+	                        		<td>${p.product.name}</td>
 	                        		<td>${p.sellingPrice}</td>
 	                        	</tr>
 	                        	</c:forEach>
