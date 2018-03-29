@@ -8,4 +8,5 @@ public interface CustomerPriceService {
     CustomerPrice saveOrUpdate(CustomerPrice customerPrice);
     List<CustomerPrice> findAllByCustomerId(String customerId);
     List<CustomerPrice> findAllByProductId(String productId);
+    void deleteCustomerPrice(String customerId, String productId);
 }

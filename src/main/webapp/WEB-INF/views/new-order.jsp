@@ -41,7 +41,7 @@
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
                                 <div class="col-sm-9"> 
-                                    <input name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${newDrNumber}" readonly="true"/>
+                                    <input name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${newDrNumber}"/>
                                     <%--<form:input path="deliveryReceiptNum" type="hidden" class="form-control" value="${newDrNumber}" />--%>
                                     <form:errors path="order.deliveryReceiptNum" class="control-label"/>
                                 </div>

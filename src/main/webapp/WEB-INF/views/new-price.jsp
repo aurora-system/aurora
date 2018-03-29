@@ -44,7 +44,7 @@
                             </spring:bind>
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
-		                      	    <button type="submit" class="btn btn-primary">Add Product</button>
+		                      	    <button type="submit" class="btn btn-primary">Set Price</button>
 		                        </div>
 		                    </div>
                         </form:form>
@@ -70,7 +70,6 @@
                         <table id="productsTable" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Product name</th>
                                     <th>Selling Price</th>
                                 </tr>
@@ -78,7 +77,6 @@
                             <tbody>
                                 <c:forEach var="price" items="${prices}">
                                     <tr>
-                                        <td>${price.priceId}</td>
                                         <td>${price.product.name}</td>
                                         <td>${price.sellingPrice}</td>
                                     </tr>

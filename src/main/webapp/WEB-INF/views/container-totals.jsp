@@ -42,6 +42,36 @@
             </div>
         </div>
     </div>
+    
+    <div class="container" style="width: 800px">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
+						Running Total
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Total Round</th>
+	                            <th>Total Slim</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<tr>
+	                        		<td>${runningRound}</td>
+	                        		<td>${runningSlim}</td>
+	                        	</tr>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>

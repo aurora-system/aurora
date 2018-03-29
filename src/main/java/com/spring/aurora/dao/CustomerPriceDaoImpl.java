@@ -1,6 +1,8 @@
 package com.spring.aurora.dao;
 
 import com.spring.aurora.model.CustomerPrice;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -37,4 +39,15 @@ public class CustomerPriceDaoImpl implements CustomerPriceDao {
     public List<CustomerPrice> findAllByProductId(String productId) {
         return Collections.emptyList();
     }
+
+	@Override
+	public void deleteCustomerPrice(String customerId, String productId) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+
+		Query deletePriceQuery = session.createQuery("delete from CustomerPrice cp where cp.customerId = :customerId and cp.productId = :productId");
+		deletePriceQuery.setParameter("customerId", customerId);
+		deletePriceQuery.setParameter("productId", productId);
+		deletePriceQuery.executeUpdate();
+	}
 }

@@ -81,6 +81,9 @@ public class CustomerPriceController {
         } else {
             redirect.addFlashAttribute("msg", "Product added successfully!");
         }
+        
+        customerPriceService.deleteCustomerPrice(price.getCustomerId(), price.getProductId());
+        
         price.setCreatedAt(Date.valueOf(LocalDate.now()));
         price.setUpdatedAt(Date.valueOf(LocalDate.now()));
         customerPriceService.saveOrUpdate(price);

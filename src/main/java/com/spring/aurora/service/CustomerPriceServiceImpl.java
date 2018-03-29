@@ -27,4 +27,9 @@ public class CustomerPriceServiceImpl implements CustomerPriceService {
     public List<CustomerPrice> findAllByProductId(String productId) {
         return customerPriceDao.findAllByProductId(productId);
     }
+
+	@Override
+	public void deleteCustomerPrice(String customerId, String productId) {
+		customerPriceDao.deleteCustomerPrice(customerId, productId);
+	}
 }

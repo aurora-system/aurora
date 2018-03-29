@@ -150,6 +150,17 @@ public class ContainerController {
                         customer, getSlimTotal(customer.getCustomerId()), getRoundTotal(customer.getCustomerId()));}));
         model.addAttribute("containersMap", containersMap);
         
+        int runningRound = 0;
+        int runningSlim = 0;
+        
+        for (Customer c : customers) {
+        	runningRound += getRoundTotal(c.getCustomerId());
+        	runningSlim += getSlimTotal(c.getCustomerId());
+        }
+        
+        model.addAttribute("runningRound", runningRound);
+        model.addAttribute("runningSlim", runningSlim);
+        
         return "container-totals";
     }
 
