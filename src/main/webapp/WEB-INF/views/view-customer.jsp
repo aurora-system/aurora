@@ -91,7 +91,9 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
-                		Prices
+						Prices
+						<spring:url value="/prices/list/${customer.customerId}" var="listPriceUrl" />
+						<a href="${listPriceUrl}" class="btn btn-default pull-right" role="button">Add Product &amp; Price</a>
                 	</div>
                 	
                 	 <div class="panel-body">

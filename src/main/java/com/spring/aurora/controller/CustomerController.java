@@ -1,10 +1,8 @@
 package com.spring.aurora.controller;
 
 import com.spring.aurora.entity.CustomerDueDateEntity;
-import com.spring.aurora.model.Container;
-import com.spring.aurora.model.Customer;
-import com.spring.aurora.model.Debt;
-import com.spring.aurora.model.Order;
+import com.spring.aurora.entity.ProductPriceEntity;
+import com.spring.aurora.model.*;
 import com.spring.aurora.service.*;
 import com.spring.aurora.util.CustomerFormValidator;
 
@@ -16,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.spring.aurora.util.OrderFormValidator;
 import org.slf4j.Logger;
@@ -56,6 +55,12 @@ public class CustomerController {
     
     @Autowired
     private ExpenseService expenseService;
+
+    @Autowired
+    private CustomerPriceService customerPriceService;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     CustomerFormValidator customerFormValidator;
@@ -143,6 +148,17 @@ public class CustomerController {
         double paymentsSubTotal = paymentService.getPaymentsTotalByCustomerId(customerId);
         double totalDebt = debtsSubTotal - paymentsSubTotal;
         model.addAttribute("totalDebt", totalDebt);
+
+        List<CustomerPrice> prices = customerPriceService.findAllByCustomerId(customerId);
+        List<ProductPriceEntity> productPrices = prices.stream().map((CustomerPrice p) -> {
+            return new ProductPriceEntity(
+                    p.getPriceId(),
+                    customerService.view(p.getCustomerId()),
+                    productService.findByProductId(p.getProductId()),
+                    p.getSellingPrice()
+            );
+        }).collect(Collectors.toList());
+        model.addAttribute("prices", productPrices);
     	
         return "view-customer";
     }
