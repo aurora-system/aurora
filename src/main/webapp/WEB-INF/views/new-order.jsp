@@ -147,7 +147,11 @@
                             </div>
                         </spring:bind>
                         
-                        <div class="col-sm-offset-3 col-sm-9"><button type="submit" class="btn btn-primary">Submit</button></div>
+                        <div class="col-sm-offset-3 col-sm-9">
+                        	<button type="submit" class="btn btn-primary">Submit</button>
+	                        <spring:url value="/orders/list" var="listOrdersUrl"/>
+	                        <a href="${listOrdersUrl}" class="btn btn-primary">Cancel</a>
+                        </div>
                     </form:form>
                 </div>
             </div>
@@ -204,11 +208,11 @@
                     	productStr += $(this).attr('id');
                     }
                     
-                    if ($(this).attr('id') == '1') {
+                    if ($(this).attr('id') == '1-qty') {
                     	$('#roundCount').val($(this).val());
                     }
                     
-                    if ($(this).attr('id') == '2') {
+                    if ($(this).attr('id') == '2-qty') {
                     	$('#slimCount').val($(this).val());
                     }
                 });

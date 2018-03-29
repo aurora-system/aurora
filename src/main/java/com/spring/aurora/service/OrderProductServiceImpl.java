@@ -22,6 +22,11 @@ public class OrderProductServiceImpl implements OrderProductService{
 	public OrderProduct insert(OrderProduct orderProduct) {
 		return orderProductDao.insert(orderProduct);
 	}
+	
+	@Override
+	public OrderProduct update(OrderProduct orderProduct) {
+		return orderProductDao.update(orderProduct);
+	}
 
 	@Override
 	public List<OrderProduct> findAllByOrderId(String orderId) {

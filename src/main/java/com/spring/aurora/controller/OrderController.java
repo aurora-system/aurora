@@ -79,12 +79,10 @@ public class OrderController {
 		OrderProductEntity ope = new OrderProductEntity();
 		Order order = new Order();
 		order.setCustomerId(customerId);
-		
 		ope.setOrder(order);
 		
 		List<Product> productList = productService.findAll();
 		List<CustomerPrice> cpList = customerPriceService.findAllByCustomerId(customerId);
-		System.out.println("Customer Prices: " + cpList);
 		
 		List<Product> overridenProductList = new ArrayList<>();
 		boolean overriden = false;
@@ -157,18 +155,73 @@ public class OrderController {
 //		return "new-order";
 //	}
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editOrder(Model model, String orderId) {
         logger.debug("Edit Order form.");
         
-        //Customer customer = customerService.view(orderId);
+        OrderProductEntity ope = new OrderProductEntity();
         Order order = orderService.findOrderByOrderId(orderId);
+        ope.setOrder(order);
+        
         Customer customer = customerService.view(order.getCustomerId());
 		model.addAttribute("customerName", customer.getName());
+		
+		List<Product> productList = productService.findAll();
+		List<CustomerPrice> cpList = customerPriceService.findAllByCustomerId(order.getCustomerId());
+		
+		List<Product> overriddenProductList = new ArrayList<>();
+		boolean overridden = false;
+		
+		for (Product p : productList) {
+			
+			overridden = false;
+			
+			for (CustomerPrice cp : cpList) {
+				if (p.getProductId().equalsIgnoreCase(cp.getProductId())) {
+					Product overridenProduct = p;
+					p.setSellingPrice(cp.getSellingPrice());
+					overriddenProductList.add(overridenProduct);
+					overridden = true;
+					break;
+				}
+			}
+			
+			if (!overridden) {
+				overriddenProductList.add(p);
+			}
+		}
+		
+		if (overriddenProductList.size() > 0) {
+			model.addAttribute("productList", overriddenProductList);
+		} else {
+			model.addAttribute("productList", productList);
+		}
+		
+		List<OrderProduct> opList = orderProductService.findAllByOrderId(orderId);
+		
+		for (OrderProduct op : opList) {
+			System.out.println("ID: " + op.getOrderProductId());
+		}
+		
+		ope.setOpList(opList);
+		model.addAttribute("opeForm", ope);
 		model.addAttribute("drNumber", order.getDeliveryReceiptNum());
-        model.addAttribute("orderForm", order);
+        //model.addAttribute("orderForm", order);
         return "edit-order";
     }
+    
+//	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+//    public String editOrder(Model model, String orderId) {
+//        logger.debug("Edit Order form.");
+//        
+//        //Customer customer = customerService.view(orderId);
+//        Order order = orderService.findOrderByOrderId(orderId);
+//        Customer customer = customerService.view(order.getCustomerId());
+//		model.addAttribute("customerName", customer.getName());
+//		model.addAttribute("drNumber", order.getDeliveryReceiptNum());
+//        model.addAttribute("orderForm", order);
+//        return "edit-order";
+//    }
 
 	@RequestMapping(value = "/daily", method = RequestMethod.GET)
     public String dailySales(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
@@ -509,8 +562,6 @@ public class OrderController {
             
             Order insertedOrder = orderService.insert(order);
             
-            System.out.println("Order ID: " + insertedOrder.getOrderId());
-            
             for (OrderProduct op : orderProductEntity.getOpList()) {
             	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
             		// Do not save
@@ -529,17 +580,19 @@ public class OrderController {
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateOrder(@ModelAttribute("orderForm") @Validated Order order,
+    public String updateOrderProductEntity(@ModelAttribute("opeForm") @Validated OrderProductEntity orderProductEntity,
                                BindingResult result, Model model,
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Update order.");
+        Order order = orderProductEntity.getOrder();
+        
         if (result.hasErrors()) {
             model.addAttribute("customerId", order.getCustomerId());
             model.addAttribute("drNumber", orderService.getNewDrNumber());
 
             Customer customer = customerService.view(order.getCustomerId());
             model.addAttribute("customerName", customer.getName());
-            return "new-order";
+            return "edit-order";
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
@@ -547,14 +600,54 @@ public class OrderController {
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             order.setStatus("Pending");
             
-            orderService.update(order);
-            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
+            Order updatedOrder = orderService.update(order);
+            
+            for (OrderProduct op : orderProductEntity.getOpList()) {
+            	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
+            		// Do not save
+            	} else {
+            		op.setOrderId(updatedOrder.getOrderId());
+            		System.out.println("OP ID: " + op.getOrderProductId());
+            		//op.setOrderProductId();
+            		orderProductService.update(op);
+            	}
+            }
+            
+            redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             
             // POST/REDIRECT/GET
             return "redirect:/orders/list";
             //return "redirect:/customers/" + customer.getCustomerId();
         }
     }
+    
+//    @RequestMapping(value = "/update", method = RequestMethod.POST)
+//    public String updateOrder(@ModelAttribute("orderForm") @Validated Order order,
+//                               BindingResult result, Model model,
+//                               final RedirectAttributes redirectAttributes) {
+//        logger.debug("Update order.");
+//        if (result.hasErrors()) {
+//            model.addAttribute("customerId", order.getCustomerId());
+//            model.addAttribute("drNumber", orderService.getNewDrNumber());
+//
+//            Customer customer = customerService.view(order.getCustomerId());
+//            model.addAttribute("customerName", customer.getName());
+//            return "new-order";
+//        } else {
+//            // Add message to flash scope
+//            redirectAttributes.addFlashAttribute("css", "success");
+//            order.setDeliveryReceiptNum(order.getDeliveryReceiptNum());
+//            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+//            order.setStatus("Pending");
+//            
+//            orderService.update(order);
+//            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
+//            
+//            // POST/REDIRECT/GET
+//            return "redirect:/orders/list";
+//            //return "redirect:/customers/" + customer.getCustomerId();
+//        }
+//    }
     
     /**
      * Saves the debt of the customer if amount paid is less than total amount for a given order.

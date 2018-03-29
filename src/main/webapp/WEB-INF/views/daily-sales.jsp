@@ -53,7 +53,6 @@
 	                            <th width="100">Customer</th>
 								<th>RD</th>
 	                            <th>SD</th>
-	                            <th>Price</th>
 	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash</th>
@@ -71,7 +70,6 @@
 	                                    <td>${d.customerName}</td>
 	                                    <td>${d.order.roundCount}</td>
 	                                    <td>${d.order.slimCount}</td>
-	                                    <td></td>
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
 	                                    <td bgcolor="ECFBEA">${d.paidCash}</td>

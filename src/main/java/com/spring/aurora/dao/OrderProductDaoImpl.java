@@ -31,6 +31,13 @@ public class OrderProductDaoImpl implements OrderProductDao {
 		session.save(orderProduct);
 		return orderProduct;
 	}
+	
+	@Override
+	public OrderProduct update(OrderProduct orderProduct) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(orderProduct);
+		return orderProduct;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
