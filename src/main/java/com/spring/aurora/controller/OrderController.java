@@ -199,8 +199,11 @@ public class OrderController {
 		
 		List<OrderProduct> opList = orderProductService.findAllByOrderId(orderId);
 		
-		for (OrderProduct op : opList) {
-			System.out.println("ID: " + op.getOrderProductId());
+		for (Product p : productList) {
+			OrderProduct op = new OrderProduct();
+			op.setOrderId(order.getOrderId());
+			op.setProductId(p.getProductId());
+			opList.add(op);
 		}
 		
 		ope.setOpList(opList);
@@ -607,9 +610,17 @@ public class OrderController {
             		// Do not save
             	} else {
             		op.setOrderId(updatedOrder.getOrderId());
+            		System.out.println("Product ID: " + op.getProductId());
             		System.out.println("OP ID: " + op.getOrderProductId());
-            		//op.setOrderProductId();
-            		orderProductService.update(op);
+            		if (op.getOrderProductId() == null || op.getOrderProductId().equalsIgnoreCase("")) {
+            			System.out.println("Saving new OP");
+            			//op.setProductId(productId);
+            			orderProductService.insert(op);
+            			
+            		} else {
+            			System.out.println("Updating existing OP");
+            			orderProductService.update(op);
+            		}
             	}
             }
             

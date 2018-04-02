@@ -206,11 +206,15 @@
                     }
                     
                     if ($(this).attr('id') == '1-qty') {
-                    	$('#roundCount').val($(this).val());
+                    	if ($(this).val() > 0) {
+                    		$('#roundCount').val($(this).val());
+                    	}
                     }
                     
                     if ($(this).attr('id') == '2-qty') {
-                    	$('#slimCount').val($(this).val());
+                    	if ($(this).val() > 0) {
+                    		$('#slimCount').val($(this).val());
+                    	}
                     }
                 });
                 

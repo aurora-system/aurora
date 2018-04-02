@@ -89,7 +89,7 @@
                                 <label class="col-sm-3 control-label" for="type">Amount Paid:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="order.amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"></form:input>
-                                    <form:errors path="order.amountPaid" class="control-label"/>
+<%--                                     <form:errors path="order.amountPaid" class="control-label"/> --%>
                                 </div>
                             </div>
                         </spring:bind>
@@ -120,7 +120,7 @@
                                 <label class="col-sm-3 control-label" for="type">Round Returned:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="order.roundReturned" type="text" class="form-control" id="roundReturned" placeholder="0"/>
-                                    <form:errors path="order.roundReturned" class="control-label"/>
+<%--                                     <form:errors path="order.roundReturned" class="control-label"/> --%>
                                 </div>
                             </div>
                         </spring:bind>
@@ -131,7 +131,7 @@
                                 <label class="col-sm-3 control-label" for="type">Slim Returned:</label>
                                 <div class="col-sm-9"> 
                                     <form:input path="order.slimReturned" type="text" class="form-control" id="slimReturned" placeholder="0"/>
-                                    <form:errors path="order.slimReturned" class="control-label"/>
+<%--                                     <form:errors path="order.slimReturned" class="control-label"/> --%>
                                 </div>
                             </div>
                         </spring:bind>
@@ -142,7 +142,7 @@
                                 <label class="col-sm-3 control-label" for="type">Remarks:</label>
                                 <div class="col-sm-9"> 
                                     <form:textarea path="order.remarks" type="text" class="form-control" id="remarks" />
-                                    <form:errors path="order.remarks" class="control-label"/>
+<%--                                     <form:errors path="order.remarks" class="control-label"/> --%>
                                 </div>
                             </div>
                         </spring:bind>
@@ -209,11 +209,15 @@
                     }
                     
                     if ($(this).attr('id') == '1-qty') {
-                    	$('#roundCount').val($(this).val());
+                    	if ($(this).val() > 0) {
+                    		$('#roundCount').val($(this).val());
+                    	}
                     }
                     
                     if ($(this).attr('id') == '2-qty') {
-                    	$('#slimCount').val($(this).val());
+                    	if ($(this).val() > 0) {
+                    		$('#slimCount').val($(this).val());
+                    	}
                     }
                 });
                 
