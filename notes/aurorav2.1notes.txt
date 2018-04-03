@@ -1,0 +1,41 @@
+1. logged in user
+- log in db who created the record
+- logout link
+
+2. Expose edit product/price
+if edited in products, update in customer price
+Update prices of products
+
+3. List of products
+Round Refill 35
+Round Container 220
+Round Container + Refill 250
+Slim Refill 35
+Slim Container 220
+Slim Container + Refill 250
+1 pc. 500 mL Bottled Water 10
+1 box 500 mL Bottled Water 300
+1 pc. 1L Bottled Water 20
+1 box 1L Bottled Water 300
+5 Liter Refill 15
+5 Liter Container 55
+5 Liter Container + Refill 70
+2.5 Gallon Refill 20
+2.5 Gallon Container 150
+2.5 Gallon Container + Refill 170
+Solane 653
+Hot and Cold Water Dispenser
+
+4. All prices should be in 0.00 format, 2 decimal places
+daily sales
+
+5. Add total sales column, cash + check payments, bbefore expenses column
+
+6. Running Total ng lahat ng containers, 
+
+7. Add AR running total of all customers as of today.
+
+8. Expense category
+Report: 
+
+
