@@ -25,7 +25,7 @@ public class OrderFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "amountPaid", "NotEmpty.orderForm.amountPaid");
         //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "totalAmount", "NotEmpty.orderForm.totalAmount");
         Order order = (Order) target;
-        if (order.getTotalAmount() == null || order.getTotalAmount() <= 0){
+        if (order.getTotalAmount() == null || order.getTotalAmount() < 0){
             errors.rejectValue("totalAmount", "Valid.orderForm.totalAmount");
         }
     }

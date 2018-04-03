@@ -42,8 +42,8 @@
                             <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
-                            <th>Slim #</th>
                             <th>Round #</th>
+                            <th>Slim #</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Edit</th>
@@ -77,8 +77,8 @@
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td>${o.order.amountPaid}</td>
                                     <td>${o.order.totalAmount}</td>
-                                    <td>${o.order.slimCount}</td>
                                     <td>${o.order.roundCount}</td>
+                                    <td>${o.order.slimCount}</td>
                                     <td>${o.formattedDate}</td>
                                     <td>${o.order.status}</td>
                                     <td>

@@ -19,7 +19,7 @@ public class CustomerPriceFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productId", "NotEmpty.customerPriceForm.productId");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sellingPrice", "NotEmpty.customerPriceForm.sellingPrice");
         CustomerPrice price = (CustomerPrice) target;
-        if (price.getSellingPrice() == null || price.getSellingPrice() <= 0) {
+        if (price.getSellingPrice() == null || price.getSellingPrice() < 0) {
             errors.rejectValue("sellingPrice", "Valid.customerPriceForm.sellingPrice");
         }
     }

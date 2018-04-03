@@ -42,10 +42,10 @@ public class Order {
 	private int roundCount;
 	
 	@Column(name="cont_slim_returned")
-	private int slimReturned;
+	private Integer slimReturned;
 	
 	@Column(name="cont_round_returned")
-	private int roundReturned;
+	private Integer roundReturned;
 	
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -117,7 +117,7 @@ public class Order {
 		this.roundCount = roundCount;
 	}
 
-	public int getSlimReturned() {
+	public Integer getSlimReturned() {
 		return slimReturned;
 	}
 
@@ -125,7 +125,7 @@ public class Order {
 		this.slimReturned = slimReturned;
 	}
 
-	public int getRoundReturned() {
+	public Integer getRoundReturned() {
 		return roundReturned;
 	}
 

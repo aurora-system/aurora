@@ -24,7 +24,7 @@ public class ProductFormValidator implements Validator {
         /*if (product.getInitialPrice() == null || product.getInitialPrice() <= 0) {
             errors.rejectValue("initialPrice", "Valid.productForm.initialPrice");
         }*/
-        if (product.getSellingPrice() == null || product.getSellingPrice() <= 0) {
+        if (product.getSellingPrice() == null || product.getSellingPrice() < 0) {
             errors.rejectValue("sellingPrice", "Valid.productForm.sellingPrice");
         }
 

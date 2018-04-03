@@ -198,13 +198,13 @@
             
             // Compute the total amount based on the quantity of products
             $('.form-control.calc').change( function() {
-            	var total = 0;
+            	var total = 0.00;
             	var productStr;
             	
                 $('.form-control.calc').each( function() {
                     if ($(this).val() != '') {
                         var multiplier = "." + $(this).attr('id') + '.price';
-                    	total += (parseInt($(this).val()) ) * (parseInt($(multiplier).val()) );
+                    	total += (parseFloat($(this).val()) ) * (parseFloat($(multiplier).val()) );
                     	productStr += $(this).attr('id');
                     }
                     
