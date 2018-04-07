@@ -22,6 +22,7 @@
 <spring:url value="/container/history?d=today" var="urlContainerHistory" />
 <spring:url value="/help" var="urlHelp" />
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
+<spring:url value="/products/list" var="urlListProducts"/>
 
 <nav class="navbar navbar-inverse">
 	<div class="container">
@@ -32,6 +33,7 @@
 			<ul class="nav navbar-nav navbar-right" id="headerNav">
 				<li><a href="${urlCustomers}">Customers</a></li>
 				<li><a href="${urlOrders}">Orders</a></li>
+				<li><a href="${urlListProducts}">Products</a></li>
 				<li><a href="${urlListExpenses}">Expenses</a></li>
 				<li><a href="${urlDebt}">A/R Summary</a></li>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Reports</a>
