@@ -6,6 +6,7 @@ import com.spring.aurora.util.ProductFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,8 +58,12 @@ public class ProductController {
             redirect.addFlashAttribute("msg", "Product added successfully!");
         }
         product.setInitialPrice(product.getSellingPrice());
-        product.setCreatedAt(Date.valueOf(LocalDate.now()));
         product.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        if (StringUtils.isEmpty(product.getProductId())
+                || !StringUtils.hasText(product.getProductId())) {
+            product.setCreatedAt(Date.valueOf(LocalDate.now()));
+            product.setProductId(null);
+        }
         productService.save(product);
         return "redirect:/products/list";
     }
