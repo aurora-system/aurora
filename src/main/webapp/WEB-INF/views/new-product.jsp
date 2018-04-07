@@ -15,6 +15,7 @@
                     <div class="panel-body">
                         <spring:url value="/products/save" var="saveProductUrl"/>
                         <form:form class="form-horizontal" method="post" modelAttribute="product" action="${saveProductUrl}">
+                            <form:input path="productId" type="hidden"/>
                             <spring:bind path="name">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <label class="col-sm-3 control-label">Product name: </label>
@@ -45,6 +46,8 @@
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
 		                      	    <button type="submit" class="btn btn-primary">Save Product</button>
+		                      	    <spring:url value="/products/list" var="listProductUrl"/>
+		                      	    <a href="${listProductUrl}" class="btn btn-primary">Cancel</a>
 		                        </div>
 		                    </div>
                         </form:form>

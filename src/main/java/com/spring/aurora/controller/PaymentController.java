@@ -40,6 +40,7 @@ public class PaymentController {
         payment.setCreatedAt(Date.valueOf(LocalDate.now()));
         payment.setCustomerId(cid);
         payment.setPaymentType("CASH");
+        payment.setWithholdingTax(new Double("0.00"));
         Customer customer = customerService.view(cid);
         model.addAttribute("payment", payment);
         model.addAttribute("customer", customer);

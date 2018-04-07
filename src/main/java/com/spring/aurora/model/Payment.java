@@ -23,6 +23,9 @@ public class Payment {
 	@Column(name="amount")
 	private Double amount;
 
+	@Column(name = "wh_tax")
+	private Double withholdingTax;
+
 	@Column(name="payment_type")
 	private String paymentType;
 
@@ -50,6 +53,14 @@ public class Payment {
 
 	public Double getAmount() {
 		return amount;
+	}
+
+	public Double getWithholdingTax() {
+		return withholdingTax;
+	}
+
+	public void setWithholdingTax(Double withholdingTax) {
+		this.withholdingTax = withholdingTax;
 	}
 
 	public void setAmount(Double amount) {

@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
@@ -64,5 +61,12 @@ public class ProductController {
         product.setUpdatedAt(Date.valueOf(LocalDate.now()));
         productService.save(product);
         return "redirect:/products/list";
+    }
+
+    @RequestMapping(value = "/edit/{productId}", method = RequestMethod.GET)
+    public String editProductForm(@PathVariable String productId,Model model){
+        Product product = productService.findByProductId(productId);
+        model.addAttribute("product", product);
+        return "new-product";
     }
 }

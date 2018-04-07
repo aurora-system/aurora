@@ -44,6 +44,15 @@
                                     </div>
                                 </div>
                             </spring:bind>
+                            <spring:bind path="withholdingTax">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="col-sm-3 control-label">Withholding Tax in Php: </label>
+                                    <div class="col-sm-9">
+                                        <form:input path="withholdingTax" type="text" class="form-control" id="withholdingTax" placeholder="Withholding Tax"/>
+                                        <form:errors path="withholdingTax" class="control-label"/>
+                                    </div>
+                                </div>
+                            </spring:bind>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <form:radiobutton path="paymentType" value="CASH"/>Cash &nbsp;

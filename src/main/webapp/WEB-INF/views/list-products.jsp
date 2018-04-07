@@ -35,6 +35,7 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Selling Price</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +44,10 @@
                                         <td>${product.name}</td>
                                         <td>${product.description}</td>
                                         <td>${product.sellingPrice}</td>
+                                        <td>
+                                            <spring:url value="/products/edit/${product.productId}" var="editProductUrl"/>
+                                            <a href="${editProductUrl}" class="btn btn-default">Edit Product</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

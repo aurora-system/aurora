@@ -35,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public double getPaymentsTotalByCustomerId(String customerId) {
         List<Payment> debts = paymentDao.findAllByCustomerId(customerId);
-        double total = debts.stream().mapToDouble(p -> p.getAmount()).sum();
+        double total = debts.stream().mapToDouble(p -> p.getAmount() - p.getWithholdingTax()).sum();
         return total;
     }
 
