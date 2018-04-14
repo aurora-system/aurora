@@ -10,7 +10,8 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>List of Customers' debts as of today</p>
+                        <p>List of A/Rs for each customer as of today</p>
+                        <p>Total of all Accounts Receivables as of today: ${arTotal}</p>
                     </div>
                     <div class="panel-body">
                         <table id="debtsTable" class="table table-striped table-bordered table-hover">

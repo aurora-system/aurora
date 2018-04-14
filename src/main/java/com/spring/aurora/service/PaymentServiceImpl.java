@@ -43,4 +43,11 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Payment> findAllByDate(Date date) {
 		return paymentDao.findAllByDate(date);
 	}
+
+    @Override
+    public double getTotalPayments() {
+        List<Payment> payments = paymentDao.findAll();
+        double total = payments.stream().mapToDouble(p -> p.getAmount() - p.getWithholdingTax()).sum();
+        return total;
+    }
 }

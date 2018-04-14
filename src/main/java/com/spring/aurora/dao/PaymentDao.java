@@ -10,4 +10,5 @@ public interface PaymentDao {
     List<Payment> findAllByCustomerId(String customerId);
     List<Payment> findAllByCustomerIdAndDate(String customerId, Date date);
     List<Payment> findAllByDate(Date date);
+    List<Payment> findAll();
 }

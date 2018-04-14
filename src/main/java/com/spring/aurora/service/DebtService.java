@@ -10,4 +10,5 @@ public interface DebtService {
     List<Debt> findAllByCustomerId(String customerId);
     List<Debt> findAllByCustomerIdAndDate(String customerId, Date date);
     double findDebtsTotalByCustomerId(String customerId);
+    double findTotalARs();
 }

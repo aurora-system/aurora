@@ -73,11 +73,22 @@ public class DebtController {
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     public String listAllDebts(Model model) {
         List<Customer> customers = customerService.findAll();
-        Map<String, Object> debtsMap = customers.stream().collect(Collectors.toMap(Customer::getCustomerId,
+        Map<String, Object> debtsMap = customers.stream()
+                .filter(customer -> getDebtsTotal(customer.getCustomerId()) > 0.0)
+                .collect(Collectors.toMap(Customer::getCustomerId,
                 customer -> {return new DebtCustomerEntity(
-                        customer.getName(), getDebtsTotal(customer.getCustomerId()));}));
+                        customer.getName(), getDebtsTotal(customer.getCustomerId()));}
+                        ));
         model.addAttribute("debtsMap", debtsMap);
+        Double arTotal = getTotalArsAsOfToday();
+        model.addAttribute("arTotal", arTotal);
         return "list-debts-all";
+    }
+
+    private Double getTotalArsAsOfToday() {
+        Double totalARs = debtService.findTotalARs();
+        Double totalPmts = paymentService.getTotalPayments();
+        return totalARs - totalPmts;
     }
 
     private double getDebtsTotal(String customerId) {

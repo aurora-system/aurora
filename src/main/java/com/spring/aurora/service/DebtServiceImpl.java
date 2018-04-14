@@ -40,4 +40,10 @@ public class DebtServiceImpl implements DebtService {
         return total;
     }
 
+    @Override
+    public double findTotalARs() {
+        List<Debt> debts = debtDao.findAll();
+        double total = debts.stream().mapToDouble(Debt::getAmount).sum();
+        return total;
+    }
 }

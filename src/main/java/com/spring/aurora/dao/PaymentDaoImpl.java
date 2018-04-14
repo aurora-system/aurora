@@ -46,4 +46,11 @@ public class PaymentDaoImpl implements PaymentDao {
 	                .add(Restrictions.eq("createdAt", date)).list();
 	        return payments;
 	}
+
+    @Override
+    public List<Payment> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Payment> payments = session.createCriteria(Payment.class).list();
+        return payments;
+    }
 }

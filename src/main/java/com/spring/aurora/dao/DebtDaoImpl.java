@@ -32,4 +32,11 @@ public class DebtDaoImpl implements DebtDao {
                 .add(Restrictions.eq("customerId", customerId)).list();
         return debts;
     }
+
+    @Override
+    public List<Debt> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Debt> debts = session.createCriteria(Debt.class).list();
+        return debts;
+    }
 }

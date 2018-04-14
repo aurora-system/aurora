@@ -7,4 +7,5 @@ import java.util.List;
 public interface DebtDao {
     Debt insert(Debt debt);
     List<Debt> findAllByCustomerId(String customerId);
+    List<Debt> findAll();
 }

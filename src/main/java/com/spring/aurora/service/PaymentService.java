@@ -11,4 +11,5 @@ public interface PaymentService {
     List<Payment> findAllByCustomerIdAndDate(String customerId, Date date);
     List<Payment> findAllByDate(Date date);
     double getPaymentsTotalByCustomerId(String customerId);
+    double getTotalPayments();
 }
