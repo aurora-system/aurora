@@ -208,12 +208,21 @@ public class CustomerController {
     	
     	for (Customer c : customerList) {
     		
-    		LocalDate lastOrderDate = orderService.getMostRecentOrderDate(c.getCustomerId()).toLocalDateTime().toLocalDate();
-    		LocalDate dueDate = lastOrderDate.plusDays(c.getOrderInterval());
-    		long daysRemaining = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+    		Timestamp mostRecentOrderDate = orderService.getMostRecentOrderDate(c.getCustomerId());
+    		LocalDate lastOrderDate = LocalDate.now();
     		
-    		CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, lastOrderDate, dueDate, daysRemaining);
-    		cddList.add(cdd);
+    		if (mostRecentOrderDate != null) {
+    			lastOrderDate = mostRecentOrderDate.toLocalDateTime().toLocalDate();
+    			LocalDate dueDate = lastOrderDate.plusDays(c.getOrderInterval());
+        		long daysRemaining = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+        		
+        		CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, lastOrderDate, dueDate, daysRemaining);
+        		cddList.add(cdd);
+    		} else {
+    			CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, null, LocalDate.now(), 0);
+        		cddList.add(cdd);
+    		}
+    		
     	}
     	
         model.addAttribute("dueDates", cddList);

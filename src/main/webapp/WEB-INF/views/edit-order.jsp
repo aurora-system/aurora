@@ -41,7 +41,7 @@
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
                                 <div class="col-sm-9"> 
-                                    <input name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${drNumber}" readonly="true"/>
+                                    <input required="required" name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${drNumber}"/>
                                     <%--<form:input path="deliveryReceiptNum" type="hidden" class="form-control" value="${newDrNumber}" />--%>
                                     <form:errors path="order.deliveryReceiptNum" class="control-label"/>
                                 </div>
@@ -87,7 +87,7 @@
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Amount Paid:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="order.amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"/>
+                                    <form:input required="required" path="order.amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"/>
                                     <form:errors path="order.amountPaid" class="control-label"/>
                                 </div>
                             </div>
@@ -188,11 +188,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable()
-            
-            $('#orderForm').on('submit', () => {
-                $('#deliveryReceiptNum').prop('disabled', false);
-            })
-            
+         
          // Compute the total amount based on the quantity of products
             $('.form-control.calc').change( function() {
             	var total = 0;

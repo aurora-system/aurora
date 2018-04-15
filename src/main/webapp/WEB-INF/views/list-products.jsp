@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
+                    <div class="panel-heading clearfix">
                         <p style="margin-bottom: 0px;">
                             <strong>List of products</strong>
                             <spring:url value="/products/new" var="newProductUrl"/>

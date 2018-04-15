@@ -41,7 +41,7 @@
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Delivery Receipt Number:</label>
                                 <div class="col-sm-9"> 
-                                    <input name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" value="${newDrNumber}"/>
+                                    <input required="required" name="order.deliveryReceiptNum" type="text" class="form-control" id="deliveryReceiptNum" placeholder="Enter the DR Number"/>
                                     <%--<form:input path="deliveryReceiptNum" type="hidden" class="form-control" value="${newDrNumber}" />--%>
                                     <form:errors path="order.deliveryReceiptNum" class="control-label"/>
                                 </div>
@@ -88,7 +88,7 @@
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="type">Amount Paid:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="order.amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"></form:input>
+                                    <form:input required="required" path="order.amountPaid" type="text" class="form-control" id="amountPaid" placeholder="Amount Paid"></form:input>
 <%--                                     <form:errors path="order.amountPaid" class="control-label"/> --%>
                                 </div>
                             </div>
@@ -185,6 +185,7 @@
 <!--     </div> -->
     </div>
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/jquery.form-validator.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>

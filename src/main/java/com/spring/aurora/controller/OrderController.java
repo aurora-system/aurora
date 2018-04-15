@@ -126,7 +126,7 @@ public class OrderController {
 		
 		model.addAttribute("opeForm", ope);
 		model.addAttribute("customerId", customerId);
-		model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+		//model.addAttribute("newDrNumber", orderService.getNewDrNumber());
 		
 		
 		//List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(customerId);
@@ -161,6 +161,14 @@ public class OrderController {
         
         OrderProductEntity ope = new OrderProductEntity();
         Order order = orderService.findOrderByOrderId(orderId);
+        
+        if (order.getRoundReturned().equalsIgnoreCase("0")) {
+        	order.setRoundReturned(null);
+        }
+        if (order.getSlimReturned().equalsIgnoreCase("0")) {
+        	order.setSlimReturned(null);
+        }
+        
         ope.setOrder(order);
         
         Customer customer = customerService.view(order.getCustomerId());
@@ -199,14 +207,29 @@ public class OrderController {
 		
 		List<OrderProduct> opList = orderProductService.findAllByOrderId(orderId);
 		
+		List<OrderProduct> opListForDisplay = new ArrayList<>();
+		
 		for (Product p : productList) {
-			OrderProduct op = new OrderProduct();
-			op.setOrderId(order.getOrderId());
-			op.setProductId(p.getProductId());
-			opList.add(op);
+			
+			boolean hasMatch = false;
+			
+			for (OrderProduct op : opList) {
+				if (p.getProductId().equalsIgnoreCase(op.getProductId())) {
+					opListForDisplay.add(op);
+					hasMatch = true;
+					break;
+				}
+			}
+			
+			if (!hasMatch) {
+				OrderProduct op = new OrderProduct();
+				op.setOrderId(order.getOrderId());
+				op.setProductId(p.getProductId());
+				opListForDisplay.add(op);
+			}
 		}
 		
-		ope.setOpList(opList);
+		ope.setOpList(opListForDisplay);
 		model.addAttribute("opeForm", ope);
 		model.addAttribute("drNumber", order.getDeliveryReceiptNum());
         //model.addAttribute("orderForm", order);
@@ -259,8 +282,8 @@ public class OrderController {
             	
             	totalSlimDelivered += o.getSlimCount();
             	totalRoundDelivered += o.getRoundCount();
-            	totalSlimReturned += o.getSlimReturned();
-            	totalRoundReturned += o.getRoundReturned();
+            	totalSlimReturned += Integer.parseInt(o.getSlimReturned());
+            	totalRoundReturned += Integer.parseInt(o.getRoundReturned());
             	
             	
             	Double ar = o.getTotalAmount() - o.getAmountPaid();
@@ -504,7 +527,7 @@ public class OrderController {
         	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
         	
         	// Get OrderProduct.quantity if type slim/round
-        	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), order.getSlimReturned(), order.getRoundReturned(), order.getCustomerId());
+        	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()), order.getCustomerId());
         	
         	orderService.setToDelivered(orderId);
         	redirectAttributes.addFlashAttribute("msg", "Order has been set to delivered.");
@@ -548,10 +571,20 @@ public class OrderController {
         logger.debug("Save order.");
         
         Order order = orderProductEntity.getOrder();
+        System.out.println("RoundCount: " + order.getRoundReturned());
+        System.out.println("SlimCount: " + order.getSlimReturned());
+        
+        if (order.getRoundReturned().equalsIgnoreCase("")) {
+        	order.setRoundReturned("0");
+        }
+        
+        if (order.getSlimReturned().equalsIgnoreCase("")) {
+        	order.setSlimReturned("0");
+        }
         
         if (result.hasErrors()) {
             model.addAttribute("customerId", order.getCustomerId());
-            model.addAttribute("newDrNumber", orderService.getNewDrNumber());
+            //model.addAttribute("newDrNumber", orderService.getNewDrNumber());
 
             Customer customer = customerService.view(order.getCustomerId());
             model.addAttribute("customerName", customer.getName());
@@ -559,19 +592,23 @@ public class OrderController {
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
-            order.setDeliveryReceiptNum(orderService.getNewDrNumber());
+            //order.setDeliveryReceiptNum(orderService.getNewDrNumber());
             order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             order.setStatus("Pending");
             
             Order insertedOrder = orderService.insert(order);
             
-            for (OrderProduct op : orderProductEntity.getOpList()) {
-            	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
-            		// Do not save
-            	} else {
-            		op.setOrderId(insertedOrder.getOrderId());
-            		orderProductService.insert(op);
-            	}
+            List<OrderProduct> orderProductEntityList = orderProductEntity.getOpList();
+            
+            if (orderProductEntityList != null && orderProductEntityList.size() != 0) {
+            	for (OrderProduct op : orderProductEntityList) {
+                	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
+                		// Do not save
+                	} else {
+                		op.setOrderId(insertedOrder.getOrderId());
+                		orderProductService.insert(op);
+                	}
+                }
             }
             
             redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
@@ -588,6 +625,14 @@ public class OrderController {
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Update order.");
         Order order = orderProductEntity.getOrder();
+        
+        if (order.getRoundReturned().equalsIgnoreCase("")) {
+        	order.setRoundReturned("0");
+        }
+        
+        if (order.getSlimReturned().equalsIgnoreCase("")) {
+        	order.setSlimReturned("0");
+        }
         
         if (result.hasErrors()) {
             model.addAttribute("customerId", order.getCustomerId());
