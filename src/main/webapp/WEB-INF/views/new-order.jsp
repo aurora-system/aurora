@@ -124,7 +124,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Round Returned:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="order.roundReturned" type="text" class="form-control" id="roundReturned" placeholder="0"/>
+                                    <form:input style="background-color:#F6ECD5;" path="order.roundReturned" type="text" class="form-control" id="roundReturned" placeholder="0"/>
 <%--                                     <form:errors path="order.roundReturned" class="control-label"/> --%>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Slim Returned:</label>
                                 <div class="col-sm-9"> 
-                                    <form:input path="order.slimReturned" type="text" class="form-control" id="slimReturned" placeholder="0"/>
+                                    <form:input style="background-color:#D5E8F6;" path="order.slimReturned" type="text" class="form-control" id="slimReturned" placeholder="0"/>
 <%--                                     <form:errors path="order.slimReturned" class="control-label"/> --%>
                                 </div>
                             </div>

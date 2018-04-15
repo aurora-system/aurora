@@ -86,7 +86,7 @@
 										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-default" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
+											<input class="btn btn-default" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
                                     </td>

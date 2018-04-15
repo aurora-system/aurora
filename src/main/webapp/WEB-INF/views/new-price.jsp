@@ -4,13 +4,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
+<spring:url value="/orders/neworder" var="urlNewOrder" />
 <body>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Add new product for ${customer.name}
+                    <div class="panel-heading clearfix">
+                        Add new product price for ${customer.name}
+                        <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
                     </div>
                     <div class="panel-body">
                         <spring:url value="/prices/save" var="savePriceUrl"/>
