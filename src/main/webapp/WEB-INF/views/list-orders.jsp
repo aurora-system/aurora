@@ -45,6 +45,8 @@
                             <th>Total Amount</th>
                             <th>Round #</th>
                             <th>Slim #</th>
+                            <th>Returned Round</th>
+                            <th>Returned Slim</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Edit</th>
@@ -80,6 +82,8 @@
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.totalAmount}"></fmt:formatNumber></td>
                                     <td>${o.order.roundCount}</td>
                                     <td>${o.order.slimCount}</td>
+                                    <td>${o.order.roundReturned}</td>
+                                    <td>${o.order.slimReturned}</td>
                                     <td>${o.formattedDate}</td>
                                     <td>${o.order.status}</td>
                                     <td>
