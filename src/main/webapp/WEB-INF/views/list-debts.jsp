@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
                                     <tr>
                                         <td>${debt.createdAt}</td>
                                         <td>${debt.remarks}</td>
-                                        <td>${debt.amount}</td>
+                                        <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${debt.amount}"></fmt:formatNumber></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

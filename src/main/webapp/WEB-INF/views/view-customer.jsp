@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -71,8 +72,8 @@
 	                                <tr>
 	                                    <td>${o.deliveryReceiptNum}</td>
 	                                    <td><center><span class="label label-primary">${o.status}</span></center></td>
-	                                    <td>${o.amountPaid}</td>
-	                                    <td>${o.totalAmount}</td>
+	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.amountPaid}"></fmt:formatNumber></td>
+	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.totalAmount}"></fmt:formatNumber></td>
 	                                    <td>${o.roundCount}</td>
 	                                    <td>${o.slimCount}</td>
 	                                    <td>${o.createdAt}</td>
@@ -147,7 +148,7 @@
 	                        		<td>${dueDate}</td>
 	                        		<td>${totalBorrowedRound}</td>
 	                        		<td>${totalBorrowedSlim}</td>
-	                        		<td>${totalDebt}</td>
+	                        		<td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${totalDebt}"></fmt:formatNumber></td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>

@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading clearfix">
                         <p style="margin-bottom: 0px;">
-                            <strong>List of products</strong>
+                            <strong>List of Products</strong>
                             <spring:url value="/products/new" var="newProductUrl"/>
                             <a href="${newProductUrl}" class="btn btn-default pull-right" role="button">Add New Product</a>
                         </p>                        
@@ -43,7 +44,7 @@
                                     <tr>
                                         <td>${product.name}</td>
                                         <td>${product.description}</td>
-                                        <td>${product.sellingPrice}</td>
+                                        <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${product.sellingPrice}"></fmt:formatNumber></td>
                                         <td>
                                             <spring:url value="/products/edit/${product.productId}" var="editProductUrl"/>
                                             <a href="${editProductUrl}" class="btn btn-default">Edit Product</a>

@@ -45,8 +45,10 @@
                                 </div>
                             </spring:bind>
                             <div class="form-group">
+                            	<spring:url value="/debts/list?cid=${entry.key}" var="urlListDebts" />
 		                        <div class="col-sm-offset-3 col-sm-9">
 		                      	    <button type="submit" class="btn btn-primary">Save A/R Entry</button>
+		                      	    <a href="${urlListDebts}" class="btn btn-primary">Cancel</a>
 		                        </div>
 		                    </div>
                         </form:form>
