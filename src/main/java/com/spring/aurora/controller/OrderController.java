@@ -595,12 +595,12 @@ public class OrderController {
         }
         
         if (result.hasErrors()) {
-            model.addAttribute("customerId", order.getCustomerId());
+            //model.addAttribute("customerId", order.getCustomerId());
             //model.addAttribute("newDrNumber", orderService.getNewDrNumber());
 
-            Customer customer = customerService.view(order.getCustomerId());
-            model.addAttribute("customerName", customer.getName());
-            return "new-order";
+            //Customer customer = customerService.view(order.getCustomerId());
+            //model.addAttribute("customerName", customer.getName());
+            return "ErrorPage";
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
@@ -647,12 +647,12 @@ public class OrderController {
         }
         
         if (result.hasErrors()) {
-            model.addAttribute("customerId", order.getCustomerId());
-            model.addAttribute("drNumber", orderService.getNewDrNumber());
+            //model.addAttribute("customerId", order.getCustomerId());
+            //model.addAttribute("drNumber", orderService.getNewDrNumber());
 
-            Customer customer = customerService.view(order.getCustomerId());
-            model.addAttribute("customerName", customer.getName());
-            return "edit-order";
+            //Customer customer = customerService.view(order.getCustomerId());
+            //model.addAttribute("customerName", customer.getName());
+            return "ErrorPage";
         } else {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
@@ -663,20 +663,28 @@ public class OrderController {
             Order updatedOrder = orderService.update(order);
             
             for (OrderProduct op : orderProductEntity.getOpList()) {
-            	if (op.getQuantity().equalsIgnoreCase("") || op.getQuantity().equalsIgnoreCase("0")) {
+            	if (op.getQuantity().equalsIgnoreCase("")) {
             		// Do not save
             	} else {
             		op.setOrderId(updatedOrder.getOrderId());
             		System.out.println("Product ID: " + op.getProductId());
             		System.out.println("OP ID: " + op.getOrderProductId());
+            		System.out.println("Quantity: " + op.getQuantity());
             		if (op.getOrderProductId() == null || op.getOrderProductId().equalsIgnoreCase("")) {
             			System.out.println("Saving new OP");
             			//op.setProductId(productId);
-            			orderProductService.insert(op);
+            			if (!op.getQuantity().equalsIgnoreCase("0")) {
+            				orderProductService.insert(op);
+            			}
             			
             		} else {
-            			System.out.println("Updating existing OP");
-            			orderProductService.update(op);
+            			System.out.println("Updating/Delete existing OP");
+            			
+            			if (op.getQuantity().equalsIgnoreCase("0")) {
+            				orderProductService.remove(op);
+            			} else {
+            				orderProductService.update(op);
+            			}
             		}
             	}
             }

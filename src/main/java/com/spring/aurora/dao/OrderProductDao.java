@@ -9,5 +9,6 @@ public interface OrderProductDao {
 	
     OrderProduct insert(OrderProduct orderProduct);
     OrderProduct update(OrderProduct OrderProduct);
+    void remove(OrderProduct OrderProduct);
     List<OrderProduct> findAllByOrderId(String orderId);
 }

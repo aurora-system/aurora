@@ -7,5 +7,6 @@ import com.spring.aurora.model.OrderProduct;
 public interface OrderProductService {
 	OrderProduct insert(OrderProduct orderProduct);
 	OrderProduct update(OrderProduct orderProduct);
+	void remove(OrderProduct orderProduct);
 	List<OrderProduct> findAllByOrderId(String orderId);
 }

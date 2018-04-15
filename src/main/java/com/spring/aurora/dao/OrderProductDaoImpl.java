@@ -52,4 +52,10 @@ public class OrderProductDaoImpl implements OrderProductDao {
 		return orderProducts;
 	}
 
+	@Override
+	public void remove(OrderProduct orderProduct) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(orderProduct);
+	}
+
 }

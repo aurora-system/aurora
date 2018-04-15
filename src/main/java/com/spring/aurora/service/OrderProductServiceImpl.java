@@ -33,4 +33,9 @@ public class OrderProductServiceImpl implements OrderProductService{
 		return orderProductDao.findAllByOrderId(orderId);
 	}
 
+	@Override
+	public void remove(OrderProduct orderProduct) {
+		orderProductDao.remove(orderProduct);
+	}
+
 }

@@ -207,13 +207,13 @@
                     }
                     
                     if ($(this).attr('id') == '1-qty') {
-                    	if ($(this).val() > 0) {
+                    	if ($(this).val() != '') {
                     		$('#roundCount').val($(this).val());
                     	}
                     }
                     
                     if ($(this).attr('id') == '2-qty') {
-                    	if ($(this).val() > 0) {
+                    	if ($(this).val() != '') {
                     		$('#slimCount').val($(this).val());
                     	}
                     }
