@@ -28,14 +28,19 @@
 						
 						<form:hidden path="order.customerId"/>
 						
-<%-- 						<spring:bind path="customerId"> --%>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="type">Customer Name:</label>
-                               <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="customerName" placeholder="${customerName}" readonly="true"/>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="type">Customer Name:</label>
+                           <div class="col-sm-9">
+                                <input type="text" class="form-control" id="customerName" placeholder="${customerName}" readonly="true"/>
                             </div>
-<%--                         </spring:bind> --%>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="type">Customer Address:</label>
+                           <div class="col-sm-9">
+                                <input type="text" class="form-control" id="customerName" placeholder="${customerAddress}" readonly="true"/>
+                            </div>
+                        </div>
 
 						<spring:bind path="order.deliveryReceiptNum">
                             <div class="form-group ${status.error ? 'has-error' : ''}">

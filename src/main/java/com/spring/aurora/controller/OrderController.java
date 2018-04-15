@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -34,6 +35,9 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     
     private static DecimalFormat df2 = new DecimalFormat("#.00");
+    
+    private static final String monthsWith31[] = {"01", "03", "05", "07", "08", "10", "12"};
+    private static final String monthsStr[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 //	@Autowired
 //	OrderFormValidator orderFormValidator;
@@ -133,6 +137,7 @@ public class OrderController {
 		
 		Customer customer = customerService.view(customerId);
 		model.addAttribute("customerName", customer.getName());
+		model.addAttribute("customerAddress", customer.getAddress());
 		return "new-order";
 	}
     
@@ -173,6 +178,7 @@ public class OrderController {
         
         Customer customer = customerService.view(order.getCustomerId());
 		model.addAttribute("customerName", customer.getName());
+		model.addAttribute("customerAddress", customer.getAddress());
 		
 		List<Product> productList = productService.findAll();
 		List<CustomerPrice> cpList = customerPriceService.findAllByCustomerId(order.getCustomerId());
@@ -363,7 +369,7 @@ public class OrderController {
 		
 		System.out.println("Date Picked: " + datePicked);
 		
-		if (datePicked == null || datePicked.equalsIgnoreCase("today")) {
+		if (datePicked == null || datePicked.equalsIgnoreCase("today") || datePicked.equalsIgnoreCase("")) {
 			
 			LocalDateTime now = LocalDateTime.now();
 			
@@ -383,10 +389,16 @@ public class OrderController {
 		} else {
 			String[] splitDate = datePicked.split("-");
 			m = splitDate[0];
-			y = splitDate[1];
+			System.out.println("M: " + m);
+			
+			if (splitDate.length > 1) {
+				y = splitDate[1];
+			}
 		}
 		
-		if (Integer.valueOf(m) % 2 == 0) {
+		List<String> monthsWith31List = Arrays.asList(monthsWith31);
+		
+		if (!monthsWith31List.contains(m)) {
 			if (Integer.valueOf(m) == 2) {
 				if (ReportUtil.isLeapYear(Integer.parseInt(y))) {
 					days = 29;
@@ -418,9 +430,9 @@ public class OrderController {
 			}
 			
 			month = "" + m;
-			System.out.println(">>>>" + month);
 			
 			String dateStr = y + "-" + month + "-" + day;
+			System.out.println(dateStr);
 			Date date = (Date.valueOf(LocalDate.parse(dateStr)));
 			List<Order> orderList = orderService.findAllOrdersToday(date);
 			
@@ -463,7 +475,7 @@ public class OrderController {
 		model.addAttribute("grandTotalSlim", grandTotalSlim);
 		model.addAttribute("grandTotalContainers", grandTotalContainers);
 		
-		model.addAttribute("monthYear", m + " " + y);
+		model.addAttribute("monthYear", monthsStr[Integer.valueOf(m)-1] + " " + y);
     	return "monthly-totals";
     }
     

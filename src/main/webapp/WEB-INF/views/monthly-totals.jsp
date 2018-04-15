@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
@@ -16,7 +17,7 @@
                 <c:if test="${not empty msg}">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            X
                         </button>
                         <strong>${msg}</strong>
                     </div>
@@ -26,7 +27,7 @@
                     <div class="panel-body">
                         <form class="form-horizontal" method="get" action="${monthlyTotalsUrl}">
                             <div class="form-group col-sm-6">
-								<div class="col-sm-6 input-append date" id="datepicker" data-date="03-2018" 
+								<div class="col-sm-6 input-append date" id="datepicker" data-date="00-2018" 
 								     data-date-format="mm-yyyy">
 								 	<input class="form-control" type="text" readonly="readonly" name="d" placeholder="select month">
 								 	<span class="glyphicon glyphicon-calendar add-on" style="padding-top: 5px;"></span>
@@ -66,10 +67,10 @@
 	                            <c:forEach var="dt" items="${dailyTotals}">
 	                                <tr>
 	                                   <td>${dt.date}</td>
-	                                   <td>${dt.totalCash}</td>
-	                                   <td>${dt.totalAr}</td> <!-- Debts -->
-	                                   <td>${dt.totalPayments}</td>
-	                                   <td>${dt.totalExpenses}</td>
+	                                   <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${dt.totalCash}"></fmt:formatNumber></td>
+	                                   <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${dt.totalAr}"></fmt:formatNumber></td> <!-- Debts -->
+	                                   <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${dt.totalPayments}"></fmt:formatNumber></td>
+	                                   <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${dt.totalExpenses}"></fmt:formatNumber></td>
 	                                   <td>${dt.totalDeliveredRound}</td>
 	                                   <td>${dt.totalDeliveredSlim}</td>
 	                                   <td>${dt.totalDeliveredContainers}</td>
@@ -105,7 +106,7 @@
 	                        	<tr>
 	                        		<td>${grandTotalCash}</td>
 	                        		<td>${grandTotalAr}</td>
-	                        		<td>${grandTotalExpense}</td>
+	                        		<td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${grandTotalExpense}"></fmt:formatNumber></td>
 	                        		<td>${grandTotalRound}</td>
 	                        		<td>${grandTotalSlim}</td>
 	                        		<td>${grandTotalContainers}</td>

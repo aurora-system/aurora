@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -71,10 +72,10 @@
 	                                    <td>${d.order.roundCount}</td>
 	                                    <td>${d.order.slimCount}</td>
 	                                    <td>${d.remarks}</td>
-	                                    <td bgcolor="F7E8D0">${d.balanceAmount}</td>
-	                                    <td bgcolor="ECFBEA">${d.paidCash}</td>
-	                                    <td bgcolor="BBC2FB">${d.paidCheck}</td>
-	                                    <td bgcolor="FBEAEA">${d.expenseAmount}</td>
+	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
+	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
+	                                    <td bgcolor="BBC2FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
+	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td>
 	                                    <td>${d.order.roundReturned}</td>
 	                                    <td>${d.order.slimReturned}</td>
 	                                </tr>
