@@ -17,6 +17,7 @@
                             <thead>
                                 <tr>
                                     <th>Customer</th>
+                                    <th>Contact Number</th>
                                     <th width="120">Last Order Date</th>
                                     <th width="120">Due Date</th>
                                     <th width="60" bgcolor="FBEAEA">Days Remaining</th>
@@ -29,6 +30,7 @@
                                     <spring:url value="/orders/neworder?customerId=${c.customer.customerId}" var="newOrderUrl"/>
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${c.customer.name}</a></td>
+                                        <td>${c.customer.mainNumber}</td>
                                         <td>${c.lastOrderDate}</td>
                                         <td>${c.dueDate}</td>
                                         <td bgcolor="FBEAEA">${c.daysRemaining}</td>

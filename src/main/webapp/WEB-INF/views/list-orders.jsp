@@ -43,10 +43,10 @@
                             <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
-                            <th>Round #</th>
-                            <th>Slim #</th>
-                            <th>Returned Round</th>
-                            <th>Returned Slim</th>
+                            <th bgcolor="F6ECD5">Round #</th>
+                            <th bgcolor="D5E8F6">Slim #</th>
+                            <th bgcolor="F6ECD5">Ret Round</th>
+                            <th bgcolor="D5E8F6">Ret Slim</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Edit</th>
@@ -80,10 +80,10 @@
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.amountPaid}"></fmt:formatNumber></td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.totalAmount}"></fmt:formatNumber></td>
-                                    <td>${o.order.roundCount}</td>
-                                    <td>${o.order.slimCount}</td>
-                                    <td>${o.order.roundReturned}</td>
-                                    <td>${o.order.slimReturned}</td>
+                                    <td bgcolor="F6ECD5">${o.order.roundCount}</td>
+                                    <td bgcolor="D5E8F6">${o.order.slimCount}</td>
+                                    <td bgcolor="F6ECD5">${o.order.roundReturned}</td>
+                                    <td bgcolor="D5E8F6">${o.order.slimReturned}</td>
                                     <td>${o.formattedDate}</td>
                                     <td>${o.order.status}</td>
                                     <td>
@@ -116,6 +116,8 @@
             	"order" : [[ 2, "desc"]],
             	"columns": [
             	    { "orderable": false },
+            	    null,
+            	    null,
             	    null,
             	    null,
             	    null,

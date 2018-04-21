@@ -39,6 +39,7 @@
                     <p><b>Main number:</b> ${customer.mainNumber}</p>
                     <p><b>Alternate number:</b> ${customer.alternateNumber}</p>
 					<p><b>Email Address:</b> ${customer.emailAddress}</p>
+					<p><b>Order Interval:</b> ${customer.orderInterval} Days</p>
 					<span class="label label-danger pull-right"><h6>Due in ${daysBeforeDueDate} days</h6></span>
                 </div>
             </div>
@@ -64,6 +65,8 @@
 	                            <th>Total Amount</th>
 	                            <th>Round #</th>
 	                            <th>Slim #</th>
+	                            <th>Ret Round</th>
+	                            <th>Ret Slim</th>
 	                            <th>Date</th>
 	                          </tr>
 	                        </thead>
@@ -76,6 +79,8 @@
 	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.totalAmount}"></fmt:formatNumber></td>
 	                                    <td>${o.roundCount}</td>
 	                                    <td>${o.slimCount}</td>
+	                                    <td>${o.roundReturned}</td>
+	                                    <td>${o.slimReturned}</td>
 	                                    <td>${o.createdAt}</td>
 	                                </tr>
 	                            </c:forEach>
