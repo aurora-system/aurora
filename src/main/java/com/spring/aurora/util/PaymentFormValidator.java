@@ -20,7 +20,7 @@ public class PaymentFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paymentType", "NotEmpty.paymentForm.paymentType");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdAt", "NotEmpty.paymentForm.createdAt");
         Payment payment = (Payment) target;
-        if (payment.getAmount() == null || payment.getAmount() <= 0) {
+        if (payment.getAmount() == null || payment.getAmount() == 0) {
             errors.rejectValue("amount", "Valid.paymentForm.amount");
         }
     }
