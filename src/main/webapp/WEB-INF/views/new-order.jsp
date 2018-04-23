@@ -141,6 +141,15 @@
                             </div>
                         </spring:bind>
                         
+                        <spring:bind path="saveReturned">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="saveReturned">Save Returned Containers Before Delivery:</label>
+                                <div class="col-sm-9">
+                                    <form:radiobuttons path="saveReturned" items="${saveReturnedAnswers}"/>
+                                </div>
+                            </div>
+                        </spring:bind>
+                        
                         <!-- REMARKS -->
                         <spring:bind path="order.remarks">
                             <div class="form-group">
@@ -151,8 +160,8 @@
                                 </div>
                             </div>
                         </spring:bind>
-                        
-                        <div class="col-sm-offset-3 col-sm-9">
+
+						<div class="col-sm-offset-3 col-sm-9">
                         	<button type="submit" class="btn btn-primary">Submit</button>
 	                        <spring:url value="/orders/list" var="listOrdersUrl"/>
 	                        <a href="${listOrdersUrl}" class="btn btn-primary">Cancel</a>

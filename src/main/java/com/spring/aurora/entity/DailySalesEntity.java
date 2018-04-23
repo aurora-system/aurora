@@ -22,6 +22,8 @@ public class DailySalesEntity {
 	private Double balanceAmount;
 	private String remarks;
 	private String dateAndTime;
+	private String returnedRound;
+	private String returnedSlim;
 	
 	public String getDateAndTime() {
 		return dateAndTime;
@@ -94,6 +96,18 @@ public class DailySalesEntity {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getReturnedRound() {
+		return returnedRound;
+	}
+	public void setReturnedRound(String returnedRound) {
+		this.returnedRound = returnedRound;
+	}
+	public String getReturnedSlim() {
+		return returnedSlim;
+	}
+	public void setReturnedSlim(String returnedSlim) {
+		this.returnedSlim = returnedSlim;
 	}
 	
 }

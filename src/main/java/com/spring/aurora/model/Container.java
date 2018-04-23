@@ -21,6 +21,9 @@ public class Container {
 	@Column(name="customer_id")
 	private String customerId;
 	
+	@Column(name="order_id")
+	private String orderId;
+	
 	@Column(name="status")
 	private String status;
 	
@@ -47,6 +50,14 @@ public class Container {
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getStatus() {

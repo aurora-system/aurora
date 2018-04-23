@@ -70,6 +70,7 @@ CREATE TABLE `aurora`.`payment` (
 CREATE TABLE `aurora`.`container` (
   `container_id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
+  `order_id` INT NULL,
   `status` VARCHAR(45) NOT NULL,
   `round_count` INT NULL,
   `slim_count` INT NULL,

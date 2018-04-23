@@ -127,6 +127,7 @@ public class OrderController {
 		// Use this for update
 		// List<OrderProduct> opList = orderProductService.findAllByOrderId(order.getOrderId());
 		ope.setOpList(opList);
+		ope.setSaveReturned("No");
 		
 		model.addAttribute("opeForm", ope);
 		model.addAttribute("customerId", customerId);
@@ -138,6 +139,7 @@ public class OrderController {
 		Customer customer = customerService.view(customerId);
 		model.addAttribute("customerName", customer.getName());
 		model.addAttribute("customerAddress", customer.getAddress());
+		model.addAttribute("saveReturnedAnswers",new String[]{"Yes","No"});
 		return "new-order";
 	}
     
@@ -288,8 +290,8 @@ public class OrderController {
             	
             	totalSlimDelivered += o.getSlimCount();
             	totalRoundDelivered += o.getRoundCount();
-            	totalSlimReturned += Integer.parseInt(o.getSlimReturned());
-            	totalRoundReturned += Integer.parseInt(o.getRoundReturned());
+            	//totalSlimReturned += Integer.parseInt(o.getSlimReturned());
+            	//totalRoundReturned += Integer.parseInt(o.getRoundReturned());
             	
             	
             	Double ar = o.getTotalAmount() - o.getAmountPaid();
@@ -299,12 +301,15 @@ public class OrderController {
             	Timestamp dateTime = o.getCreatedAt();
             	String formattedDate = new SimpleDateFormat("h:mm a").format(dateTime);
             	
+            	dse.setReturnedRound(o.getRoundReturned());
+            	dse.setReturnedSlim(o.getSlimReturned());
             	dse.setRemarks(o.getRemarks());
             	dse.setDateAndTime(formattedDate);
             	dseList.add(dse);
         	}
         }
         
+        // For Expenses
         List<Expense> expenseList = new ArrayList<>();
         expenseList = expenseService.findAllByDate(date);
         
@@ -316,6 +321,7 @@ public class OrderController {
         	dseList.add(dse);
         }
         
+        // For Payments
         List<Payment> paymentList = new ArrayList<>();
         paymentList = paymentService.findAllByDate(date);
         
@@ -332,6 +338,28 @@ public class OrderController {
         		totalCheckPayments += p.getAmount();
         	}
         	dseList.add(dse);
+        }
+        
+        // For Containers
+        List<Container> containerList = new ArrayList<>();
+        containerList = containerService.findContainerActivityByDate(date);
+        
+        for (Container c : containerList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setCustomerName(customerService.view(c.getCustomerId()).getName());
+        	dse.setRemarks("Returned containers.");
+        	
+        	if (c.getStatus().equalsIgnoreCase("R")) {
+        		totalRoundReturned += c.getRoundCount();
+        		totalSlimReturned += c.getSlimCount();
+        		dse.setReturnedRound(Integer.valueOf(c.getRoundCount()).toString());
+        		dse.setReturnedSlim(Integer.valueOf(c.getSlimCount()).toString());
+        		dseList.add(dse);
+        		// TODO: INTRODUCE RETURNED WITH ORDER - RO, R IS ONLY FOR SEPARATE RETURNS
+        	} else if (c.getStatus().equalsIgnoreCase("RO")) {
+        		totalRoundReturned += c.getRoundCount();
+        		totalSlimReturned += c.getSlimCount();
+        	}
         }
         
         model.addAttribute("dailySales", dseList);
@@ -538,8 +566,19 @@ public class OrderController {
         	order = orderService.findOrderByOrderId(orderId);
         	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
         	
-        	// Get OrderProduct.quantity if type slim/round
-        	saveContainerActivity(order.getSlimCount(), order.getRoundCount(), Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()), order.getCustomerId());
+        	// Check first if already saved prior to delivery!
+        	boolean saveReturnedContainers = true;
+        	
+        	for (Container con : containerService.findAllByCustomerId(order.getCustomerId())) {
+        		if (con.getOrderId() != null && con.getOrderId().equalsIgnoreCase(order.getOrderId())) {
+        			saveReturnedContainers = false;
+        			break;
+        		}
+        	}
+        	
+    		saveContainerActivity(order.getSlimCount(), order.getRoundCount(),
+					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
+					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
         	
         	orderService.setToDelivered(orderId);
         	redirectAttributes.addFlashAttribute("msg", "Order has been set to delivered.");
@@ -583,9 +622,6 @@ public class OrderController {
         logger.debug("Save order.");
         
         Order order = orderProductEntity.getOrder();
-        System.out.println("RoundCount: " + order.getRoundReturned());
-        System.out.println("SlimCount: " + order.getSlimReturned());
-        
         if (order.getRoundReturned().equalsIgnoreCase("")) {
         	order.setRoundReturned("0");
         }
@@ -609,6 +645,11 @@ public class OrderController {
             order.setStatus("Pending");
             
             Order insertedOrder = orderService.insert(order);
+            
+			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
+				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
+						order.getCustomerId(), order.getOrderId());
+			}
             
             List<OrderProduct> orderProductEntityList = orderProductEntity.getOpList();
             
@@ -763,7 +804,8 @@ public class OrderController {
      * @param roundReturned
      * @param customerId
      */
-    public void saveContainerActivity (int slimCount, int roundCount, int slimReturned, int roundReturned, String customerId) {
+	public void saveContainerActivity(int slimCount, int roundCount, int slimReturned, int roundReturned,
+			String customerId, String orderId, boolean saveReturnedContainers) {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
@@ -773,12 +815,27 @@ public class OrderController {
         containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         containerService.insert(containerActivity);
         
-        if (slimReturned != 0 || roundReturned != 0) {
+        if (saveReturnedContainers && (slimReturned != 0 || roundReturned != 0)) {
         	containerActivity = new Container();
             containerActivity.setCustomerId(customerId);
+            containerActivity.setOrderId(orderId);
             containerActivity.setRoundCount(roundReturned);
             containerActivity.setSlimCount(slimReturned);
-            containerActivity.setStatus("R");
+            containerActivity.setStatus("RO"); // Return with Order
+            containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            containerService.insert(containerActivity);
+        }
+    }
+    
+    public void saveReturnedContainers (int slimReturned, int roundReturned, String customerId, String orderId) {
+    	
+        if (slimReturned != 0 || roundReturned != 0) {
+        	Container containerActivity = new Container();
+            containerActivity.setCustomerId(customerId);
+            containerActivity.setOrderId(orderId);
+            containerActivity.setRoundCount(roundReturned);
+            containerActivity.setSlimCount(slimReturned);
+            containerActivity.setStatus("RO"); // Return with Order
             containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             containerService.insert(containerActivity);
         }

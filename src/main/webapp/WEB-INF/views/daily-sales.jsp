@@ -76,8 +76,8 @@
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
 	                                    <td bgcolor="BBC2FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
 	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td>
-	                                    <td>${d.order.roundReturned}</td>
-	                                    <td>${d.order.slimReturned}</td>
+	                                    <td>${d.returnedRound}</td>
+	                                    <td>${d.returnedSlim}</td>
 	                                </tr>
 	                            </c:forEach>
 	                        </tbody>
@@ -98,10 +98,10 @@
                 	 	<table id="myTable" class="table table-striped table-bordered table-hover">
                 	 		<thead>
 	                          <tr>
-	                            <th>Slim Delivered</th>
 	                            <th>Round Delivered</th>
-	                            <th>Slim Returned</th>
+	                            <th>Slim Delivered</th>
 	                            <th>Round Returned</th>
+	                            <th>Slim Returned</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash Payment</th>
 	                            <th bgcolor="BBC2FB">Check Payment</th>
@@ -111,10 +111,10 @@
 	                        </thead>
 	                        <tbody>
 	                        	<tr>
-	                        		<td>${totalSlimDelivered}</td>
 	                        		<td>${totalRoundDelivered}</td>
-	                        		<td>${totalSlimReturned}</td>
+	                        		<td>${totalSlimDelivered}</td>
 	                        		<td>${totalRoundReturned}</td>
+	                        		<td>${totalSlimReturned}</td>
 	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
 	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
 	                        		<td bgcolor="BBC2FB">${totalCheckPayments}</td>
