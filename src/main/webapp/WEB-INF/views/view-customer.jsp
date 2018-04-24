@@ -74,7 +74,7 @@
 	                            <c:forEach var="o" items="${orders}">
 	                                <tr>
 	                                    <td>${o.deliveryReceiptNum}</td>
-	                                    <td><center><span class="label label-primary">${o.status}</span></center></td>
+	                                    <td>${o.status}</td>
 	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.amountPaid}"></fmt:formatNumber></td>
 	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.totalAmount}"></fmt:formatNumber></td>
 	                                    <td>${o.roundCount}</td>
@@ -103,7 +103,7 @@
                 	</div>
                 	
                 	 <div class="panel-body">
-                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 	<table id="myPriceTable" class="table table-striped table-bordered table-hover">
                 	 		<thead>
 	                          <tr>
 	                            <th>Product Name</th>
@@ -130,8 +130,41 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+						Container Returns History
+						<a href="${urlReturnContainer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Return Container</a>
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myContainerTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Round Returned</th>
+	                            <th>Slim Returned</th>
+	                            <th>Return Date</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<c:forEach var="ch" items="${containerHistory}">
+	                        		<tr>
+		                        		<td>${ch.roundCount}</td>
+		                        		<td>${ch.slimCount}</td>
+		                        		<td>${ch.createdAt}</td>
+	                        		</tr>
+	                        	</c:forEach>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
                 		Details
-                		<a href="${urlReturnContainer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Return Container</a>
                 		<a href="${urlNewDebt}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New A/R Entry</a>
 						<a href="${urlNewPayment}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                 	</div>
@@ -173,6 +206,10 @@
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"order" : [[ 0, "desc"]]
+            })
+            $('#myPriceTable').DataTable({
+            })
+            $('#myContainerTable').DataTable({
             })
         })
     </script>

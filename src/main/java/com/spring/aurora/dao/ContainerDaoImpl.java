@@ -35,6 +35,13 @@ public class ContainerDaoImpl implements ContainerDao {
 		session.save(container);
 		return container;
 	}
+	
+	@Override
+	public Container update(Container container) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(container);
+		return container;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

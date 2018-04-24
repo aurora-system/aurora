@@ -587,34 +587,6 @@ public class OrderController {
     	return "redirect:/orders/list";
     }
     
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public String saveOrder(@ModelAttribute("orderForm") @Validated Order order,
-//                               BindingResult result, Model model,
-//                               final RedirectAttributes redirectAttributes) {
-//        logger.debug("Save order.");
-//        if (result.hasErrors()) {
-//            model.addAttribute("customerId", order.getCustomerId());
-//            model.addAttribute("newDrNumber", orderService.getNewDrNumber());
-//
-//            Customer customer = customerService.view(order.getCustomerId());
-//            model.addAttribute("customerName", customer.getName());
-//            return "new-order";
-//        } else {
-//            // Add message to flash scope
-//            redirectAttributes.addFlashAttribute("css", "success");
-//            order.setDeliveryReceiptNum(orderService.getNewDrNumber());
-//            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-//            order.setStatus("Pending");
-//            
-//            orderService.insert(order);
-//            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
-//            
-//            // POST/REDIRECT/GET
-//            return "redirect:/orders/list";
-//            //return "redirect:/customers/" + customer.getCustomerId();
-//        }
-//    }
-    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveOrderProductEntity(@ModelAttribute("opeForm") @Validated OrderProductEntity orderProductEntity,
                                BindingResult result, Model model,
@@ -690,7 +662,6 @@ public class OrderController {
         if (result.hasErrors()) {
             //model.addAttribute("customerId", order.getCustomerId());
             //model.addAttribute("drNumber", orderService.getNewDrNumber());
-
             //Customer customer = customerService.view(order.getCustomerId());
             //model.addAttribute("customerName", customer.getName());
             return "ErrorPage";
@@ -730,6 +701,10 @@ public class OrderController {
             	}
             }
             
+            updateContainerActivity(order.getSlimCount(), order.getRoundCount(),
+					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
+					order.getCustomerId(), order.getOrderId());
+            
             redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             
             // POST/REDIRECT/GET
@@ -737,34 +712,6 @@ public class OrderController {
             //return "redirect:/customers/" + customer.getCustomerId();
         }
     }
-    
-//    @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    public String updateOrder(@ModelAttribute("orderForm") @Validated Order order,
-//                               BindingResult result, Model model,
-//                               final RedirectAttributes redirectAttributes) {
-//        logger.debug("Update order.");
-//        if (result.hasErrors()) {
-//            model.addAttribute("customerId", order.getCustomerId());
-//            model.addAttribute("drNumber", orderService.getNewDrNumber());
-//
-//            Customer customer = customerService.view(order.getCustomerId());
-//            model.addAttribute("customerName", customer.getName());
-//            return "new-order";
-//        } else {
-//            // Add message to flash scope
-//            redirectAttributes.addFlashAttribute("css", "success");
-//            order.setDeliveryReceiptNum(order.getDeliveryReceiptNum());
-//            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-//            order.setStatus("Pending");
-//            
-//            orderService.update(order);
-//            redirectAttributes.addFlashAttribute("msg", "Order created successfully!");
-//            
-//            // POST/REDIRECT/GET
-//            return "redirect:/orders/list";
-//            //return "redirect:/customers/" + customer.getCustomerId();
-//        }
-//    }
     
     /**
      * Saves the debt of the customer if amount paid is less than total amount for a given order.
@@ -809,6 +756,7 @@ public class OrderController {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
+        containerActivity.setOrderId(orderId);
         containerActivity.setRoundCount(roundCount);
         containerActivity.setSlimCount(slimCount);
         containerActivity.setStatus("B");
@@ -826,7 +774,38 @@ public class OrderController {
             containerService.insert(containerActivity);
         }
     }
+	
+	public void updateContainerActivity(int slimCount, int roundCount, int slimReturned, int roundReturned,
+			String customerId, String orderId) {
+    	
+    	Container containerActivity = new Container();
+        containerActivity.setCustomerId(customerId);
+        containerActivity.setOrderId(orderId);
+        containerActivity.setRoundCount(roundCount);
+        containerActivity.setSlimCount(slimCount);
+        containerActivity.setStatus("B");
+        containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        containerService.update(containerActivity);
+        
+        if ((slimReturned != 0 || roundReturned != 0)) {
+        	containerActivity = new Container();
+            containerActivity.setCustomerId(customerId);
+            containerActivity.setOrderId(orderId);
+            containerActivity.setRoundCount(roundReturned);
+            containerActivity.setSlimCount(slimReturned);
+            containerActivity.setStatus("RO"); // Return with Order
+            containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            containerService.update(containerActivity);
+        }
+    }
     
+	/**
+	 * 
+	 * @param slimReturned
+	 * @param roundReturned
+	 * @param customerId
+	 * @param orderId
+	 */
     public void saveReturnedContainers (int slimReturned, int roundReturned, String customerId, String orderId) {
     	
         if (slimReturned != 0 || roundReturned != 0) {

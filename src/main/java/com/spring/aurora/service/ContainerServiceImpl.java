@@ -23,6 +23,11 @@ public class ContainerServiceImpl implements ContainerService {
     public Container insert(Container container) {
         return containerDao.insert(container);
     }
+    
+    @Override
+	public Container update(Container container) {
+    	return containerDao.update(container);
+	}
 
     @Override
     public List<Container> findAllByCustomerId(String customerId) {
@@ -38,4 +43,5 @@ public class ContainerServiceImpl implements ContainerService {
 	public List<Container> findContainerActivityByDate(Date date) {
 		return containerDao.findContainerActivityByDate(date);
 	}
+
 }

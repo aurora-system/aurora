@@ -57,7 +57,7 @@
 	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash</th>
-	                            <th bgcolor="BBC2FB">Check</th>
+	                            <th bgcolor="EEE7FB">Check</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
 	                            <th>RR</th>
 	                            <th>SR</th>
@@ -74,7 +74,7 @@
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
-	                                    <td bgcolor="BBC2FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
+	                                    <td bgcolor="EEE7FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
 	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td>
 	                                    <td>${d.returnedRound}</td>
 	                                    <td>${d.returnedSlim}</td>
@@ -104,7 +104,7 @@
 	                            <th>Slim Returned</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash Payment</th>
-	                            <th bgcolor="BBC2FB">Check Payment</th>
+	                            <th bgcolor="EEE7FB">Check Payment</th>
 	                            <th bgcolor="FBEAEA">Expense</th>
 	                            <th bgcolor="D0E6F7">Net Cash</th>
 	                          </tr>
@@ -117,7 +117,7 @@
 	                        		<td>${totalSlimReturned}</td>
 	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
 	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
-	                        		<td bgcolor="BBC2FB">${totalCheckPayments}</td>
+	                        		<td bgcolor="EEE7FB">${totalCheckPayments}</td>
 	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
 	                        		<td bgcolor="D0E6F7">${netCash}</td>
 	                        	</tr>

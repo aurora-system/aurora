@@ -1,22 +1,14 @@
 package com.spring.aurora.controller;
 
-import com.spring.aurora.entity.CustomerDueDateEntity;
-import com.spring.aurora.entity.ProductPriceEntity;
-import com.spring.aurora.model.*;
-import com.spring.aurora.service.*;
-import com.spring.aurora.util.CustomerFormValidator;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.spring.aurora.util.OrderFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +19,27 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.spring.aurora.entity.CustomerDueDateEntity;
+import com.spring.aurora.entity.ProductPriceEntity;
+import com.spring.aurora.model.Container;
+import com.spring.aurora.model.Customer;
+import com.spring.aurora.model.CustomerPrice;
+import com.spring.aurora.model.Order;
+import com.spring.aurora.service.ContainerService;
+import com.spring.aurora.service.CustomerPriceService;
+import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.DebtService;
+import com.spring.aurora.service.ExpenseService;
+import com.spring.aurora.service.OrderService;
+import com.spring.aurora.service.PaymentService;
+import com.spring.aurora.service.ProductService;
+import com.spring.aurora.util.CustomerFormValidator;
+import com.spring.aurora.util.OrderFormValidator;
 
 @Controller
 @RequestMapping(value = "/customers")
@@ -128,21 +136,26 @@ public class CustomerController {
         List<Container> containerList = new ArrayList<>();
         containerList = containerService.findAllByCustomerId(customerId);
         
+        List<Container> returnedContainers = new ArrayList<>();
+   
         int totalRoundBorrowed = 0;
         int totalSlimBorrowed = 0;
         
-        for (Container c : containerList) {   
+        for (Container c : containerList) {
+        	
         	if (c.getStatus().equalsIgnoreCase("B")) {
         		totalRoundBorrowed = totalRoundBorrowed +  c.getRoundCount();
         		totalSlimBorrowed = totalSlimBorrowed + c.getSlimCount();
         	} else {
         		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
         		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
+        		returnedContainers.add(c);
         	}
         }
         
         model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
     	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
+    	model.addAttribute("containerHistory", returnedContainers);
         
     	double debtsSubTotal = debtService.findDebtsTotalByCustomerId(customerId);
         double paymentsSubTotal = paymentService.getPaymentsTotalByCustomerId(customerId);
