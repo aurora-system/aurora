@@ -63,8 +63,8 @@
 	                            <th width="50">Status</th>
 	                            <th>Amount Paid</th>
 	                            <th>Total Amount</th>
-	                            <th>Round #</th>
-	                            <th>Slim #</th>
+	                            <th>Del Round</th>
+	                            <th>Del Slim</th>
 	                            <th>Ret Round</th>
 	                            <th>Ret Slim</th>
 	                            <th>Date</th>

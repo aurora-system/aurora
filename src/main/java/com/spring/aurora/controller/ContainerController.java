@@ -146,7 +146,7 @@ public class ContainerController {
     public String listAllContainers(Model model) {
     	List<Customer> customers = customerService.findAll();
 		Map<String, Object> containersMap = customers.stream()
-				.filter(customer -> getSlimTotal(customer.getCustomerId()) > 0 && getRoundTotal(customer.getCustomerId()) != 0)
+				.filter(customer -> getSlimTotal(customer.getCustomerId()) != 0 || getRoundTotal(customer.getCustomerId()) != 0)
 				.collect(Collectors.toMap(Customer::getCustomerId,
                 customer -> {return new ContainerCustomerEntity(
                         customer, getSlimTotal(customer.getCustomerId()), getRoundTotal(customer.getCustomerId()));}));

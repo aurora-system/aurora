@@ -2,7 +2,7 @@
 <div class="container">
 	<hr>
 	<footer>
-		<p>&copy; Aurora Systems v2.0</p>
+		<p>&copy; Aurora Systems v3.0</p>
 	</footer>
 </div>
 
