@@ -164,9 +164,42 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+						Payment History
+						<a href="${urlNewPayment}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
+                	</div>
+                	
+                	 <div class="panel-body">
+                        <table id="myPaymentTable" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Remarks</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="payment" items="${payments}">
+                                    <tr>
+                                        <td>${payment.createdAt}</td>
+                                        <td>${payment.remarks}</td>
+                                        <td>${payment.amount}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
                 		Details
                 		<a href="${urlNewDebt}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New A/R Entry</a>
-						<a href="${urlNewPayment}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                 	</div>
                 	
                 	 <div class="panel-body">
@@ -210,6 +243,8 @@
             $('#myPriceTable').DataTable({
             })
             $('#myContainerTable').DataTable({
+            })
+            $('#myPaymentTable').DataTable({
             })
         })
     </script>

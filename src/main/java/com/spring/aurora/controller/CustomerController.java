@@ -30,6 +30,7 @@ import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.CustomerPrice;
 import com.spring.aurora.model.Order;
+import com.spring.aurora.model.Payment;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerPriceService;
 import com.spring.aurora.service.CustomerService;
@@ -172,6 +173,9 @@ public class CustomerController {
             );
         }).collect(Collectors.toList());
         model.addAttribute("prices", productPrices);
+        
+        List<Payment> payments = paymentService.findAllByCustomerId(customerId);
+        model.addAttribute("payments", payments);
     	
         return "view-customer";
     }

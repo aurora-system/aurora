@@ -39,16 +39,16 @@
                         <thead>
                           <tr>
                           	<th>Actions</th>
+                          	<th>Status</th>
                             <th>Customer Name</th>
                             <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
-                            <th bgcolor="F6ECD5">Round #</th>
-                            <th bgcolor="D5E8F6">Slim #</th>
+                            <th bgcolor="F6ECD5">Del Round</th>
+                            <th bgcolor="D5E8F6">Del Slim</th>
                             <th bgcolor="F6ECD5">Ret Round</th>
                             <th bgcolor="D5E8F6">Ret Slim</th>
                             <th>Date</th>
-                            <th>Status</th>
                             <th>Edit</th>
                           </tr>
                         </thead>
@@ -76,6 +76,7 @@
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
 									</td>
+									<td>${o.order.status}</td>
                                     <td><a href="${urlViewCustomer}">${o.customerName}</a></td>
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.amountPaid}"></fmt:formatNumber></td>
@@ -85,7 +86,6 @@
                                     <td bgcolor="F6ECD5">${o.order.roundReturned}</td>
                                     <td bgcolor="D5E8F6">${o.order.slimReturned}</td>
                                     <td>${o.formattedDate}</td>
-                                    <td>${o.order.status}</td>
                                     <td>
                                     	<spring:url value="/orders/edit" var="editOrderUrl"/>
 										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
@@ -112,7 +112,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({
-            	"order" : [[ 2, "desc"]],
+            	"order" : [[ 3, "desc"]],
             	"columns": [
             	    { "orderable": false },
             	    null,
