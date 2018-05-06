@@ -76,11 +76,18 @@
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-    <script type="text/javascript">
+    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
+	<script type="text/javascript">
         $(document).ready(() => {
-            $('#containersTable').DataTable()
+            $('#containersTable').DataTable({
+                fixedHeader: true,
+                paging: false,
+                scrollY: 350,
+                scrollCollapse: true
+            })
         })
     </script>
 </body>

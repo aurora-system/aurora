@@ -19,8 +19,7 @@ insert into debt (customer_id,amount,remarks) values (308, 125.00 ,'Beginning Ba
 insert into debt (customer_id,amount,remarks) values (662, 455.00 ,'Beginning Balance');
 insert into debt (customer_id,amount,remarks) values (188, 1400.00 ,'Beginning Balance');
 insert into debt (customer_id,amount,remarks) values ( 27, 1440.00 ,'Beginning Balance');
--- new
--- insert into debt (customer_id,amount,remarks) values (, 2300.00 ,'Beginning Balance');
--- insert into debt (customer_id,amount,remarks) values (, 3500.00 ,'Beginning Balance');
--- insert into debt (customer_id,amount,remarks) values (, 210.00 ,'Beginning Balance');
--- insert into debt (customer_id,amount,remarks) values (, 2450.00 ,'Beginning Balance');
+insert into debt (customer_id,amount,remarks) values (793, 2300.00 ,'Beginning Balance');
+insert into debt (customer_id,amount,remarks) values (454, 3500.00 ,'Beginning Balance');
+insert into debt (customer_id,amount,remarks) values (763, 210.00 ,'Beginning Balance');
+insert into debt (customer_id,amount,remarks) values (772, 2450.00 ,'Beginning Balance');

@@ -232,19 +232,27 @@
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({
-            	"order" : [[ 0, "desc"]]
+            	"order" : [[ 0, "desc"]],
+				fixedHeader: true,
+				scrollY: 350,
+                scrollCollapse: true
             })
             $('#myPriceTable').DataTable({
+				fixedHeader: true
             })
             $('#myContainerTable').DataTable({
+				fixedHeader: true
             })
             $('#myPaymentTable').DataTable({
+				fixedHeader: true
             })
         })
     </script>
