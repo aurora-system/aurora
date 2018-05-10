@@ -18,6 +18,12 @@ public class CustomerDueDateEntity {
 		this.dueDate = dueDate;
 		this.daysRemaining = daysRemaining;
 	}
+	
+	public CustomerDueDateEntity(Customer customer, LocalDate lastOrderDate) {
+		super();
+		this.customer = customer;
+		this.lastOrderDate = lastOrderDate;
+	}
 
 	public Customer getCustomer() {
 		return customer;

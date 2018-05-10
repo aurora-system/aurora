@@ -269,8 +269,7 @@ public class CustomerController {
     		if (mostRecentOrderDate != null) {
     			lastOrderDate = mostRecentOrderDate.toLocalDateTime().toLocalDate();
     			LocalDate dueDate = lastOrderDate.plusDays(c.getOrderInterval());
-    			
-    			if (date == java.sql.Date.valueOf( dueDate )) {
+    			if (date.equals(java.sql.Date.valueOf( dueDate ))) {
     				CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, lastOrderDate);
             		cddList.add(cdd);
     			}

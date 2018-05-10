@@ -60,7 +60,7 @@
 	                        <div class="form-group ${status.error ? 'has-error' : ''}">
 	                        <c:forEach var="p" items="${productList}" varStatus="s">
 	                        	<div class="form-group">
-		                        	<label class="col-sm-3 control-label" for="type">${p.name} Qty:</label>
+		                        	<label class="col-sm-3 control-label" for="type">${p.name}:</label>
 		                        	<div class="col-sm-1"> 
 <%-- 		                        		<input name="quantity" type="text" class="form-control calc" id="${p.productId}-qty" placeholder="0"/> --%>
 		                            	<form:input path="opList[${s.index}].quantity" name="quantity" type="text" class="form-control calc" id="${p.productId}-qty" placeholder="0"/>
