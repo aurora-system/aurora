@@ -299,8 +299,7 @@ public class CustomerController {
             redirectAttributes.addFlashAttribute("msg", "Customer created successfully!");
 
             // POST/REDIRECT/GET
-            return "redirect:/customers/list";
-            //return "redirect:/customers/" + customer.getCustomerId();
+            return "redirect:/customers/view?customerId="  + customer.getCustomerId();
         }
     }
     
@@ -321,8 +320,7 @@ public class CustomerController {
 			redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
 
             // POST/REDIRECT/GET
-            return "redirect:/customers/list";
-            //return "redirect:/customers/" + customer.getCustomerId();
+            return "redirect:/customers/view?customerId=" + customer.getCustomerId();
         }
     }
 }
