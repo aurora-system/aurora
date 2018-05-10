@@ -247,6 +247,41 @@ public class CustomerController {
         return "list-duedates";
     }
     
+    @RequestMapping(value = "/dailyduedates", method = RequestMethod.GET)
+	public String viewDailyDueDates(Model model,
+			@RequestParam(value = "d", defaultValue = "today", required = false) String d) {
+
+		logger.info("Show daily due dates.");
+		
+		List<CustomerDueDateEntity> cddList = new ArrayList<>();
+    	List<Customer> customerList = customerService.findAll();
+		
+		java.sql.Date date = ("today".equalsIgnoreCase(d)) ? java.sql.Date.valueOf(LocalDate.now())
+				: java.sql.Date.valueOf(LocalDate.parse(d));
+		
+		String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
+		model.addAttribute("datePicked", datePicked);
+		
+		for (Customer c : customerList) {
+			Timestamp mostRecentOrderDate = orderService.getMostRecentOrderDate(c.getCustomerId());
+    		LocalDate lastOrderDate = LocalDate.now();
+    		
+    		if (mostRecentOrderDate != null) {
+    			lastOrderDate = mostRecentOrderDate.toLocalDateTime().toLocalDate();
+    			LocalDate dueDate = lastOrderDate.plusDays(c.getOrderInterval());
+    			
+    			if (date == java.sql.Date.valueOf( dueDate )) {
+    				CustomerDueDateEntity cdd = new CustomerDueDateEntity(c, lastOrderDate);
+            		cddList.add(cdd);
+    			}
+    		}
+		}
+
+		model.addAttribute("dueDates", cddList);
+		
+		return "list-daily-duedates";
+	}
+    
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("customerForm") @Validated Customer customer,
                                BindingResult result, Model model,
