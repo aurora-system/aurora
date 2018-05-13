@@ -54,15 +54,16 @@ public class ProductController {
         productFormValidator.validate(product, result);
         if (result.hasErrors()) {
             return "new-product";
-        } else {
-            redirect.addFlashAttribute("msg", "Product added successfully!");
-        }
+        } 
         product.setInitialPrice(product.getSellingPrice());
         product.setUpdatedAt(Date.valueOf(LocalDate.now()));
         if (StringUtils.isEmpty(product.getProductId())
                 || !StringUtils.hasText(product.getProductId())) {
             product.setCreatedAt(Date.valueOf(LocalDate.now()));
             product.setProductId(null);
+            redirect.addFlashAttribute("msg", "Product added successfully!");
+        } else {
+            redirect.addFlashAttribute("msg", "Product updated successfully!");
         }
         productService.save(product);
         return "redirect:/products/list";
@@ -72,6 +73,6 @@ public class ProductController {
     public String editProductForm(@PathVariable String productId,Model model){
         Product product = productService.findByProductId(productId);
         model.addAttribute("product", product);
-        return "new-product";
+        return "edit-product";
     }
 }
