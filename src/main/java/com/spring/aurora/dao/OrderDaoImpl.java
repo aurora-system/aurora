@@ -118,6 +118,15 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
+	public List<Order> findAllPendingOrders() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Order> orders = session.createCriteria(Order.class)
+				.add(Restrictions.eq("status", "Pending"))
+				.list();
+		return orders;
+	}
+
+	@Override
 	public void cancelOrder(String orderId) {
 		Session session = this.sessionFactory.getCurrentSession();
 

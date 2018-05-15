@@ -516,7 +516,7 @@ public class OrderController {
     	List<Order> orderList = new ArrayList<>();
     	List<OrderCustomerEntity> orderCustomerEntityList = new ArrayList<>();
         
-    	orderList = orderService.findAll();
+    	orderList = orderService.findAllOrdersToday(Date.valueOf(LocalDate.now()));
         
         for (Order order : orderList) {
         	

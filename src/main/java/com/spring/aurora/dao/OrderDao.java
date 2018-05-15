@@ -12,6 +12,7 @@ public interface OrderDao {
     Timestamp getMostRecentOrderDate(String customerId);
     List<Order> findAllByCustomerId(String customerId);
     List<Order> findAllOrdersToday(Date dateParam);
+    List<Order> findAllPendingOrders();
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
     Order findOrderByOrderId(String orderId);

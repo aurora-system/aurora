@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.ArrayList;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -56,7 +57,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findAllOrdersToday(Date dateParam) {
-		return orderDao.findAllOrdersToday(dateParam);
+		List<Order> pendingOrders = orderDao.findAllPendingOrders();
+		List<Order> todayOrders = orderDao.findAllOrdersToday(dateParam);
+		List<Order> allOrders = new ArrayList<>();
+		allOrders.addAll(pendingOrders);
+		allOrders.addAll(todayOrders);
+		return allOrders;
 	}
 
 	@Override
