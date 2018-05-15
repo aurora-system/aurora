@@ -38,6 +38,23 @@
                     <strong>${failmsg}</strong>
                 </div>
             </c:if>
+
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <spring:url value="/orders/list" var="listOrdersByDateUrl"/>
+                    <form class="form-horizontal" method="get" action="${listOrdersByDateUrl}">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Date: </label>
+                            <div class="col-sm-3">
+                                <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
+                            </div>
+                               <div class="col-sm-5">
+                                <button type="submit" class="btn btn-primary">List Orders</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

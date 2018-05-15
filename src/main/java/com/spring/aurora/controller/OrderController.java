@@ -508,7 +508,7 @@ public class OrderController {
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listOrders(Model model) {
+    public String listOrders(@RequestParam(required = false) String d, Model model) {
     	logger.info("List all orders.");
     	
     	int pendingCount = 0;
@@ -516,7 +516,8 @@ public class OrderController {
     	List<Order> orderList = new ArrayList<>();
     	List<OrderCustomerEntity> orderCustomerEntityList = new ArrayList<>();
         
-    	orderList = orderService.findAllOrdersToday(Date.valueOf(LocalDate.now()));
+    	Date date = d == null || d.isEmpty() ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
+    	orderList = orderService.findAllOrdersToday(date);
         
         for (Order order : orderList) {
         	
