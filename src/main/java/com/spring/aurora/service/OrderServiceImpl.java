@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> allOrders = new ArrayList<>();
 		allOrders.addAll(pendingOrders);
 		allOrders.addAll(todayOrders);
-		return pendingOrders;
+		return allOrders;
 	}
 
 	@Override
