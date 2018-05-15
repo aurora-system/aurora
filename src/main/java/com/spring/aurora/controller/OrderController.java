@@ -691,7 +691,7 @@ public class OrderController {
             order.setStatus("Pending");
             
             Order insertedOrder = orderService.insert(order);
-            System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
+            //System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
             
             
 			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
