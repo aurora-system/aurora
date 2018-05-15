@@ -510,6 +510,8 @@ public class OrderController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listOrders(Model model) {
     	logger.info("List all orders.");
+    	
+    	int pendingCount = 0;
         
     	List<Order> orderList = new ArrayList<>();
     	List<OrderCustomerEntity> orderCustomerEntityList = new ArrayList<>();
@@ -517,6 +519,11 @@ public class OrderController {
     	orderList = orderService.findAll();
         
         for (Order order : orderList) {
+        	
+        	if (order.getStatus().equalsIgnoreCase("pending")) {
+        		pendingCount++;
+        	}
+        	
         	OrderCustomerEntity oce = new OrderCustomerEntity();
         	oce.setOrder(order);
         	Customer customer = customerService.view(order.getCustomerId());
@@ -526,7 +533,40 @@ public class OrderController {
             orderCustomerEntityList.add(oce);
         }
         model.addAttribute("orders", orderCustomerEntityList);
+        model.addAttribute("pendingCount", pendingCount);
+        
         return "list-orders";
+    }
+    
+    @RequestMapping(value = "/pending", method = RequestMethod.GET)
+    public String listPendingOrders(Model model) {
+    	logger.info("List all pending orders.");
+    	
+    	int pendingCount = 0;
+        
+    	List<Order> orderList = new ArrayList<>();
+    	List<OrderCustomerEntity> orderCustomerEntityList = new ArrayList<>();
+        
+    	orderList = orderService.findAll();
+        
+        for (Order order : orderList) {
+        	
+        	if (order.getStatus().equalsIgnoreCase("pending")) {
+        		pendingCount++;
+        		
+        		OrderCustomerEntity oce = new OrderCustomerEntity();
+            	oce.setOrder(order);
+            	Customer customer = customerService.view(order.getCustomerId());
+                oce.setCustomerName(customer.getName());
+                String formattedDate = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a").format(order.getCreatedAt());
+                oce.setFormattedDate(formattedDate);
+                orderCustomerEntityList.add(oce);
+        	}
+        }
+        model.addAttribute("orders", orderCustomerEntityList);
+        model.addAttribute("pendingCount", pendingCount);
+        
+        return "list-pending-orders";
     }
 
     @RequestMapping("/{customerId}")
@@ -576,6 +616,7 @@ public class OrderController {
         		}
         	}
         	
+        	// TODO: Add fields for slim container buy refill, round container buy refill, slim container buy empty, round container buy empty
     		saveContainerActivity(order.getSlimCount(), order.getRoundCount(),
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
@@ -585,6 +626,39 @@ public class OrderController {
         }
     	
     	return "redirect:/orders/list";
+    }
+    
+    @RequestMapping("/deliverPending")
+	public String deliverPendingOrder(Order order, BindingResult result, @RequestParam String orderId,
+			final RedirectAttributes redirectAttributes) {
+
+    	if (result.hasErrors()) {
+            return "list-orders";
+        } else {
+        	
+        	order = orderService.findOrderByOrderId(orderId);
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+        	
+        	// Check first if already saved prior to delivery!
+        	boolean saveReturnedContainers = true;
+        	
+        	for (Container con : containerService.findAllByCustomerId(order.getCustomerId())) {
+        		if (con.getOrderId() != null && con.getOrderId().equalsIgnoreCase(order.getOrderId())) {
+        			saveReturnedContainers = false;
+        			break;
+        		}
+        	}
+        	
+        	// TODO: Add fields for slim container buy refill, round container buy refill, slim container buy empty, round container buy empty
+    		saveContainerActivity(order.getSlimCount(), order.getRoundCount(),
+					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
+					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
+        	
+        	orderService.setToDelivered(orderId);
+        	redirectAttributes.addFlashAttribute("msg", "Order has been set to delivered.");
+        }
+    	
+    	return "redirect:/orders/pending";
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -617,6 +691,8 @@ public class OrderController {
             order.setStatus("Pending");
             
             Order insertedOrder = orderService.insert(order);
+            System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
+            
             
 			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
 				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),

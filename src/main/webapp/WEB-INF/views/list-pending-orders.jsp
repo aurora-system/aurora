@@ -4,14 +4,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/orders/pending" var="urlShowPending" />
 <body>
 <jsp:include page="fragments/header.jsp" />
     
     <div class="container">
 	    <div class="row">
 	        <div class="col-lg-12">
-				<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
+<%-- 	        	<span class="label label-danger pull-right" style="margin-bottom: 10px;">There are ${pendingCount} pending orders</span> --%>
+				<a href="${urlAddCustomer}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
 	        </div>
 	    </div>
     </div>
@@ -42,14 +42,13 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    List of Orders
+                    List of Pending Orders
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
                           	<th>Actions</th>
-                          	<th>Status</th>
                             <th>Customer Name</th>
                             <th>DR #</th>
                             <th>Amount Paid</th>
@@ -72,7 +71,7 @@
 <!-- 											<input type="hidden" name=orderId value=${o.order.orderId}>  -->
 <%-- 											<input class="btn btn-default" type="submit" value="Edit" <c:if test="${o.order.status == 'Delivered'}"><c:out value="disabled='disabled'"/></c:if>> --%>
 <%-- 										</form> --%>
-										<form action="deliver" method="get" style="display: inline-block;">
+										<form action="deliverPending" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 											<input type="hidden" name=orderId value=${o.order.orderId}> 
 											<input class="btn btn-success" type="submit" value="Deliver"
@@ -86,7 +85,6 @@
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
 									</td>
-									<td>${o.order.status}</td>
                                     <td><a href="${urlViewCustomer}">${o.customerName}</a></td>
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.amountPaid}"></fmt:formatNumber></td>
@@ -127,7 +125,6 @@
             	"order" : [[ 3, "desc"]],
             	"columns": [
             	    { "orderable": false },
-            	    null,
             	    null,
             	    null,
             	    null,
