@@ -4,17 +4,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
+<spring:url value="/orders/pending" var="urlShowPending" />
 <body>
 <jsp:include page="fragments/header.jsp" />
     
-    <div class="container">
-	    <div class="row">
-	        <div class="col-lg-12">
-<%-- 	        	<span class="label label-danger pull-right" style="margin-bottom: 10px;">There are ${pendingCount} pending orders</span> --%>
-				<a href="${urlAddCustomer}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
-	        </div>
+    <c:if test="${pendingCount > 0}">
+	    <div class="container">
+		    <div class="row">
+		        <div class="col-lg-12">
+					<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
+		        </div>
+		    </div>
 	    </div>
-    </div>
+    </c:if>
     
     <div class="container">
     <div class="row">
