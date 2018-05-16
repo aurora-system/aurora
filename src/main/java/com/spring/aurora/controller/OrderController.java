@@ -536,6 +536,9 @@ public class OrderController {
         model.addAttribute("orders", orderCustomerEntityList);
         model.addAttribute("pendingCount", pendingCount);
         
+        String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
+        model.addAttribute("datePicked", datePicked);
+        
         return "list-orders";
     }
     
@@ -693,7 +696,8 @@ public class OrderController {
             
             Order insertedOrder = orderService.insert(order);
             //System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
-            
+            //System.out.println("Slim count: " + order.getSlimCount());
+            //System.out.println("Round count: " + order.getRoundCount());
             
 			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
 				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),

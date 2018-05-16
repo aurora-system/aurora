@@ -50,7 +50,7 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
-                    List of Orders
+                    List of Orders for ${datePicked}
                     <c:if test="${pendingCount > 0}">
                     	<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
                     </c:if>
