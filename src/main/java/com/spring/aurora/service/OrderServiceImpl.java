@@ -61,7 +61,14 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> todayOrders = orderDao.findAllOrdersToday(dateParam);
 		List<Order> allOrders = new ArrayList<>();
 		allOrders.addAll(pendingOrders);
-		allOrders.addAll(todayOrders);
+		
+		for (Order todayOrder: todayOrders) {
+			if (!allOrders.contains(todayOrder)) {
+				allOrders.add(todayOrder);
+			}
+		}
+		
+		//allOrders.addAll(todayOrders);
 		return allOrders;
 	}
 

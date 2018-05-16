@@ -152,4 +152,23 @@ public class Order {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj == null) {
+	        return false;
+	    }
+		
+	    if (!Order.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    
+	    final Order other = (Order) obj;
+	    if (!this.orderId.equals(other.orderId)) {
+	        return false;
+	    }
+
+	    return true;
+	}
 }

@@ -7,17 +7,6 @@
 <spring:url value="/orders/pending" var="urlShowPending" />
 <body>
 <jsp:include page="fragments/header.jsp" />
-    
-    <c:if test="${pendingCount > 0}">
-	    <div class="container">
-		    <div class="row">
-		        <div class="col-lg-12">
-					<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
-		        </div>
-		    </div>
-	    </div>
-    </c:if>
-    
     <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -60,8 +49,11 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
-                <div class="panel-heading">
+                <div class="panel-heading clearfix">
                     List of Orders
+                    <c:if test="${pendingCount > 0}">
+                    	<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
+                    </c:if>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
