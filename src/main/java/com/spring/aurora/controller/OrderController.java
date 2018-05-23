@@ -695,9 +695,11 @@ public class OrderController {
             order.setStatus("Pending");
             
             Order insertedOrder = orderService.insert(order);
-            //System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
-            //System.out.println("Slim count: " + order.getSlimCount());
-            //System.out.println("Round count: " + order.getRoundCount());
+            
+            System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
+            Customer customer = customerService.view(order.getCustomerId());
+            customer.setOrderInterval(orderProductEntity.getOrderInterval());
+            customerService.update(customer);
             
 			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
 				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),

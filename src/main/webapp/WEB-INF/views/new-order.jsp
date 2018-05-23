@@ -53,6 +53,15 @@
                             </div>
                         </spring:bind>
                         
+                        <spring:bind path="orderInterval">
+	                        <div class="form-group">
+	                        	<label class="col-sm-3 control-label" for="orderInterval">Order Interval:</label>
+	                        		<div class="col-sm-9">
+	                     				<form:input type="text" path="orderInterval" class="form-control" id="orderInterval" placeholder="Override the order interval here"/>
+	                                </div>
+	                        </div>
+                        </spring:bind>
+                         
                         <hr />
                         
                         <!-- PRODUCTS -->
@@ -227,11 +236,19 @@
                     	if ($(this).val() > 0) {
                     		$('#roundCount').val($(this).val());
                     	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#roundCount').val(0);
+                    	}
                     }
                     
                     if ($(this).attr('id') == '2-qty') {
                     	if ($(this).val() > 0) {
                     		$('#slimCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#slimCount').val(0);
                     	}
                     }
                 });

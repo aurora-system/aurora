@@ -9,9 +9,16 @@ import com.spring.aurora.model.Product;
 public class OrderProductEntity {
 
 	private Order order;
+	private int orderInterval;
 	private List<OrderProduct> opList;
 	private String saveReturned;
 	
+	public int getOrderInterval() {
+		return orderInterval;
+	}
+	public void setOrderInterval(int orderInterval) {
+		this.orderInterval = orderInterval;
+	}
 	public Order getOrder() {
 		return order;
 	}
