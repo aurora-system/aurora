@@ -697,9 +697,12 @@ public class OrderController {
             Order insertedOrder = orderService.insert(order);
             
             System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
-            Customer customer = customerService.view(order.getCustomerId());
-            customer.setOrderInterval(orderProductEntity.getOrderInterval());
-            customerService.update(customer);
+            
+            if (orderProductEntity.getOrderInterval() > 0) {
+            	Customer customer = customerService.view(order.getCustomerId());
+                customer.setOrderInterval(orderProductEntity.getOrderInterval());
+                customerService.update(customer);
+            }
             
 			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
 				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
