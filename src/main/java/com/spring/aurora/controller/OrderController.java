@@ -275,6 +275,7 @@ public class OrderController {
         Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
         String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
         model.addAttribute("datePicked", datePicked);
+        model.addAttribute("dateParam", d);
         
         List<Order> orderList = orderService.findAllOrdersToday(date);
         
@@ -377,6 +378,128 @@ public class OrderController {
         double netCash = totalCashPayments - totalExpenses;
         model.addAttribute("netCash", ReportUtil.applyCurrencyFormat("" + netCash));
         return "daily-sales";
+    }
+	
+	@RequestMapping(value = "/dailyPrintPreview", method = RequestMethod.GET)
+    public String dailySalesPrintPreview(Model model, @RequestParam(value="d", defaultValue="today", required=false) String d ) {
+        logger.info("Daily sales report.");
+        
+        int totalSlimDelivered = 0;
+        int totalRoundDelivered = 0;
+        int totalSlimReturned = 0;
+        int totalRoundReturned = 0;
+        Double totalExpenses = 0.00;
+        Double totalCashPayments = 0.00;
+        Double totalCheckPayments = 0.00;
+        Double totalDebt = 0.00;
+        
+        List<DailySalesEntity> dseList = new ArrayList<>();
+        
+        Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
+        String datePicked = new SimpleDateFormat("MMM dd YYYY").format(date);
+        model.addAttribute("datePicked", datePicked);
+        
+        List<Order> orderList = orderService.findAllOrdersToday(date);
+        
+        for (Order o : orderList) {
+        	if (o.getStatus().equalsIgnoreCase("Delivered")) {
+        		DailySalesEntity dse = new DailySalesEntity();
+            	dse.setOrder(o);
+            	
+            	Customer c = customerService.view(o.getCustomerId());
+            	dse.setCustomerName(c.getName());
+            	totalCashPayments += o.getAmountPaid();
+            	dse.setPaidCash(o.getAmountPaid());
+            	
+            	totalSlimDelivered += o.getSlimCount();
+            	totalRoundDelivered += o.getRoundCount();
+            	//totalSlimReturned += Integer.parseInt(o.getSlimReturned());
+            	//totalRoundReturned += Integer.parseInt(o.getRoundReturned());
+            	
+            	
+            	Double ar = o.getTotalAmount() - o.getAmountPaid();
+            	totalDebt += ar;
+            	dse.setBalanceAmount(Double.parseDouble(df2.format(ar)));
+            	
+            	Timestamp dateTime = o.getCreatedAt();
+            	String formattedDate = new SimpleDateFormat("h:mm a").format(dateTime);
+            	
+            	dse.setReturnedRound(o.getRoundReturned());
+            	dse.setReturnedSlim(o.getSlimReturned());
+            	dse.setRemarks(o.getRemarks());
+            	dse.setDateAndTime(formattedDate);
+            	dseList.add(dse);
+        	}
+        }
+        
+        // For Expenses
+        List<Expense> expenseList = new ArrayList<>();
+        expenseList = expenseService.findAllByDate(date);
+        
+        for (Expense e : expenseList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setRemarks(e.getDescription());
+        	totalExpenses += e.getAmount();
+        	dse.setExpenseAmount(Double.parseDouble(df2.format(e.getAmount())));
+        	dseList.add(dse);
+        }
+        
+        // For Payments
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList = paymentService.findAllByDate(date);
+        
+        for (Payment p : paymentList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setCustomerName(customerService.view(p.getCustomerId()).getName());
+        	dse.setRemarks(p.getRemarks());
+        	
+        	if (p.getPaymentType().equalsIgnoreCase("CASH")) {
+        		dse.setPaidCash(Double.parseDouble(df2.format(p.getAmount())));
+        		totalCashPayments += p.getAmount();
+        	} else {
+        		dse.setPaidCheck(Double.parseDouble(df2.format(p.getAmount())));
+        		totalCheckPayments += p.getAmount();
+        	}
+        	dseList.add(dse);
+        }
+        
+        // For Containers
+        List<Container> containerList = new ArrayList<>();
+        containerList = containerService.findContainerActivityByDate(date);
+        
+        for (Container c : containerList) {
+        	DailySalesEntity dse = new DailySalesEntity();
+        	dse.setCustomerName(customerService.view(c.getCustomerId()).getName());
+        	dse.setRemarks("Returned containers.");
+        	
+        	if (c.getStatus().equalsIgnoreCase("R")) {
+        		totalRoundReturned += c.getRoundCount();
+        		totalSlimReturned += c.getSlimCount();
+        		dse.setReturnedRound(Integer.valueOf(c.getRoundCount()).toString());
+        		dse.setReturnedSlim(Integer.valueOf(c.getSlimCount()).toString());
+        		dseList.add(dse);
+        		// TODO: INTRODUCE RETURNED WITH ORDER - RO, R IS ONLY FOR SEPARATE RETURNS
+        	} else if (c.getStatus().equalsIgnoreCase("RO")) {
+        		totalRoundReturned += c.getRoundCount();
+        		totalSlimReturned += c.getSlimCount();
+        	}
+        }
+        
+        model.addAttribute("dailySales", dseList);
+        
+        model.addAttribute("totalSlimDelivered", totalSlimDelivered);
+        model.addAttribute("totalRoundDelivered", totalRoundDelivered);
+        model.addAttribute("totalSlimReturned", totalSlimReturned);
+        model.addAttribute("totalRoundReturned", totalRoundReturned);
+        
+        model.addAttribute("totalExpenses", ReportUtil.applyCurrencyFormat("" + totalExpenses));
+        model.addAttribute("totalCashPayments", ReportUtil.applyCurrencyFormat("" + totalCashPayments));
+        model.addAttribute("totalCheckPayments", ReportUtil.applyCurrencyFormat("" + totalCheckPayments));
+        model.addAttribute("totalDebt", ReportUtil.applyCurrencyFormat("" + totalDebt));
+        
+        double netCash = totalCashPayments - totalExpenses;
+        model.addAttribute("netCash", ReportUtil.applyCurrencyFormat("" + netCash));
+        return "daily-sales-print-preview";
     }
     
 	@RequestMapping(value = "/monthly", method = RequestMethod.GET)

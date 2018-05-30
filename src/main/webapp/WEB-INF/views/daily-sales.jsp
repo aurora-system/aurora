@@ -7,6 +7,7 @@
 <jsp:include page="fragments/header.jsp" />
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/orders/daily" var="dailySalesUrl"/>
+<spring:url value="/orders/dailyPrintPreview" var="dailySalesPrintPreviewUrl"/>
 <body>
     <div class="container">
     	<div class="row">
@@ -42,8 +43,9 @@
 	    <div class="row">
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
-	                <div class="panel-heading">
+	                <div class="panel-heading clearfix">
 	                    Daily sales for ${datePicked}.
+	                    <a href="${dailySalesPrintPreviewUrl}?d=${dateParam}" class="btn btn-default pull-right" role="button">Print Preview</a>
 	                </div>
 	                <div class="panel-body">
 	                    <table id="myTable" class="table table-striped table-bordered table-hover">

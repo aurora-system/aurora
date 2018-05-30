@@ -25,12 +25,20 @@ CREATE TABLE `aurora`.`orders` (
   `total_amount` DECIMAL(10,2) NOT NULL,
   `cont_slim_count` INT NOT NULL DEFAULT 0,
   `cont_round_count` INT NOT NULL DEFAULT 0,
+  `slim_buy_count` INT NOT NULL DEFAULT 0,
+  `round_buy_count` INT NOT NULL DEFAULT 0,
   `cont_slim_returned` INT NOT NULL DEFAULT 0,
   `cont_round_returned` INT NOT NULL DEFAULT 0,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   `remarks` VARCHAR(500) NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC));
+ 
+-- QUERY - May 28 2018
+--ALTER TABLE `aurora`.`orders` 
+--ADD COLUMN `slim_buy_count` INT(11) NOT NULL DEFAULT '0' AFTER `cont_round_count`,
+--ADD COLUMN `round_buy_count` INT(11) NOT NULL DEFAULT '0' AFTER `slim_buy_count`;
+  
   
 -- DEBT
 CREATE TABLE `aurora`.`debt` (
