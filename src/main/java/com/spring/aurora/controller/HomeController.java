@@ -1,9 +1,15 @@
 package com.spring.aurora.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +26,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * Handles requests for the application home page.
- */
-@Transactional
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+
+	@Autowired
+	DataSource dataSource;
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -48,22 +53,20 @@ public class HomeController {
 	
 	@RequestMapping(value = "/help", method = RequestMethod.GET)
 	public String help(Model model) {
-		
-		
 		return "help-page";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginx", method = RequestMethod.GET)
 	public String getLoginPage(@RequestParam(value="error", required=false) boolean error,
 			@RequestParam boolean logout,
 			Model model) {
 		logger.debug("Received request to show login page");
 
-		// Add an error message to the model if login is unsuccessful
-		// The 'error' parameter is set to true based on the when the authentication has failed. 
-		// We declared this under the authentication-failure-url attribute inside the spring-security.xml
-		/* See below:
-		 <form-login 
+		/* Add an error message to the model if login is unsuccessful
+		   The 'error' parameter is set to true based on the when the authentication has failed.
+		   We declared this under the authentication-failure-url attribute inside the spring-security.xml
+		   See below:
+		   <form-login
 				login-page="/krams/auth/login" 
 				authentication-failure-url="/krams/auth/login?error=true" 
 				default-target-url="/krams/main/common"/>
@@ -76,7 +79,6 @@ public class HomeController {
 			model.addAttribute("msg", "You've been logged out successfully.");
 		}
 		
-		// This will resolve to /WEB-INF/jsp/login.jsp
 		return "login";
 	}
      
@@ -92,17 +94,27 @@ public class HomeController {
 		return "403";
 	}
 	
-//    @RequestMapping(value = "/home", method = RequestMethod.POST)
-//    public String login(@RequestParam String username, @RequestParam String password, Model model) {
-//    	User u = this.userService.loginUser(username, password);
-//    	
-//        if (u == null) {
-//        	return "login";
-//        } else {
-//        	model.addAttribute("username", username);
-//            model.addAttribute("user", u);
-//            return "user";
-//        }
-//    }
-    
+    /*@RequestMapping(value = "/home", method = RequestMethod.POST)
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    	User u = this.userService.loginUser(username, password);
+
+        if (u == null) {
+        	return "login";
+        } else {
+        	model.addAttribute("username", username);
+            model.addAttribute("user", u);
+            return "user";
+        }
+    }*/
+
+    @RequestMapping ("/alter")
+	public String alter(Model model) throws SQLException {
+		String alterStmt = "ALTER TABLE `aurora`.`orders` ADD COLUMN `slim_buy_count` INT(11) NOT NULL DEFAULT '0' AFTER `cont_round_count`, ADD COLUMN `round_buy_count` INT(11) NOT NULL DEFAULT '0' AFTER `slim_buy_count`";
+
+        Connection conn = dataSource.getConnection();
+        Statement stmt = conn.createStatement();
+		boolean res = stmt.execute(alterStmt);
+		model.addAttribute("result", res);
+    	return "alter";
+	}
 }
