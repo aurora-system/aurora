@@ -28,6 +28,11 @@ public class ContainerServiceImpl implements ContainerService {
 	public Container update(Container container) {
     	return containerDao.update(container);
 	}
+    
+    @Override
+	public Container delete(Container container) {
+    	return containerDao.delete(container);
+	}
 
     @Override
     public List<Container> findAllByCustomerId(String customerId) {

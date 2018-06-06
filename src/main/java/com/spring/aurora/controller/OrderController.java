@@ -772,9 +772,6 @@ public class OrderController {
             		// Do not save
             	} else {
             		op.setOrderId(updatedOrder.getOrderId());
-            		System.out.println("Product ID: " + op.getProductId());
-            		System.out.println("OP ID: " + op.getOrderProductId());
-            		System.out.println("Quantity: " + op.getQuantity());
             		if (op.getOrderProductId() == null || op.getOrderProductId().equalsIgnoreCase("")) {
             			System.out.println("Saving new OP");
             			//op.setProductId(productId);
@@ -878,7 +875,8 @@ public class OrderController {
         containerActivity.setSlimCount(slimCount);
         containerActivity.setStatus("B");
         containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        containerService.update(containerActivity);
+        containerService.delete(containerActivity);
+        containerService.insert(containerActivity);
         
         if ((slimReturned != 0 || roundReturned != 0)) {
         	containerActivity = new Container();
@@ -888,7 +886,8 @@ public class OrderController {
             containerActivity.setSlimCount(slimReturned);
             containerActivity.setStatus("RO"); // Return with Order
             containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-            containerService.update(containerActivity);
+            containerService.delete(containerActivity);
+            containerService.insert(containerActivity);
         }
     }
     

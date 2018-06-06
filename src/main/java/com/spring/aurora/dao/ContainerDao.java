@@ -9,6 +9,7 @@ public interface ContainerDao {
     
 	Container insert(Container container);
 	Container update(Container container);
+	Container delete(Container container);
     List<Container> findAllByCustomerId(String customerId);
     List<Container> findAll();
     List<Container> findContainerActivityByDate(Date date);
