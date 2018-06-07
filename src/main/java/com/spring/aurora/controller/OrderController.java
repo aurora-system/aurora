@@ -825,10 +825,15 @@ public class OrderController {
     			debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
     		}
     		
-    		
     		debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
     		debtEntry.setOrderId(orderId);
+    		debtService.delete(debtEntry);
     		debtService.insert(debtEntry);
+    	} else {
+    		Debt debtEntry = new Debt();
+    		debtEntry.setCustomerId(customerId);
+    		debtEntry.setOrderId(orderId);
+    		debtService.delete(debtEntry);
     	}
     }
     

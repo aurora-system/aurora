@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface DebtService {
     Debt insert(Debt customer);
+    Debt delete(Debt debt);
     List<Debt> findAllByCustomerId(String customerId);
     List<Debt> findAllByCustomerIdAndDate(String customerId, Date date);
     double findDebtsTotalByCustomerId(String customerId);

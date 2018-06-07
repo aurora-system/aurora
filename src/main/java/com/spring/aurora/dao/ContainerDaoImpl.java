@@ -48,14 +48,12 @@ public class ContainerDaoImpl implements ContainerDao {
 
 		Session session = this.sessionFactory.getCurrentSession();
 
-		List<Container> containers = new ArrayList<>();
-		
 		// TODO: set the Safe Updates mode in MySQL to false (Edit > Preferences > SQL Editor > un-check Safe Updates
 		session.createQuery("delete from Container c where c.customerId = :customerId and c.orderId = :orderId")
 				.setParameter("customerId", container.getCustomerId()).setParameter("orderId", container.getOrderId())
 				.executeUpdate();
 
-		return container;
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")

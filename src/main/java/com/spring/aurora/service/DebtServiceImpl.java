@@ -22,6 +22,11 @@ public class DebtServiceImpl implements DebtService {
     public Debt insert(Debt debt) {
         return debtDao.insert(debt);
     }
+    
+    @Override
+    public Debt delete(Debt debt) {
+        return debtDao.delete(debt);
+    }
 
     @Override
     public List<Debt> findAllByCustomerId(String customerId) {

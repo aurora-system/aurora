@@ -1,5 +1,6 @@
 package com.spring.aurora.dao;
 
+import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Payment;
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -23,6 +25,19 @@ public class DebtDaoImpl implements DebtDao {
         Session session = sessionFactory.getCurrentSession();
         session.save(debt);
         return debt;
+    }
+    
+    @Override
+    public Debt delete(Debt debt) {
+    	
+    	Session session = this.sessionFactory.getCurrentSession();
+
+		// TODO: set the Safe Updates mode in MySQL to false (Edit > Preferences > SQL Editor > un-check Safe Updates
+		session.createQuery("delete from Debt d where d.customerId = :customerId and d.orderId = :orderId")
+				.setParameter("customerId", debt.getCustomerId()).setParameter("orderId", debt.getOrderId())
+				.executeUpdate();
+
+		return null;
     }
 
     @Override
