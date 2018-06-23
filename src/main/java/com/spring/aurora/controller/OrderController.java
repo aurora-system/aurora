@@ -240,6 +240,8 @@ public class OrderController {
 		ope.setOpList(opListForDisplay);
 		model.addAttribute("opeForm", ope);
 		model.addAttribute("drNumber", order.getDeliveryReceiptNum());
+		model.addAttribute("createdAt", order.getCreatedAt());
+		model.addAttribute("status", order.getStatus());
         //model.addAttribute("orderForm", order);
         return "edit-order";
     }
@@ -762,8 +764,6 @@ public class OrderController {
             // Add message to flash scope
             redirectAttributes.addFlashAttribute("css", "success");
             order.setDeliveryReceiptNum(order.getDeliveryReceiptNum());
-            order.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-            order.setStatus("Pending");
             
             Order updatedOrder = orderService.update(order);
             
@@ -794,6 +794,8 @@ public class OrderController {
             updateContainerActivity(order.getSlimCount(), order.getRoundCount(),
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId());
+            
+            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
             
             redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             

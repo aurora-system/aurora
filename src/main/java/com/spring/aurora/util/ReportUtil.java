@@ -46,7 +46,7 @@ public class ReportUtil {
 		int slimTotal = 0;
 		
 		for (Order o : orderList) {
-			slimTotal += o.getRoundCount();
+			slimTotal += o.getSlimCount();
 		}
 		
 		return slimTotal;

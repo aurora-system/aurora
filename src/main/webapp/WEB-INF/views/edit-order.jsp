@@ -98,26 +98,6 @@
                             </div>
                         </spring:bind>
                         
-<%--                          <spring:bind path="slimCount"> --%>
-<!--                             <div class="form-group"> -->
-<!--                                 <label class="col-sm-3 control-label" for="type">Slim Order:</label> -->
-<!--                                 <div class="col-sm-9">  -->
-<%--                                     <form:input path="slimCount" type="text" class="form-control" id="slimCount" placeholder="0"/> --%>
-<%--                                     <form:errors path="slimCount" class="control-label"/> --%>
-<!--                                 </div> -->
-<!--                             </div> -->
-<%--                         </spring:bind> --%>
-                        
-<%--                         <spring:bind path="roundCount"> --%>
-<!--                             <div class="form-group"> -->
-<!--                                 <label class="col-sm-3 control-label" for="type">Round Order:</label> -->
-<!--                                 <div class="col-sm-9">  -->
-<%--                                     <form:input path="roundCount" type="text" class="form-control" id="roundCount" placeholder="0"/> --%>
-<%--                                     <form:errors path="roundCount" class="control-label"/> --%>
-<!--                                 </div> -->
-<!--                             </div> -->
-<%--                         </spring:bind> --%>
-                        
                         <spring:bind path="order.roundReturned">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="type">Round Returned:</label>
@@ -147,6 +127,9 @@
                                 </div>
                             </div>
                         </spring:bind>
+                        
+                        <form:input type="hidden" path="order.createdAt" class="form-control" id="createdAt" value="${createdAt}"/>
+                        <form:input type="hidden" path="order.status" class="form-control" id="status" value="${status}"/>
                         
                         <div class="col-sm-offset-3 col-sm-9">
                         	<button type="submit" class="btn btn-primary">Submit</button>
