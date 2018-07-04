@@ -48,6 +48,39 @@
     </div>
     
     <div class="container">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="panel panel-info">
+                	<div class="panel-heading clearfix">
+						Prices
+						<spring:url value="/prices/list/${customer.customerId}" var="listPriceUrl" />
+						<a href="${listPriceUrl}" class="btn btn-default pull-right" role="button">Add Product &amp; Price</a>
+                	</div>
+                	
+                	 <div class="panel-body">
+                	 	<table id="myPriceTable" class="table table-striped table-bordered table-hover">
+                	 		<thead>
+	                          <tr>
+	                            <th>Product Name</th>
+	                            <th>Price</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<c:forEach var="p" items="${prices}">
+	                        		<tr>
+	                        		<td>${p.product.name}</td>
+	                        		<td>${p.sellingPrice}</td>
+	                        	</tr>
+	                        	</c:forEach>
+	                        </tbody>
+                	 	</table>
+                	 </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="container">
 	    <div class="row">
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
@@ -90,39 +123,6 @@
 	            </div>
 	        </div>
 	    </div>
-    </div>
-    
-    <div class="container">
-    	<div class="row">
-    		<div class="col-lg-12">
-    			<div class="panel panel-info">
-                	<div class="panel-heading clearfix">
-						Prices
-						<spring:url value="/prices/list/${customer.customerId}" var="listPriceUrl" />
-						<a href="${listPriceUrl}" class="btn btn-default pull-right" role="button">Add Product &amp; Price</a>
-                	</div>
-                	
-                	 <div class="panel-body">
-                	 	<table id="myPriceTable" class="table table-striped table-bordered table-hover">
-                	 		<thead>
-	                          <tr>
-	                            <th>Product Name</th>
-	                            <th>Price</th>
-	                          </tr>
-	                        </thead>
-	                        <tbody>
-	                        	<c:forEach var="p" items="${prices}">
-	                        		<tr>
-	                        		<td>${p.product.name}</td>
-	                        		<td>${p.sellingPrice}</td>
-	                        	</tr>
-	                        	</c:forEach>
-	                        </tbody>
-                	 	</table>
-                	 </div>
-                </div>
-    		</div>
-    	</div>
     </div>
     
     <div class="container">
