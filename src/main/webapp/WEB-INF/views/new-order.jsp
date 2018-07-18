@@ -251,6 +251,46 @@
                     		$('#slimCount').val(0);
                     	}
                     }
+                    
+                    if ($(this).attr('id') == '3-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#roundBuyContOnlyCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#roundBuyContOnlyCount').val(0);
+                    	}
+                    }
+                    
+                    if ($(this).attr('id') == '4-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#slimBuyContOnlyCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#slimBuyContOnlyCount').val(0);
+                    	}
+                    }
+                    
+                    if ($(this).attr('id') == '5-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#roundBuyRefillCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#roundBuyRefillCount').val(0);
+                    	}
+                    }
+                    
+                    if ($(this).attr('id') == '6-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#slimBuyRefillCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#slimBuyRefillCount').val(0);
+                    	}
+                    }
                 });
                 
                 $('#totalAmount').attr('value', total);

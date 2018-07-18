@@ -41,6 +41,12 @@ public class Order {
 	@Column(name="cont_round_count")
 	private int roundCount;
 	
+	@Column(name="slim_buy_count")
+	private int slimBuyCount;
+	
+	@Column(name="round_buy_count")
+	private int roundBuyCount;
+	
 	@Column(name="cont_slim_returned")
 	private String slimReturned;
 	
@@ -115,6 +121,22 @@ public class Order {
 
 	public void setRoundCount(int roundCount) {
 		this.roundCount = roundCount;
+	}
+
+	public int getSlimBuyCount() {
+		return slimBuyCount;
+	}
+
+	public void setSlimBuyCount(int slimBuyCount) {
+		this.slimBuyCount = slimBuyCount;
+	}
+
+	public int getRoundBuyCount() {
+		return roundBuyCount;
+	}
+
+	public void setRoundBuyCount(int roundBuyCount) {
+		this.roundBuyCount = roundBuyCount;
 	}
 
 	public String getSlimReturned() {
