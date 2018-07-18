@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -364,7 +365,7 @@ public class OrderController {
         		totalSlimReturned += c.getSlimCount();
         	}
         }
-        
+
         model.addAttribute("dailySales", dseList);
         
         model.addAttribute("totalSlimDelivered", totalSlimDelivered);
@@ -381,7 +382,15 @@ public class OrderController {
         model.addAttribute("netCash", ReportUtil.applyCurrencyFormat("" + netCash));
         
         if (mode.equalsIgnoreCase("preview")) {
-        	return "daily-sales-print-preview";
+			Collections.sort(dseList,
+					(DailySalesEntity dse1, DailySalesEntity dse2) -> {
+						Order o1 = dse1.getOrder();
+						Order o2 = dse2.getOrder();
+						String dr1 = o1 == null ? "" : o1.getDeliveryReceiptNum();
+						String dr2 = o2 == null ? "" : o2.getDeliveryReceiptNum();
+						return dr1.compareTo(dr2);
+					} );
+			return "daily-sales-print-preview";
         } else {
         	return "daily-sales";
         }
