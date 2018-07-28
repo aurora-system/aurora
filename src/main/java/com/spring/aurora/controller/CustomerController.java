@@ -90,11 +90,16 @@ public class CustomerController {
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listCustomers(Model model) {
+    public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
         model.addAttribute("customers", customerService.findAll());
         //model.addAttribute("orderForm", new Order());
-        return "list-customers";
+        if (mode.equalsIgnoreCase("preview")) {
+        	return "list-customers-print-preview";
+        } else {
+        	return "list-customers";
+        }
+        
     }
     
     @RequestMapping(value = "/view", method = RequestMethod.GET)

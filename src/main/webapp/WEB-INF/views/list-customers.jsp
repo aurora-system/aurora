@@ -5,6 +5,7 @@
 <html lang="en">
 <spring:url value="/resources/css/main.css" var="mainCss" />
 <spring:url value="/customers/new" var="urlAddCustomer" />
+<spring:url value="/customers/list" var="urlListCustomers" />
 <body>
 	<jsp:include page="fragments/header.jsp" />
     <div class="container">
@@ -27,8 +28,8 @@
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
                     <p class="pull-left">List of Customers</p> 
-                    
-                    <a href="${urlAddCustomer}" class="btn btn-default pull-right" role="button">New Customer</a>
+                    <a href="${urlAddCustomer}" class="btn btn-info pull-right" role="button" style="margin-left: 5px;">New Customer</a>
+                    <a href="${urlListCustomers}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
