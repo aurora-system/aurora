@@ -294,6 +294,12 @@ public class OrderController {
             	
             	totalSlimDelivered += o.getSlimRefillOnlyCount();
             	totalRoundDelivered += o.getRoundRefillOnlyCount();
+            	totalSlimDelivered += o.getSlimContainerOnlyCount();
+            	totalRoundDelivered += o.getRoundContainerOnlyCount();
+            	totalSlimDelivered += o.getSlimRefillWithContainerCount();
+            	totalRoundDelivered += o.getRoundRefillWithContainerCount();
+            	totalSlimDelivered += o.getSlimFreeCount();
+            	totalRoundDelivered += o.getRoundFreeCount();
             	//totalSlimReturned += Integer.parseInt(o.getSlimReturned());
             	//totalRoundReturned += Integer.parseInt(o.getRoundReturned());
             	

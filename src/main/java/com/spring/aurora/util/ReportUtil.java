@@ -38,6 +38,7 @@ public class ReportUtil {
 			roundTotal += o.getRoundRefillOnlyCount();
 			roundTotal += o.getRoundContainerOnlyCount();
 			roundTotal += o.getRoundRefillWithContainerCount();
+			roundTotal += o.getRoundFreeCount();
 		}
 		
 		return roundTotal;
@@ -51,6 +52,7 @@ public class ReportUtil {
 			slimTotal += o.getSlimRefillOnlyCount();
 			slimTotal += o.getSlimContainerOnlyCount();
 			slimTotal += o.getSlimRefillWithContainerCount();
+			slimTotal += o.getSlimFreeCount();
 		}
 		
 		return slimTotal;
