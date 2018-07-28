@@ -66,8 +66,8 @@
 	                            <c:forEach var="d" items="${dailySales}">
 	                                <tr>
 	                                    <td>${d.customerName}</td>
-	                                    <td>${d.order.slimCount}</td>
-	                                    <td>${d.order.roundCount}</td>
+	                                    <td>${d.order.slimRefillOnlyCount}</td>
+	                                    <td>${d.order.roundRefillOnlyCount}</td>
 	                                    <td>${d.order.slimReturned}</td>
 	                                    <td>${d.order.roundReturned}</td>
 	                                    <td>${d.order.deliveryReceiptNum}</td>

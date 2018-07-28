@@ -96,8 +96,12 @@
 	                            <th width="50">Status</th>
 	                            <th>Amount Paid</th>
 	                            <th>Total Amount</th>
-	                            <th>Del Round</th>
-	                            <th>Del Slim</th>
+	                            <th>Round Refill Only</th>
+	                            <th>Slim Refill Only</th>
+	                            <th>Round Cont Only</th>
+	                            <th>Slim Cont Only</th>
+	                            <th>Round Both</th>
+	                            <th>Slim Both</th>
 	                            <th>Ret Round</th>
 	                            <th>Ret Slim</th>
 	                            <th>Date</th>
@@ -110,8 +114,12 @@
 	                                    <td>${o.status}</td>
 	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.amountPaid}"></fmt:formatNumber></td>
 	                                    <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.totalAmount}"></fmt:formatNumber></td>
-	                                    <td>${o.roundCount}</td>
-	                                    <td>${o.slimCount}</td>
+	                                    <td>${o.roundRefillOnlyCount}</td>
+	                                    <td>${o.slimRefillOnlyCount}</td>
+	                                    <td>${o.roundContainerOnlyCount}</td>
+                                    	<td>${o.slimContainerOnlyCount}</td>
+                                    	<td>${o.roundRefillWithContainerCount}</td>
+                                    	<td>${o.slimRefillWithContainerCount}</td>
 	                                    <td>${o.roundReturned}</td>
 	                                    <td>${o.slimReturned}</td>
 	                                    <td>${o.createdAt}</td>

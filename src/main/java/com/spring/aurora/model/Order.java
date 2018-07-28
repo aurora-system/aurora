@@ -1,9 +1,6 @@
 package com.spring.aurora.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,17 +32,29 @@ public class Order {
 	@Column(name="total_amount")
 	private Double totalAmount;
 	
-	@Column(name="cont_slim_count")
-	private int slimCount;
+	@Column(name="slim_refill_only_count")
+	private int slimRefillOnlyCount;
 	
-	@Column(name="cont_round_count")
-	private int roundCount;
+	@Column(name="round_refill_only_count")
+	private int roundRefillOnlyCount;
 	
-	@Column(name="slim_buy_count")
-	private int slimBuyCount;
+	@Column(name="slim_container_only_count")
+	private int slimContainerOnlyCount;
 	
-	@Column(name="round_buy_count")
-	private int roundBuyCount;
+	@Column(name="round_container_only_count")
+	private int roundContainerOnlyCount;
+	
+	@Column(name="slim_refill_with_container_count")
+	private int slimRefillWithContainerCount;
+	
+	@Column(name="round_refill_with_container_count")
+	private int roundRefillWithContainerCount;
+	
+	@Column(name="round_free_count")
+	private int roundFreeCount;
+	
+	@Column(name="slim_free_count")
+	private int slimFreeCount;
 	
 	@Column(name="cont_slim_returned")
 	private String slimReturned;
@@ -107,36 +116,68 @@ public class Order {
 		this.totalAmount = totalAmount;
 	}
 
-	public int getSlimCount() {
-		return slimCount;
+	public int getSlimRefillOnlyCount() {
+		return slimRefillOnlyCount;
 	}
 
-	public void setSlimCount(int slimCount) {
-		this.slimCount = slimCount;
+	public void setSlimRefillOnlyCount(int slimCount) {
+		this.slimRefillOnlyCount = slimCount;
 	}
 
-	public int getRoundCount() {
-		return roundCount;
+	public int getRoundRefillOnlyCount() {
+		return roundRefillOnlyCount;
 	}
 
-	public void setRoundCount(int roundCount) {
-		this.roundCount = roundCount;
+	public void setRoundRefillOnlyCount(int roundCount) {
+		this.roundRefillOnlyCount = roundCount;
 	}
 
-	public int getSlimBuyCount() {
-		return slimBuyCount;
+	public int getSlimContainerOnlyCount() {
+		return slimContainerOnlyCount;
 	}
 
-	public void setSlimBuyCount(int slimBuyCount) {
-		this.slimBuyCount = slimBuyCount;
+	public void setSlimContainerOnlyCount(int slimContainerOnlyCount) {
+		this.slimContainerOnlyCount = slimContainerOnlyCount;
 	}
 
-	public int getRoundBuyCount() {
-		return roundBuyCount;
+	public int getRoundContainerOnlyCount() {
+		return roundContainerOnlyCount;
 	}
 
-	public void setRoundBuyCount(int roundBuyCount) {
-		this.roundBuyCount = roundBuyCount;
+	public void setRoundContainerOnlyCount(int roundContainerOnlyCount) {
+		this.roundContainerOnlyCount = roundContainerOnlyCount;
+	}
+
+	public int getSlimRefillWithContainerCount() {
+		return slimRefillWithContainerCount;
+	}
+
+	public void setSlimRefillWithContainerCount(int slimRefillWithContainerCount) {
+		this.slimRefillWithContainerCount = slimRefillWithContainerCount;
+	}
+
+	public int getRoundRefillWithContainerCount() {
+		return roundRefillWithContainerCount;
+	}
+
+	public void setRoundRefillWithContainerCount(int roundRefillWithContainerCount) {
+		this.roundRefillWithContainerCount = roundRefillWithContainerCount;
+	}
+
+	public int getRoundFreeCount() {
+		return roundFreeCount;
+	}
+
+	public void setRoundFreeCount(int roundFreeCount) {
+		this.roundFreeCount = roundFreeCount;
+	}
+
+	public int getSlimFreeCount() {
+		return slimFreeCount;
+	}
+
+	public void setSlimFreeCount(int slimFreeCount) {
+		this.slimFreeCount = slimFreeCount;
 	}
 
 	public String getSlimReturned() {

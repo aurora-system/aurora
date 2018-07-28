@@ -82,8 +82,14 @@
 							</div>
 						</spring:bind>
 						
-						<form:input type="hidden" path="order.roundCount" class="form-control" id="roundCount"/>
-						<form:input type="hidden" path="order.slimCount" class="form-control" id="slimCount"/>
+						<form:input type="hidden" path="order.roundRefillOnlyCount" class="form-control" id="roundRefillOnlyCount"/>
+						<form:input type="hidden" path="order.slimRefillOnlyCount" class="form-control" id="slimRefillOnlyCount"/>
+						<form:input type="hidden" path="order.roundContainerOnlyCount" class="form-control" id="roundContainerOnlyCount"/>
+						<form:input type="hidden" path="order.slimContainerOnlyCount" class="form-control" id="slimContainerOnlyCount"/>
+						<form:input type="hidden" path="order.roundRefillWithContainerCount" class="form-control" id="roundRefillWithContainerCount"/>
+						<form:input type="hidden" path="order.slimRefillWithContainerCount" class="form-control" id="slimRefillWithContainerCount"/>
+						<form:input type="hidden" path="order.roundFreeCount" class="form-control" id="roundFreeCount"/>
+						<form:input type="hidden" path="order.slimFreeCount" class="form-control" id="slimFreeCount"/>
 						<hr />
 						
 						<!-- TOTAL AMOUNT -->
@@ -234,63 +240,85 @@
                     
                     if ($(this).attr('id') == '1-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#roundCount').val($(this).val());
+                    		$('#roundRefillOnlyCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#roundCount').val(0);
+                    		$('#roundRefillOnlyCount').val(0);
                     	}
                     }
                     
                     if ($(this).attr('id') == '2-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#slimCount').val($(this).val());
+                    		$('#slimRefillOnlyCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#slimCount').val(0);
+                    		$('#slimRefillOnlyCount').val(0);
                     	}
                     }
                     
                     if ($(this).attr('id') == '3-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#roundBuyContOnlyCount').val($(this).val());
+                    		$('#roundContainerOnlyCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#roundBuyContOnlyCount').val(0);
+                    		$('#roundContainerOnlyCount').val(0);
                     	}
                     }
                     
                     if ($(this).attr('id') == '4-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#slimBuyContOnlyCount').val($(this).val());
+                    		$('#slimContainerOnlyCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#slimBuyContOnlyCount').val(0);
+                    		$('#slimContainerOnlyCount').val(0);
                     	}
                     }
                     
                     if ($(this).attr('id') == '5-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#roundBuyRefillCount').val($(this).val());
+                    		$('#roundRefillWithContainerCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#roundBuyRefillCount').val(0);
+                    		$('#roundRefillWithContainerCount').val(0);
                     	}
                     }
                     
                     if ($(this).attr('id') == '6-qty') {
                     	if ($(this).val() > 0) {
-                    		$('#slimBuyRefillCount').val($(this).val());
+                    		$('#slimRefillWithContainerCount').val($(this).val());
                     	}
                     	
                     	if ($(this).val() == 0) {
-                    		$('#slimBuyRefillCount').val(0);
+                    		$('#slimRefillWithContainerCount').val(0);
                     	}
                     }
+                    
+                    if ($(this).attr('id') == '22-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#roundFreeCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#roundFreeCount').val(0);
+                    	}
+                    }
+                    
+                    if ($(this).attr('id') == '23-qty') {
+                    	if ($(this).val() > 0) {
+                    		$('#slimFreeCount').val($(this).val());
+                    	}
+                    	
+                    	if ($(this).val() == 0) {
+                    		$('#slimFreeCount').val(0);
+                    	}
+                    }
+                    
+                    
                 });
                 
                 $('#totalAmount').attr('value', total);

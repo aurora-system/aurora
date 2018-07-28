@@ -7,7 +7,7 @@
 <spring:url value="/orders/pending" var="urlShowPending" />
 <body>
 <jsp:include page="fragments/header.jsp" />
-    <div class="container">
+    <div class="container" style="width: 1600px">
     <div class="row">
         <div class="col-lg-12">
             <c:if test="${not empty msg}">
@@ -65,8 +65,12 @@
                             <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
-                            <th bgcolor="F6ECD5">Del Round</th>
-                            <th bgcolor="D5E8F6">Del Slim</th>
+                            <th bgcolor="F6ECD5">Round Refill Only</th>
+                            <th bgcolor="D5E8F6">Slim Refill Only</th>
+                            <th bgcolor="F6ECD5">Round Cont Only</th>
+                            <th bgcolor="D5E8F6">Slim Cont Only</th>
+                            <th bgcolor="F6ECD5">Round Both</th>
+                            <th bgcolor="D5E8F6">Slim Both</th>
                             <th bgcolor="F6ECD5">Ret Round</th>
                             <th bgcolor="D5E8F6">Ret Slim</th>
                             <th>Date</th>
@@ -102,8 +106,12 @@
                                     <td>${o.order.deliveryReceiptNum}</td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.amountPaid}"></fmt:formatNumber></td>
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.totalAmount}"></fmt:formatNumber></td>
-                                    <td bgcolor="F6ECD5">${o.order.roundCount}</td>
-                                    <td bgcolor="D5E8F6">${o.order.slimCount}</td>
+                                    <td bgcolor="F6ECD5">${o.order.roundRefillOnlyCount}</td>
+                                    <td bgcolor="D5E8F6">${o.order.slimRefillOnlyCount}</td>
+                                    <td bgcolor="F6ECD5">${o.order.roundContainerOnlyCount}</td>
+                                    <td bgcolor="D5E8F6">${o.order.slimContainerOnlyCount}</td>
+                                    <td bgcolor="F6ECD5">${o.order.roundRefillWithContainerCount}</td>
+                                    <td bgcolor="D5E8F6">${o.order.slimRefillWithContainerCount}</td>
                                     <td bgcolor="F6ECD5">${o.order.roundReturned}</td>
                                     <td bgcolor="D5E8F6">${o.order.slimReturned}</td>
                                     <td>${o.formattedDate}</td>
@@ -138,6 +146,10 @@
             	"order" : [[ 3, "desc"]],
             	"columns": [
             	    { "orderable": false },
+            	    null,
+            	    null,
+            	    null,
+            	    null,
             	    null,
             	    null,
             	    null,

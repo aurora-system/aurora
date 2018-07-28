@@ -292,8 +292,8 @@ public class OrderController {
             	totalCashPayments += o.getAmountPaid();
             	dse.setPaidCash(o.getAmountPaid());
             	
-            	totalSlimDelivered += o.getSlimCount();
-            	totalRoundDelivered += o.getRoundCount();
+            	totalSlimDelivered += o.getSlimRefillOnlyCount();
+            	totalRoundDelivered += o.getRoundRefillOnlyCount();
             	//totalSlimReturned += Integer.parseInt(o.getSlimReturned());
             	//totalRoundReturned += Integer.parseInt(o.getRoundReturned());
             	
@@ -638,8 +638,10 @@ public class OrderController {
         		}
         	}
         	
-        	// TODO: Add fields for slim container buy refill, round container buy refill, slim container buy empty, round container buy empty
-    		saveContainerActivity(order.getSlimCount(), order.getRoundCount(),
+        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+        	
+    		saveContainerActivity(slimOutGoingCount, roundOutGoingCount,
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
         	
@@ -671,8 +673,10 @@ public class OrderController {
         		}
         	}
         	
-        	// TODO: Add fields for slim container buy refill, round container buy refill, slim container buy empty, round container buy empty
-    		saveContainerActivity(order.getSlimCount(), order.getRoundCount(),
+        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+
+            saveContainerActivity(slimOutGoingCount, roundOutGoingCount,
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
         	
@@ -800,7 +804,10 @@ public class OrderController {
             	}
             }
             
-            updateContainerActivity(order.getSlimCount(), order.getRoundCount(),
+            int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+            
+            updateContainerActivity(slimOutGoingCount, roundOutGoingCount,
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId());
             

@@ -22,8 +22,12 @@
 	                          	<th style="padding: 8px;">DR#</th>
 	                          	<th style="padding: 8px;" width="60">Time</th>
 	                            <th style="padding: 8px;" width="100">Customer</th>
-								<th style="padding: 8px;">RD</th>
-	                            <th style="padding: 8px;">SD</th>
+								<th style="padding: 8px;">RR</th>
+	                            <th style="padding: 8px;">SR</th>
+	                            <th style="padding: 8px;">RC</th>
+	                            <th style="padding: 8px;">SC</th>
+	                            <th style="padding: 8px;">RB</th>
+	                            <th style="padding: 8px;">SB</th>
 	                            <th style="padding: 8px;" width="100">Remarks</th>
 	                            <th style="padding: 8px;">A/R</th>
 	                            <th style="padding: 8px;">Cash</th>
@@ -39,8 +43,12 @@
 	                                	<td style="padding: 6px;">${d.order.deliveryReceiptNum}</td>
 	                                	<td style="padding: 6px;">${d.dateAndTime}</td>
 	                                    <td style="padding: 6px;">${d.customerName}</td>
-	                                    <td style="padding: 6px;">${d.order.roundCount}</td>
-	                                    <td style="padding: 6px;">${d.order.slimCount}</td>
+	                                    <td style="padding: 6px;">${d.order.roundRefillOnlyCount}</td>
+	                                    <td style="padding: 6px;">${d.order.slimRefillOnlyCount}</td>
+	                                    <td style="padding: 6px;">${d.order.roundContainerOnlyCount}</td>
+	                                    <td style="padding: 6px;">${d.order.slimContainerOnlyCount}</td>
+	                                    <td style="padding: 6px;">${d.order.roundRefillWithContainerCount}</td>
+	                                    <td style="padding: 6px;">${d.order.slimRefillWithContainerCount}</td>
 	                                    <td style="padding: 6px;">${d.remarks}</td>
 	                                    <td style="padding: 6px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td style="padding: 6px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
@@ -97,6 +105,14 @@
                 </div>
     		</div>
     	</div>
+    	
+    	<span class="label label-default" style="font-size: 8px;">RR - Round Refill</span>
+    	<span class="label label-default" style="font-size: 8px;">SR - Slim Refill</span>
+    	<span class="label label-default" style="font-size: 8px;">RC - Round Container</span>
+    	<span class="label label-default" style="font-size: 8px;">SC - Slim Container</span>
+    	<span class="label label-default" style="font-size: 8px;">RB - Round Both</span>
+    	<span class="label label-default" style="font-size: 8px;">SB - Slim Both</span>
+    	
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>

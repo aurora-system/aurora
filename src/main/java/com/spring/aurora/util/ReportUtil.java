@@ -35,7 +35,9 @@ public class ReportUtil {
 		int roundTotal = 0;
 		
 		for (Order o : orderList) {
-			roundTotal += o.getRoundCount();
+			roundTotal += o.getRoundRefillOnlyCount();
+			roundTotal += o.getRoundContainerOnlyCount();
+			roundTotal += o.getRoundRefillWithContainerCount();
 		}
 		
 		return roundTotal;
@@ -46,7 +48,9 @@ public class ReportUtil {
 		int slimTotal = 0;
 		
 		for (Order o : orderList) {
-			slimTotal += o.getSlimCount();
+			slimTotal += o.getSlimRefillOnlyCount();
+			slimTotal += o.getSlimContainerOnlyCount();
+			slimTotal += o.getSlimRefillWithContainerCount();
 		}
 		
 		return slimTotal;

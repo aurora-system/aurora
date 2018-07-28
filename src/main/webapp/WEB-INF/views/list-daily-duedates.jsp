@@ -8,7 +8,7 @@
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/customers/dailyduedates" var="dailyDueDatesUrl"/>
 <body>
-    <div class="container" style="width: 750px">
+    <div class="container" style="width: 900px">
     	<div class="row">
             <div class="col-lg-12">
                 
@@ -49,8 +49,8 @@
 	                    <table id="dueDatesTable" class="table table-striped table-bordered table-hover">
 	                        <thead>
 	                          <tr>
-	                            <th width="120">Customer</th>
-	                            <th width="120">Address</th>
+	                            <th width="200">Customer</th>
+	                            <th width="180">Address</th>
 								<th>Contact Number</th>
                            		<th width="120">Last Order Date</th>
                            		<th width="50">Action</th>

@@ -8,7 +8,7 @@
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/orders/daily" var="dailySalesUrl"/>
 <body>
-    <div class="container">
+    <div class="container" style="width: 1600px">
     	<div class="row">
             <div class="col-lg-12">
                 
@@ -53,8 +53,12 @@
 	                          	<th>DR#</th>
 	                          	<th width="100">Time</th>
 	                            <th width="100">Customer</th>
-								<th>RD</th>
-	                            <th>SD</th>
+								<th>RR</th>
+	                            <th>SR</th>
+	                            <th>RC</th>
+	                            <th>SC</th>
+	                            <th>RB</th>
+	                            <th>SB</th>
 	                            <th width="100">Remarks</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash</th>
@@ -70,8 +74,12 @@
 	                                	<td>${d.order.deliveryReceiptNum}</td>
 	                                	<td>${d.dateAndTime}</td>
 	                                    <td>${d.customerName}</td>
-	                                    <td>${d.order.roundCount}</td>
-	                                    <td>${d.order.slimCount}</td>
+	                                    <td>${d.order.roundRefillOnlyCount}</td>
+	                                    <td>${d.order.slimRefillOnlyCount}</td>
+	                                    <td>${d.order.roundContainerOnlyCount}</td>
+	                                    <td>${d.order.slimContainerOnlyCount}</td>
+	                                    <td>${d.order.roundRefillWithContainerCount}</td>
+	                                    <td>${d.order.slimRefillWithContainerCount}</td>
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
@@ -129,10 +137,12 @@
     		</div>
     	</div>
     	
-    	<span class="label label-default">RD - Round Delivered</span>
-    	<span class="label label-default">SD - Slim Delivered</span>
-    	<span class="label label-default">RR - Round Returned</span>
-    	<span class="label label-default">SR - Round Returned</span>
+    	<span class="label label-default">RR - Round Refill</span>
+    	<span class="label label-default">SR - Slim Refill</span>
+    	<span class="label label-default">RC - Round Container</span>
+    	<span class="label label-default">SC - Slim Container</span>
+    	<span class="label label-default">RB - Round Both</span>
+    	<span class="label label-default">SB - Slim Both</span>
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
