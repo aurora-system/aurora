@@ -81,7 +81,7 @@ public class HomeController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	@RequestMapping(value = "/error403", method = RequestMethod.GET)
 	public String getDeniedPage(Model model) {
 		logger.debug("Received request to show denied page");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -90,7 +90,7 @@ public class HomeController {
 			model.addAttribute("username", userDetail.getUsername());
 		}
 		// This will resolve to /WEB-INF/jsp/403.jsp
-		return "403";
+		return "error403";
 	}
 
 	/*
