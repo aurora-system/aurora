@@ -113,6 +113,8 @@ public class HomeController {
         Statement stmt = conn.createStatement();
 		boolean res = stmt.execute(alterStmt);
 		model.addAttribute("result", res);
-    	return "alter";
+		logger.info("alter table result:="+res);
+		return "redirect:/customers/list";
+
 	}
 }
