@@ -26,54 +26,16 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- Hibernate 4 SessionFactory Bean definition -->
-    <beans:bean id="hibernate4AnnotatedSessionFactory"
-        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <beans:property name="dataSource" ref="dataSource" />
-        <beans:property name="annotatedClasses">
-            <beans:list>
-                <beans:value>com.spring.aurora.model.Customer</beans:value>
-                <beans:value>com.spring.aurora.model.Container</beans:value>
-                <beans:value>com.spring.aurora.model.Debt</beans:value>
-                <beans:value>com.spring.aurora.model.Order</beans:value>
-                <beans:value>com.spring.aurora.model.Payment</beans:value>
-                <beans:value>com.spring.aurora.model.Expense</beans:value>
-                <beans:value>com.spring.aurora.model.Product</beans:value>
-                <beans:value>com.spring.aurora.model.CustomerPrice</beans:value>
-                <beans:value>com.spring.aurora.model.OrderProduct</beans:value>
-            </beans:list>
-        </beans:property>
-        <beans:property name="hibernateProperties">
-            <beans:props>
-                <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
-                <beans:prop key="hibernate.show_sql">true</beans:prop>
-            </beans:props>
-        </beans:property>
-    </beans:bean>
-    
-	<!--<beans:bean id="customerDao" class="com.spring.aurora.dao.CustomerDaoImpl">
-        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </beans:bean>
-    
-    <beans:bean id="customerService" class="com.spring.aurora.service.CustomerServiceImpl">
-        <beans:property name="customerDao" ref="customerDao"></beans:property>
-    </beans:bean>-->
-    
-<!--     <beans:bean id="customLogoutSuccessHandler" class="com.spring.aurora.util.MyLogoutSuccessHandler" ></beans:bean> -->
-    
-    <beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		 <!-- setting maximum upload size -->
 		<beans:property name="maxUploadSize" value="10000000" />
-
 	</beans:bean>
     
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/>
      
     <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </beans:bean>
+    </beans:bean> -->
 
     <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <beans:property name="basename">
