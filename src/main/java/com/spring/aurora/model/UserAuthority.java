@@ -2,6 +2,8 @@ package com.spring.aurora.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,8 +16,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "authorities", catalog = "aurora", uniqueConstraints = @UniqueConstraint(columnNames = { "username", "authority" }))
-public class UserAuthority{
+public class UserAuthority implements Serializable {
 
+	private static final long serialVersionUID = 8031993448564449422L;
 	private Integer id;
 	private User user;
 	private String authority;

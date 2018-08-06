@@ -13,13 +13,15 @@
 	</style>
 </head>
 <body>
+<c:if test="${pageContext.request.userPrincipal.name != null}">
+    <h2>Welcome user: ${pageContext.request.userPrincipal.name}</h2> 
+</c:if>
 <h1>
 	Add a System User
 </h1>
 
-<c:url var="addAction" value="/user/add" ></c:url>
-
-<form:form action="${addAction}" modelAttribute="user">
+<c:url var="formActionUrl" value="${formAction}" ></c:url>
+<form:form action="${formActionUrl}" modelAttribute="user">
 <table>
 	<tr>
 		<td>
@@ -39,6 +41,26 @@
 		</td>
 		<td>
 			<form:password path="password" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="enabled">
+				<spring:message text="Active"/>
+			</form:label>
+		</td>
+		<td>
+			<form:checkbox path="enabled" id="enabled" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="roles">
+				<spring:message text="Select Roles"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="roles" items="${user.roles}" multiple="true" size="5" class="form-control" />
 		</td>
 	</tr>
 	<tr>
@@ -63,6 +85,7 @@
 	<tr>
 		<th width="80">Active</th>
 		<th width="120">Username</th>
+		<th width="120">Roles</th>
 		<th width="60">Edit</th>
 		<th width="60">Delete</th>
 	</tr>
@@ -70,6 +93,11 @@
 		<tr>
 			<td>${person.enabled}</td>
 			<td>${person.username}</td>
+			<td><ul>
+			<c:forEach var="role" items="${person.userAuthority}">
+			    <li>${role.authority}</li>
+			</c:forEach>
+			</ul></td>
 			<td><a href="<c:url value='/user/edit/${person.username}' />" >Edit</a></td>
 			<td><a href="<c:url value='/user/delete/${person.username}' />" >Delete</a></td>
 		</tr>

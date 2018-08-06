@@ -29,18 +29,20 @@ public class UserController {
 	public String listUsers(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("users", userService.findAll());
+		model.addAttribute("formAction", "/user/add");
 		return "users";
 	}
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user) {
 		logger.debug("User="+user.getUsername());
-		user.setEnabled(true);
-		UserAuthority auth = new UserAuthority();
-		auth.setUser(user);
-		auth.setAuthority("ROLE_USER");
 		Set<UserAuthority> set = new HashSet<>();
-		set.add(auth);
+		for (String role: user.getRoles()) {
+			UserAuthority auth = new UserAuthority();
+			auth.setUser(user);
+			auth.setAuthority(role);
+			set.add(auth);
+		}			
 		user.setUserAuthority(set);
 		userService.insert(user);
 		return "redirect:/users";
@@ -50,11 +52,21 @@ public class UserController {
 	public String editUser(@PathVariable("username") String username, Model model) {
 		model.addAttribute("user", userService.findByUsername(username));
 		model.addAttribute("users", userService.findAll());
+		model.addAttribute("formAction", "/user/update");
 		return "users";
 	}
 	
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("user") User user) {
+		Set<UserAuthority> set = user.getUserAuthority();
+		for (String role: user.getRoles()) {
+			UserAuthority auth = new UserAuthority();
+			auth.setUser(user);
+			auth.setAuthority(role);
+			if (!set.contains(auth))
+			    set.add(auth);
+		}			
+		user.setUserAuthority(set);
 		userService.update(user);
 		return "redirect:/users";
 	}

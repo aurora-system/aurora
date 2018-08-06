@@ -1,7 +1,10 @@
 package com.spring.aurora.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users", catalog = "aurora")
@@ -22,6 +26,7 @@ public class User implements Serializable {
 	private String password;
 	private boolean enabled;
 	private Set<UserAuthority> userAuthority = new HashSet<>(0);
+	private List<String> roles = new ArrayList<>(Arrays.asList("ROLE_ADMIN", "ROLE_USER"));
 
 	public User() {
 	}
@@ -72,6 +77,15 @@ public class User implements Serializable {
 
 	public void setUserAuthority(Set<UserAuthority> userAuthority) {
 		this.userAuthority = userAuthority;
+	}
+
+	@Transient
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 
 }

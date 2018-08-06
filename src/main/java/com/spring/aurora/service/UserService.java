@@ -6,7 +6,7 @@ import com.spring.aurora.model.User;
 
 public interface UserService {
 
-	User insert(User user);
+	void insert(User user);
 	void update(User user);
 	void delete(String username);
 	User findByUsername(String username);

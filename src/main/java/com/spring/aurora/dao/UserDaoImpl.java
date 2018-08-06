@@ -1,14 +1,15 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.User;
+import java.util.List;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.spring.aurora.model.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -33,9 +34,9 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User insert(User user) {
+	public void insert(User user) {
 		logger.info("User="+user.getUsername());
-		return (User) sessionFactory.getCurrentSession().save(user);
+		sessionFactory.getCurrentSession().save(user);
 	}
 
 	@Override
@@ -45,10 +46,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void delete(String username) {
-		sessionFactory.getCurrentSession()
-			.createQuery("delete from User where username=?")
-			.setParameter(0, username)
-			.executeUpdate();
+		Session session = sessionFactory.getCurrentSession();
+		Object instance = session.get(User.class, username);
+		if (instance != null) {
+			session.delete(instance);
+			session.flush();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
