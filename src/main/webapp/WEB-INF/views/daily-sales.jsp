@@ -8,7 +8,7 @@
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/orders/daily" var="dailySalesUrl"/>
 <body>
-    <div class="container" style="width: 1600px">
+    <div class="container" style="width: 1200px">
     	<div class="row">
             <div class="col-lg-12">
                 
@@ -53,19 +53,19 @@
 	                          	<th>DR#</th>
 	                          	<th width="100">Time</th>
 	                            <th width="100">Customer</th>
-								<th>RR</th>
-	                            <th>SR</th>
-	                            <th>RC</th>
-	                            <th>SC</th>
-	                            <th>RB</th>
-	                            <th>SB</th>
+								<th width="10">RR</th>
+	                            <th width="10">SR</th>
+	                            <th width="10">RC</th>
+	                            <th width="10">SC</th>
+	                            <th width="10">RB</th>
+	                            <th width="10">SB</th>
 	                            <th width="100">Remarks</th>
-	                            <th bgcolor="F7E8D0">A/R</th>
-	                            <th bgcolor="ECFBEA">Cash</th>
-	                            <th bgcolor="EEE7FB">Check</th>
-	                            <th bgcolor="FBEAEA">Expense</th>
-	                            <th>RR</th>
-	                            <th>SR</th>
+	                            <th width="30" bgcolor="F7E8D0">A/R</th>
+	                            <th width="30" bgcolor="ECFBEA">Cash</th>
+	                            <th width="30" bgcolor="EEE7FB">Check</th>
+	                            <th width="30" bgcolor="FBEAEA">Expense</th>
+	                            <th width="10">RR</th>
+	                            <th width="10">SR</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
