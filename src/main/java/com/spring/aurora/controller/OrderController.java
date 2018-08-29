@@ -369,6 +369,9 @@ public class OrderController {
         	} else if (c.getStatus().equalsIgnoreCase("RO")) {
         		totalRoundReturned += c.getRoundCount();
         		totalSlimReturned += c.getSlimCount();
+        		dse.setReturnedRound(Integer.valueOf(c.getRoundCount()).toString());
+        		dse.setReturnedSlim(Integer.valueOf(c.getSlimCount()).toString());
+        		dseList.add(dse);
         	}
         }
 
@@ -632,7 +635,7 @@ public class OrderController {
         } else {
         	
         	order = orderService.findOrderByOrderId(orderId);
-        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()));
         	
         	// Check first if already saved prior to delivery!
         	boolean saveReturnedContainers = true;
@@ -667,7 +670,7 @@ public class OrderController {
         } else {
         	
         	order = orderService.findOrderByOrderId(orderId);
-        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()));
         	
         	// Check first if already saved prior to delivery!
         	boolean saveReturnedContainers = true;
@@ -764,6 +767,7 @@ public class OrderController {
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Update order.");
         Order order = orderProductEntity.getOrder();
+        String oldOrderId = order.getOrderId();
         
         if (order.getRoundReturned().equalsIgnoreCase("")) {
         	order.setRoundReturned("0");
@@ -784,7 +788,10 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("css", "success");
             order.setDeliveryReceiptNum(order.getDeliveryReceiptNum());
             
-            Order updatedOrder = orderService.update(order);
+            orderService.delete(order);
+            Order updatedOrder = orderService.insert(order);
+            orderProductEntity.setOrder(updatedOrder);
+            //Order updatedOrder = orderService.update(order);
             
             for (OrderProduct op : orderProductEntity.getOpList()) {
             	if (op.getQuantity().equalsIgnoreCase("")) {
@@ -804,7 +811,8 @@ public class OrderController {
             			if (op.getQuantity().equalsIgnoreCase("0")) {
             				orderProductService.remove(op);
             			} else {
-            				orderProductService.update(op);
+            				orderProductService.remove(op); //OR REMOVE AND INSERT ??
+            				orderProductService.insert(op);
             			}
             		}
             	}
@@ -813,11 +821,14 @@ public class OrderController {
             int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
             int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
             
-            updateContainerActivity(slimOutGoingCount, roundOutGoingCount,
-					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
-					order.getCustomerId(), order.getOrderId());
+            Timestamp orderCreationDate = order.getCreatedAt();
             
-            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId());
+            updateContainerActivity(slimOutGoingCount, roundOutGoingCount,
+					Integer.parseInt(updatedOrder.getSlimReturned()), Integer.parseInt(updatedOrder.getRoundReturned()),
+					updatedOrder.getCustomerId(), oldOrderId, updatedOrder.getOrderId(), orderCreationDate);
+            Date orderCreationDateConverted = new Date(orderCreationDate.getTime());
+            
+            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), oldOrderId, orderCreationDateConverted);
             
             redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             
@@ -834,7 +845,7 @@ public class OrderController {
      * @param totalAmount
      * @param customerId
      */
-    public void saveDebt (double amountPaid, double totalAmount, String customerId, String orderId) {
+    public void saveDebt (double amountPaid, double totalAmount, String customerId, String orderId, Date debtDate) {
     	
     	double deficit = totalAmount - amountPaid;
     	
@@ -895,7 +906,7 @@ public class OrderController {
     }
 	
 	public void updateContainerActivity(int slimCount, int roundCount, int slimReturned, int roundReturned,
-			String customerId, String orderId) {
+			String customerId, String orderId, String newOrderId, Timestamp containerActivityDate) {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
@@ -903,8 +914,9 @@ public class OrderController {
         containerActivity.setRoundCount(roundCount);
         containerActivity.setSlimCount(slimCount);
         containerActivity.setStatus("B");
-        containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        containerActivity.setCreatedAt(containerActivityDate);
         containerService.delete(containerActivity);
+        containerActivity.setOrderId(newOrderId);
         containerService.insert(containerActivity);
         
         if ((slimReturned != 0 || roundReturned != 0)) {
@@ -914,8 +926,9 @@ public class OrderController {
             containerActivity.setRoundCount(roundReturned);
             containerActivity.setSlimCount(slimReturned);
             containerActivity.setStatus("RO"); // Return with Order
-            containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            containerActivity.setCreatedAt(containerActivityDate);
             containerService.delete(containerActivity);
+            containerActivity.setOrderId(newOrderId);
             containerService.insert(containerActivity);
         }
     }

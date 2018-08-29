@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
 
 @Repository
@@ -41,10 +42,24 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public Order update(Order order) {
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(order);
+		session.beginTransaction();
+		session.update(order);
+		session.getTransaction().commit();
 		return order;
 	}
 
+	@Override
+    public Order delete(Order order) {
+    	
+    	Session session = this.sessionFactory.getCurrentSession();
+
+		// TODO: set the Safe Updates mode in MySQL to false (Edit > Preferences > SQL Editor > un-check Safe Updates
+		session.createQuery("delete from Order o where o.orderId = :orderId").setParameter("orderId", order.getOrderId())
+				.executeUpdate();
+
+		return null;
+    }
+	
 	@Override
 	public void setToDelivered(String orderId) {
 		Session session = sessionFactory.getCurrentSession();

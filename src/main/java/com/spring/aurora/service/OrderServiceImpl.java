@@ -34,6 +34,11 @@ public class OrderServiceImpl implements OrderService {
     public Order update(Order order) {
         return orderDao.update(order);
     }
+    
+    @Override
+	public Order delete(Order order) {
+    	return orderDao.delete(order);
+	}
 
     @Override
     public List<Order> findAllByCustomerId(String customerId) {
@@ -91,4 +96,5 @@ public class OrderServiceImpl implements OrderService {
 	public String getNewDrNumber() {
 		return orderDao.getNewDrNumber();
 	}
+
 }

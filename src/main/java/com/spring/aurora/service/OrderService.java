@@ -9,6 +9,7 @@ import java.util.List;
 public interface OrderService {
     Order insert(Order order);
     Order update(Order order);
+    Order delete(Order order);
     Timestamp getMostRecentOrderDate(String customerId);
     List<Order> findAllByCustomerId(String customerId);
     List<Order> findAllOrdersToday(Date dateParam);
