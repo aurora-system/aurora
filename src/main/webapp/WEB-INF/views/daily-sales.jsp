@@ -43,29 +43,29 @@
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
 	                <div class="panel-heading clearfix">
-	                    Daily sales for ${datePicked}.
+	                    Daily sales for <span class="label label-danger">${datePicked}</span>
 	                    <a href="${dailySalesUrl}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
 	                </div>
 	                <div class="panel-body">
-	                    <table id="myTable" class="table table-striped table-bordered table-hover">
+	                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 12px;">
 	                        <thead>
 	                          <tr>
 	                          	<th>DR#</th>
 	                          	<th width="100">Time</th>
 	                            <th width="100">Customer</th>
-								<th width="10">RR</th>
-	                            <th width="10">SR</th>
-	                            <th width="10">RC</th>
-	                            <th width="10">SC</th>
-	                            <th width="10">RB</th>
-	                            <th width="10">SB</th>
-	                            <th width="100">Remarks</th>
+								<th width="10">ROUND Refill</th>
+	                            <th width="10">SLIM Refill</th>
+	                            <th width="10">ROUND Cont</th>
+	                            <th width="10">SLIM Cont</th>
+	                            <th width="10">ROUND Both</th>
+	                            <th width="10">SLIM Both</th>
+	                            <th width="50">Remarks</th>
 	                            <th width="30" bgcolor="F7E8D0">A/R</th>
 	                            <th width="30" bgcolor="ECFBEA">Cash</th>
 	                            <th width="30" bgcolor="EEE7FB">Check</th>
-	                            <th width="30" bgcolor="FBEAEA">Expense</th>
-	                            <th width="10">RR</th>
-	                            <th width="10">SR</th>
+<!-- 	                            <th width="30" bgcolor="FBEAEA">Expense</th> -->
+	                            <th width="10">ROUND Ret</th>
+	                            <th width="10">SLIM Ret</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -84,7 +84,7 @@
 	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
 	                                    <td bgcolor="EEE7FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
-	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td>
+<%-- 	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td> --%>
 	                                    <td>${d.returnedRound}</td>
 	                                    <td>${d.returnedSlim}</td>
 	                                </tr>
@@ -114,7 +114,7 @@
 	                            <th bgcolor="F7E8D0">A/R</th>
 	                            <th bgcolor="ECFBEA">Cash Payment</th>
 	                            <th bgcolor="EEE7FB">Check Payment</th>
-	                            <th bgcolor="FBEAEA">Expense</th>
+<!-- 	                            <th bgcolor="FBEAEA">Expense</th> -->
 	                            <th bgcolor="D0E6F7">Net Cash</th>
 	                          </tr>
 	                        </thead>
@@ -127,7 +127,7 @@
 	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
 	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
 	                        		<td bgcolor="EEE7FB">${totalCheckPayments}</td>
-	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
+<%-- 	                        		<td bgcolor="FBEAEA">${totalExpenses}</td> --%>
 	                        		<td bgcolor="D0E6F7">${netCash}</td>
 	                        	</tr>
 	                        </tbody>
@@ -137,12 +137,6 @@
     		</div>
     	</div>
     	
-    	<span class="label label-default">RR - Round Refill</span>
-    	<span class="label label-default">SR - Slim Refill</span>
-    	<span class="label label-default">RC - Round Container</span>
-    	<span class="label label-default">SC - Slim Container</span>
-    	<span class="label label-default">RB - Round Both</span>
-    	<span class="label label-default">SB - Slim Both</span>
     </div>
     <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
