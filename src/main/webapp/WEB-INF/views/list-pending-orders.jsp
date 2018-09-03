@@ -18,7 +18,7 @@
 	    </div>
     </c:if>
     
-    <div class="container" style="width: 1600px">
+    <div class="container" style="width: 1480px">
     <div class="row">
         <div class="col-lg-12">
             <c:if test="${not empty msg}">
@@ -47,7 +47,7 @@
                     List of Pending Orders
                 </div>
                 <div class="panel-body">
-                    <table id="myTable" class="table table-striped table-bordered table-hover">
+                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 12px;">
                         <thead>
                           <tr>
                           	<th>Actions</th>
@@ -55,14 +55,14 @@
                             <th>DR #</th>
                             <th>Amount Paid</th>
                             <th>Total Amount</th>
-                            <th bgcolor="F6ECD5">Round Refill Only</th>
-                            <th bgcolor="D5E8F6">Slim Refill Only</th>
-                            <th bgcolor="F6ECD5">Round Cont Only</th>
-                            <th bgcolor="D5E8F6">Slim Cont Only</th>
-                            <th bgcolor="F6ECD5">Round Both</th>
-                            <th bgcolor="D5E8F6">Slim Both</th>
-                            <th bgcolor="F6ECD5">Ret Round</th>
-                            <th bgcolor="D5E8F6">Ret Slim</th>
+                            <th bgcolor="F6ECD5">ROUND Refill</th>
+                            <th bgcolor="D5E8F6">SLIM Refill</th>
+                            <th bgcolor="F6ECD5">ROUND Cont</th>
+                            <th bgcolor="D5E8F6">SLIM Cont</th>
+                            <th bgcolor="F6ECD5">ROUND Both</th>
+                            <th bgcolor="D5E8F6">SLIM Both</th>
+                            <th bgcolor="F6ECD5">ROUND Ret</th>
+                            <th bgcolor="D5E8F6">SLIM Ret</th>
                             <th>Date</th>
                             <th>Edit</th>
                           </tr>
