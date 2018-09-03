@@ -369,9 +369,6 @@ public class OrderController {
         	} else if (c.getStatus().equalsIgnoreCase("RO")) {
         		totalRoundReturned += c.getRoundCount();
         		totalSlimReturned += c.getSlimCount();
-        		dse.setReturnedRound(Integer.valueOf(c.getRoundCount()).toString());
-        		dse.setReturnedSlim(Integer.valueOf(c.getSlimCount()).toString());
-        		dseList.add(dse);
         	}
         }
 
