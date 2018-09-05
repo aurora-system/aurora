@@ -8,16 +8,6 @@
 <body>
 <jsp:include page="fragments/header.jsp" />
     
-    <c:if test="${pendingCount > 0}">
-	    <div class="container" style="width: 1600px">
-		    <div class="row">
-		        <div class="col-lg-12">
-					<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
-		        </div>
-		    </div>
-	    </div>
-    </c:if>
-    
     <div class="container" style="width: 1480px">
     <div class="row">
         <div class="col-lg-12">

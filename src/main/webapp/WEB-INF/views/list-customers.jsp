@@ -38,36 +38,34 @@
                             <th>Type</th>
                             <th>Customer Name</th>
                             <th>Address</th>
-<!--                             <th>Email Address</th> -->
+                            <th>Refill Price</th>
                             <th>Contact Person</th>
                             <th>Contact Number</th>
-<!--                             <th>Alt Number</th> -->
                             <th width="100">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="c" items="${customers}">
+                            <c:forEach var="cp" items="${customerPrices}">
                                 <tr>
-                                    <td>${c.type}</td>
-                                    <td>${c.name}</td>
-                                    <td>${c.address}</td>
-<%--                                     <td>${c.emailAddress}</td> --%>
-									<td>${c.contactName}</td>
-                                    <td>${c.mainNumber}</td>
-<%--                                     <td>${c.alternateNumber}</td> --%>
+                                    <td>${cp.customer.type}</td>
+                                    <td>${cp.customer.name}</td>
+                                    <td>${cp.customer.address}</td>
+                                    <td>${cp.refillPrice}</td>
+									<td>${cp.customer.contactName}</td>
+                                    <td>${cp.customer.mainNumber}</td>
                                     <td nowrap>
 <!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->
 										
 										<form action="view" method="get" style="display: inline-block;" >
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=customerId value=${c.customerId}> 
+											<input type="hidden" name=customerId value="${cp.customer.customerId}"> 
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
 										<spring:url value="/orders/neworder" var="newOrderUrl"/>
 										<form action="${newOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name="customerId" value="${c.customerId}"/> 
+											<input type="hidden" name="customerId" value="${cp.customer.customerId}"/> 
 											<input class="btn btn-default" type="submit" value="New Order"/>
 										</form>
 									</td>
@@ -90,6 +88,7 @@
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"columns": [
+            	    null,
             	    null,
             	    null,
             	    null,

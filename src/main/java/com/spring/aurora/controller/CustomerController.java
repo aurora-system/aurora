@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.CustomerDueDateEntity;
+import com.spring.aurora.entity.CustomerPriceEntity;
 import com.spring.aurora.entity.ProductPriceEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
@@ -92,7 +93,34 @@ public class CustomerController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
+        
+        List<Customer> customerList = new ArrayList<>();
+        customerList = customerService.findAll();
+        
+        List<CustomerPriceEntity> cpeList = new ArrayList<>();
+        
+        for (Customer c : customerList) {
+        	
+        	Double price = 0.0;
+        	List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(c.getCustomerId());
+        	
+        	for (CustomerPrice cp : customerPriceList) {
+        		if (cp.getProductId().equalsIgnoreCase("1")) {
+        			price = cp.getSellingPrice();
+        			break;
+        		}
+        	}
+        	
+        	if (price <= 0) {
+        		price = 40.0; // Default price of refill
+        	}
+        	
+        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, price);
+        	cpeList.add(cpe);
+        }
+        
         model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("customerPrices", cpeList);
         //model.addAttribute("orderForm", new Order());
         if (mode.equalsIgnoreCase("preview")) {
         	return "list-customers-print-preview";

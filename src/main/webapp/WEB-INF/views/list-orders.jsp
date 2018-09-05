@@ -37,9 +37,12 @@
                             <div class="col-sm-3">
                                 <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
                             </div>
-                               <div class="col-sm-5">
+                               <div class="col-sm-1">
                                 <button type="submit" class="btn btn-primary">List Orders</button>
                             </div>
+                            <c:if test="${pendingCount > 0}">
+                    			<a href="${urlShowPending}" class="btn btn-danger" style="margin-bottom: 10px;" role="button" title="Pending for Delivery">${pendingCount}</a>
+                    		</c:if>
                         </div>
                     </form>
                 </div>
@@ -51,9 +54,6 @@
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
                     List of Orders for <span class="label label-danger">${datePicked}</span>
-                    <c:if test="${pendingCount > 0}">
-                    	<a href="${urlShowPending}" class="btn btn-danger pull-right" style="margin-bottom: 10px;" role="button">${pendingCount}</a>
-                    </c:if>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 12px;">
