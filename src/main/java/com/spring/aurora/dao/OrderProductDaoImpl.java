@@ -9,13 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.aurora.model.Order;
 import com.spring.aurora.model.OrderProduct;
 
 @Repository
-@Transactional
 public class OrderProductDaoImpl implements OrderProductDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderDaoImpl.class);
@@ -29,6 +26,7 @@ public class OrderProductDaoImpl implements OrderProductDao {
 		logger.debug("Order ID:" + orderProduct.getOrderId());
 		logger.debug("Product ID:" + orderProduct.getProductId());
 		session.save(orderProduct);
+		session.flush();
 		return orderProduct;
 	}
 	
@@ -36,6 +34,7 @@ public class OrderProductDaoImpl implements OrderProductDao {
 	public OrderProduct update(OrderProduct orderProduct) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(orderProduct);
+		session.flush();
 		return orderProduct;
 	}
 
@@ -56,6 +55,8 @@ public class OrderProductDaoImpl implements OrderProductDao {
 	public void remove(OrderProduct orderProduct) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(orderProduct);
+		session.flush();
+		
 	}
 
 }

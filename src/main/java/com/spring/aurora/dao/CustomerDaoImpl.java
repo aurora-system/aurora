@@ -1,19 +1,18 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Customer;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.spring.aurora.model.Customer;
 
 @Repository
-@Transactional
 public class CustomerDaoImpl implements CustomerDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDaoImpl.class);
@@ -26,14 +25,16 @@ public class CustomerDaoImpl implements CustomerDao {
         Session session = sessionFactory.getCurrentSession();
         logger.debug("CustomerName:" + customer.getName());
         session.save(customer);
-        return customer;
+        session.flush();
+		return customer;
     }
 
     @Override
     public Customer update(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         session.update(customer);
-        return customer;
+        session.flush();
+		return customer;
     }
 
     @Override

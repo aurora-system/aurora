@@ -1,20 +1,16 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Container;
-import com.spring.aurora.model.Debt;
-import com.spring.aurora.model.Payment;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.spring.aurora.model.Debt;
 
 @Repository
-@Transactional
 public class DebtDaoImpl implements DebtDao {
 
     @Autowired
@@ -24,7 +20,8 @@ public class DebtDaoImpl implements DebtDao {
     public Debt insert(Debt debt) {
         Session session = sessionFactory.getCurrentSession();
         session.save(debt);
-        return debt;
+        session.flush();
+		return debt;
     }
     
     @Override
@@ -37,6 +34,7 @@ public class DebtDaoImpl implements DebtDao {
 				.setParameter("customerId", debt.getCustomerId()).setParameter("orderId", debt.getOrderId())
 				.executeUpdate();
 
+		session.flush();
 		return null;
     }
 

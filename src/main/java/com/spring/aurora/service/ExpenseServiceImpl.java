@@ -1,14 +1,18 @@
 package com.spring.aurora.service;
 
-import com.spring.aurora.dao.ExpenseDao;
-import com.spring.aurora.model.Expense;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.sql.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.aurora.dao.ExpenseDao;
+import com.spring.aurora.model.Expense;
+
 @Service("expenseService")
+@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,7 @@ import com.spring.aurora.model.UserAuthority;
 @Repository
 public class UserAuthorityDaoImpl implements UserAuthorityDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserAuthorityDaoImpl.class);
+	//private static final Logger logger = LoggerFactory.getLogger(UserAuthorityDaoImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -34,6 +32,7 @@ public class UserAuthorityDaoImpl implements UserAuthorityDao {
 		Session session = sessionFactory.getCurrentSession();
 		UserAuthority auth = (UserAuthority) session.get(UserAuthority.class, id);
 		session.delete(auth);
+		session.flush();
 	}
 
 	@SuppressWarnings("unchecked")

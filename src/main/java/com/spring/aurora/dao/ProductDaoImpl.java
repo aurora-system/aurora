@@ -1,16 +1,15 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Product;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.spring.aurora.model.Product;
 
 @Repository
-@Transactional
 public class ProductDaoImpl implements ProductDao {
 
     @Autowired
@@ -20,10 +19,12 @@ public class ProductDaoImpl implements ProductDao {
     public Product save(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
-        return product;
+        session.flush();
+		return product;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Product> findAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Product> products = session.createCriteria(Product.class).list();

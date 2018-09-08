@@ -2,14 +2,11 @@ package com.spring.aurora.dao;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -17,13 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.aurora.model.Debt;
 import com.spring.aurora.model.Order;
 
 @Repository
-@Transactional
 public class OrderDaoImpl implements OrderDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderDaoImpl.class);
@@ -36,6 +30,7 @@ public class OrderDaoImpl implements OrderDao {
 		Session session = sessionFactory.getCurrentSession();
 		logger.debug("Order ID:" + order.getOrderId());
 		session.save(order);
+		session.flush();
 		return order;
 	}
 
@@ -57,6 +52,7 @@ public class OrderDaoImpl implements OrderDao {
 		session.createQuery("delete from Order o where o.orderId = :orderId").setParameter("orderId", order.getOrderId())
 				.executeUpdate();
 
+		session.flush();
 		return null;
     }
 	
@@ -101,6 +97,7 @@ public class OrderDaoImpl implements OrderDao {
 		return orders;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Timestamp getMostRecentOrderDate(String customerId) {
 
@@ -132,6 +129,7 @@ public class OrderDaoImpl implements OrderDao {
 		return orderList;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> findAllPendingOrders() {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -173,7 +171,7 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public String getNewDrNumber() {
 
-		Session session = this.sessionFactory.getCurrentSession();
+		//Session session = this.sessionFactory.getCurrentSession();
 
 		String newDrNumber = "";
 

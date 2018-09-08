@@ -1,23 +1,19 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Expense;
+import java.sql.Date;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import com.spring.aurora.model.Expense;
 
 @Repository
-@Transactional
 public class ExpenseDaoImpl implements ExpenseDao {
 
     private static final Logger logger = LoggerFactory.getLogger(ExpenseDaoImpl.class);
@@ -29,10 +25,13 @@ public class ExpenseDaoImpl implements ExpenseDao {
     public Expense insert(Expense expense) {
         Session session = sessionFactory.getCurrentSession();
         session.save(expense);
+        session.flush();
+		logger.info("Expense="+expense);
         return expense;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Expense> findAllByDate(Date date) {
         Session session = sessionFactory.getCurrentSession();
         List<Expense> expenses = session.createCriteria(Expense.class)

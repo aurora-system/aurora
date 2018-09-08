@@ -1,19 +1,21 @@
 package com.spring.aurora.service;
 
-import com.spring.aurora.dao.DebtDao;
-import com.spring.aurora.model.Debt;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.aurora.dao.DebtDao;
+import com.spring.aurora.model.Debt;
+
 @Service("debtService")
+@Transactional
 public class DebtServiceImpl implements DebtService {
-    private static final Logger logger = LoggerFactory.getLogger(DebtServiceImpl.class);
+    //private static final Logger logger = LoggerFactory.getLogger(DebtServiceImpl.class);
 
     @Autowired
     private DebtDao debtDao;

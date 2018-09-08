@@ -1,13 +1,17 @@
 package com.spring.aurora.service;
 
-import com.spring.aurora.dao.CustomerPriceDao;
-import com.spring.aurora.model.CustomerPrice;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.spring.aurora.dao.CustomerPriceDao;
+import com.spring.aurora.model.CustomerPrice;
 
 @Service("customerPriceService")
+@Transactional
 public class CustomerPriceServiceImpl implements CustomerPriceService {
 
     @Autowired

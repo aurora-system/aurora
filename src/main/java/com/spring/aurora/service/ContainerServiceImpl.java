@@ -3,6 +3,8 @@ package com.spring.aurora.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.spring.aurora.dao.ContainerDao;
 import com.spring.aurora.model.Container;
 
 @Service("containerService")
+@Transactional
 public class ContainerServiceImpl implements ContainerService {
 
 	@Autowired

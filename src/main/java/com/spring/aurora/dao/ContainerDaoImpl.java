@@ -1,26 +1,19 @@
 package com.spring.aurora.dao;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.aurora.model.Container;
-import com.spring.aurora.model.Debt;
-import com.spring.aurora.model.Order;
 
 @Repository
-@Transactional
 public class ContainerDaoImpl implements ContainerDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(ContainerDaoImpl.class);
@@ -33,6 +26,7 @@ public class ContainerDaoImpl implements ContainerDao {
 		Session session = sessionFactory.getCurrentSession();
 		logger.debug("Container activity inserted.");
 		session.save(container);
+		session.flush();
 		return container;
 	}
 	
@@ -40,6 +34,7 @@ public class ContainerDaoImpl implements ContainerDao {
 	public Container update(Container container) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(container);
+		session.flush();
 		return container;
 	}
 	

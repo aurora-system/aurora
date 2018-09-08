@@ -1,21 +1,20 @@
 package com.spring.aurora.service;
 
-import com.spring.aurora.dao.ContainerDao;
-import com.spring.aurora.dao.CustomerDao;
-import com.spring.aurora.dao.DebtDao;
-import com.spring.aurora.dao.OrderDao;
-import com.spring.aurora.dao.PaymentDao;
-import com.spring.aurora.model.Order;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
-
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.aurora.dao.OrderDao;
+import com.spring.aurora.model.Order;
 
 @Service("orderService")
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
