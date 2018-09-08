@@ -37,8 +37,8 @@
                           <tr>
                             <th>Type</th>
                             <th>Customer Name</th>
-                            <th>Address</th>
                             <th>Refill Price</th>
+                            <th>Address</th>
                             <th>Contact Person</th>
                             <th>Contact Number</th>
                             <th width="100">Actions</th>
@@ -49,8 +49,8 @@
                                 <tr>
                                     <td>${cp.customer.type}</td>
                                     <td>${cp.customer.name}</td>
-                                    <td>${cp.customer.address}</td>
                                     <td>${cp.refillPrice}</td>
+                                    <td>${cp.customer.address}</td>
 									<td>${cp.customer.contactName}</td>
                                     <td>${cp.customer.mainNumber}</td>
                                     <td nowrap>
