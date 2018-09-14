@@ -101,21 +101,31 @@ public class CustomerController {
         
         for (Customer c : customerList) {
         	
-        	Double price = 0.0;
+        	Double priceRound = 0.0;
+        	Double priceSlim = 0.0;
+        	Double refillPrice = 40.0;
         	List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(c.getCustomerId());
         	
         	for (CustomerPrice cp : customerPriceList) {
         		if (cp.getProductId().equalsIgnoreCase("1")) {
-        			price = cp.getSellingPrice();
-        			break;
+        			priceRound = cp.getSellingPrice();
+        		}
+        		
+        		if (cp.getProductId().equalsIgnoreCase("2")) {
+        			priceSlim = cp.getSellingPrice();
         		}
         	}
         	
-        	if (price <= 0) {
-        		price = 40.0; // Default price of refill
+        	if (priceRound <= 0) {
+        		if (priceSlim > 0) {
+        			refillPrice = priceSlim;
+        		}
+        	} else {
+        		refillPrice = priceRound;
         	}
         	
-        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, price);
+        	
+        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, refillPrice);
         	cpeList.add(cpe);
         }
         
