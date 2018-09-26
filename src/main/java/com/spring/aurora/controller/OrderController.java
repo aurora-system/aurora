@@ -644,10 +644,13 @@ public class OrderController {
         		}
         	}
         	
-        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
-            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundFreeCount();
+            
+            int slimBuyCount = order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount();
+            int roundBuyCount = order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount();
         	
-    		saveContainerActivity(slimOutGoingCount, roundOutGoingCount,
+    		saveContainerActivity(slimOutGoingCount, roundOutGoingCount, slimBuyCount, roundBuyCount,
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
         	
@@ -679,10 +682,13 @@ public class OrderController {
         		}
         	}
         	
-        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
-            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+        	int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundFreeCount();
 
-            saveContainerActivity(slimOutGoingCount, roundOutGoingCount,
+            int slimBuyCount = order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount();
+            int roundBuyCount = order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount();
+            
+            saveContainerActivity(slimOutGoingCount, roundOutGoingCount, slimBuyCount, roundBuyCount,
 					Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 					order.getCustomerId(), order.getOrderId(), saveReturnedContainers);
         	
@@ -815,12 +821,15 @@ public class OrderController {
             	}
             }
             
-            int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount() + order.getSlimFreeCount();
-            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount() + order.getRoundFreeCount();
+            int slimOutGoingCount = order.getSlimRefillOnlyCount() + order.getSlimFreeCount();
+            int roundOutGoingCount = order.getRoundRefillOnlyCount() + order.getRoundFreeCount();
+            
+            int slimBuyCount = order.getSlimContainerOnlyCount() + order.getSlimRefillWithContainerCount();
+            int roundBuyCount = order.getRoundContainerOnlyCount() + order.getRoundRefillWithContainerCount();
             
             Timestamp orderCreationDate = order.getCreatedAt();
             
-            updateContainerActivity(slimOutGoingCount, roundOutGoingCount,
+            updateContainerActivity(slimOutGoingCount, roundOutGoingCount, slimBuyCount, roundBuyCount,
 					Integer.parseInt(updatedOrder.getSlimReturned()), Integer.parseInt(updatedOrder.getRoundReturned()),
 					updatedOrder.getCustomerId(), oldOrderId, updatedOrder.getOrderId(), orderCreationDate);
             Date orderCreationDateConverted = new Date(orderCreationDate.getTime());
@@ -878,15 +887,25 @@ public class OrderController {
      * @param roundReturned
      * @param customerId
      */
-	public void saveContainerActivity(int slimCount, int roundCount, int slimReturned, int roundReturned,
+	public void saveContainerActivity(int slimBorrow, int roundBorrow, int slimBuy, int roundBuy, int slimReturned, int roundReturned,
 			String customerId, String orderId, boolean saveReturnedContainers) {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
         containerActivity.setOrderId(orderId);
-        containerActivity.setRoundCount(roundCount);
-        containerActivity.setSlimCount(slimCount);
-        containerActivity.setStatus("B");
+        containerActivity.setRoundCount(roundBorrow);
+        containerActivity.setSlimCount(slimBorrow);
+        containerActivity.setStatus("B"); // Borrow
+        containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        containerService.insert(containerActivity);
+        
+        // Buy Container - code is BC
+        containerActivity = new Container();
+        containerActivity.setCustomerId(customerId);
+        containerActivity.setOrderId(orderId);
+        containerActivity.setRoundCount(roundBuy);
+        containerActivity.setSlimCount(slimBuy);
+        containerActivity.setStatus("BC"); // Buy Container
         containerActivity.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         containerService.insert(containerActivity);
         
@@ -902,15 +921,27 @@ public class OrderController {
         }
     }
 	
-	public void updateContainerActivity(int slimCount, int roundCount, int slimReturned, int roundReturned,
+	public void updateContainerActivity(int slimBorrow, int roundBorrow, int slimBuy, int roundBuy, int slimReturned, int roundReturned,
 			String customerId, String orderId, String newOrderId, Timestamp containerActivityDate) {
     	
     	Container containerActivity = new Container();
         containerActivity.setCustomerId(customerId);
         containerActivity.setOrderId(orderId);
-        containerActivity.setRoundCount(roundCount);
-        containerActivity.setSlimCount(slimCount);
+        containerActivity.setRoundCount(roundBorrow);
+        containerActivity.setSlimCount(slimBorrow);
         containerActivity.setStatus("B");
+        containerActivity.setCreatedAt(containerActivityDate);
+        containerService.delete(containerActivity);
+        containerActivity.setOrderId(newOrderId);
+        containerService.insert(containerActivity);
+        
+        // Buy Container - code is BC
+        containerActivity = new Container();
+        containerActivity.setCustomerId(customerId);
+        containerActivity.setOrderId(orderId);
+        containerActivity.setRoundCount(roundBuy);
+        containerActivity.setSlimCount(slimBuy);
+        containerActivity.setStatus("BC"); // Buy Container
         containerActivity.setCreatedAt(containerActivityDate);
         containerService.delete(containerActivity);
         containerActivity.setOrderId(newOrderId);
