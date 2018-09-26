@@ -3,38 +3,30 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/container/listAll" var="urlContainerBalances" />
 <jsp:include page="fragments/header.jsp" />
 <body>
-    <div class="container" style="width: 800px">
+    <div class="container" style="width: 600px">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading clearfix">
-                        <p class="pull-left">Total Balance of Borrowed Containers as of Today</p>
-                        <a href="${urlContainerBalances}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
+                    <div class="panel-heading">
+                        <p>Total Balance of Borrowed Containers as of Today</p>
                     </div>
                     <div class="panel-body">
-                        <table id="containersTable" class="table table-striped table-bordered table-hover">
+                        <table id="containersTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">
                             <thead>
                                 <tr>
-                                    <th>Customer</th>
-                                    <th width="50">Round Total Balance</th>
-                                    <th width="50">Slim Total Balance</th>
-                                    <th width="50">Action</th>
+                                    <th style="padding: 8px;">Customer</th>
+                                    <th style="padding: 8px;" width="80">Round Total Balance</th>
+                                    <th style="padding: 8px;" width="80">Slim Total Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="c" items="${containersMap}">
-                                    <spring:url value="/customers/view?customerId=${c.key}" var="urlViewCustomer" />
-                                    <spring:url value="/container/return?cid=${c.key}" var="urlReturnContainer" />
                                     <tr>
-                                        <td><a href="${urlViewCustomer}">${c.value.customer.name}</a></td>
-                                        <td>${c.value.roundTotal}</td>
-                                        <td>${c.value.slimTotal}</td>
-                                        <td>
-                                            <a href="${urlReturnContainer}" style="text-align: center;" class="btn btn-default" role="button">Return</a>
-                                        </td>
+                                        <td style="padding: 8px;">${c.value.customer.name}</td>
+                                        <td style="padding: 8px;">${c.value.roundTotal}</td>
+                                        <td style="padding: 8px;">${c.value.slimTotal}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -45,7 +37,7 @@
         </div>
     </div>
     
-    <div class="container" style="width: 800px">
+    <div class="container" style="width: 600px">
     	<div class="row">
     		<div class="col-lg-12">
     			<div class="panel panel-info">
@@ -54,17 +46,17 @@
                 	</div>
                 	
                 	 <div class="panel-body">
-                	 	<table id="myTable" class="table table-striped table-bordered table-hover">
+                	 	<table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">
                 	 		<thead>
 	                          <tr>
-	                            <th>Total Round</th>
-	                            <th>Total Slim</th>
+	                            <th style="padding: 8px;">Total Round</th>
+	                            <th style="padding: 8px;">Total Slim</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
 	                        	<tr>
-	                        		<td>${runningRound}</td>
-	                        		<td>${runningSlim}</td>
+	                        		<td style="padding: 8px;">${runningRound}</td>
+	                        		<td style="padding: 8px;">${runningSlim}</td>
 	                        	</tr>
 	                        </tbody>
                 	 	</table>
@@ -85,10 +77,12 @@
 	<script type="text/javascript">
         $(document).ready(() => {
             $('#containersTable').DataTable({
-                fixedHeader: true,
-                paging: false,
-                scrollY: 350,
-                scrollCollapse: true
+            	"columns": [
+                    	    null,
+                    	    null,
+                    	    null,
+                    	    { "orderable": false }
+                    	  ]
             })
         })
     </script>

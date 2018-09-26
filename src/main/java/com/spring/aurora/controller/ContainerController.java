@@ -143,7 +143,8 @@ public class ContainerController {
     }
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    public String listAllContainers(Model model) {
+    public String listAllContainers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
+    	
     	List<Customer> customers = customerService.findAll();
 		Map<String, Object> containersMap = customers.stream()
 				.filter(customer -> getSlimTotal(customer.getCustomerId()) != 0 || getRoundTotal(customer.getCustomerId()) != 0)
@@ -163,7 +164,11 @@ public class ContainerController {
         model.addAttribute("runningRound", runningRound);
         model.addAttribute("runningSlim", runningSlim);
         
-        return "container-totals";
+        if (mode.equalsIgnoreCase("preview")) {
+        	return "container-totals-print-preview";
+        } else {
+        	return "container-totals";
+        }
     }
 
     public int getSlimTotal (String cid) {
