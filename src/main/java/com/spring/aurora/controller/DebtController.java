@@ -71,7 +71,7 @@ public class DebtController {
     }
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    public String listAllDebts(Model model) {
+    public String listAllDebts(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         List<Customer> customers = customerService.findAll();
         Map<String, Object> debtsMap = customers.stream()
                 .filter(customer -> getDebtsTotal(customer.getCustomerId()) > 0.0)
@@ -82,7 +82,13 @@ public class DebtController {
         model.addAttribute("debtsMap", debtsMap);
         Double arTotal = getTotalArsAsOfToday();
         model.addAttribute("arTotal", arTotal);
-        return "list-debts-all";
+        
+        if (mode.equalsIgnoreCase("preview")) {
+        	return "list-debts-all-print-preview";
+        } else {
+        	return "list-debts-all";
+        }
+        
     }
 
     private Double getTotalArsAsOfToday() {

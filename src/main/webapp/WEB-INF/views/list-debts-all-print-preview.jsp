@@ -4,43 +4,31 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/debts/listAll" var="urlListDebts" />
 <jsp:include page="fragments/header.jsp" />
 <body>
     <div class="container" style="width: 700px">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading clearfix">
+                    <div class="panel-heading" style="font-size: 10px;">
                         <p>List of A/Rs for each customer as of today</p>
                         <p>Total of all Accounts Receivables as of today: <fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${arTotal}"></fmt:formatNumber></p>
-                        <a href="${urlListDebts}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                     </div>
                     <div class="panel-body">
-                        <table id="debtsTable" class="table table-striped table-bordered table-hover">
+                        <table id="debtsTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">
                             <thead>
                                 <tr>
-                                    <th>Customer</th>
-                                    <th width="100" bgcolor="F7E8D0">Total A/R</th>
-                                    <th width="100" bgcolor="F7E8D0">Total Payments</th>
-                                    <!--<th width="220">Actions</th>-->
+                                    <th style="padding: 8px;">Customer</th>
+                                    <th style="padding: 8px;" width="100">Total A/R</th>
+                                    <th style="padding: 8px;" width="100">Total Payments</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="entry" items="${debtsMap}">
-                                    <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
-                                    <spring:url value="/payments/new?cid=${entry.key}" var="urlNewPayment" />
-                                    <spring:url value="/payments/list?cid=${entry.key}" var="urlListPayment" />
-                                    <spring:url value="/debts/list?cid=${entry.key}" var="urlListDebts" />
-                                    <spring:url value="/debts/new?cid=${entry.key}" var="urlNewArEntry" />
                                     <tr>
-                                        <td><a href="${urlListDebts}">${entry.value.customerName}</a></td>
-                                        <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></td>
-                                        <td bgcolor="F7E8D0"><a href="${urlListPayment}"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "0.00"></fmt:formatNumber></a></td>
-                                        <!--<td>
-                                            <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
-                                            <a href="${urlListPayment}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">List Payments</a>
-                                        </td>-->
+                                        <td style="padding: 8px;">${entry.value.customerName}</td>
+                                        <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></td>
+                                        <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "0.00"></fmt:formatNumber></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -64,7 +52,8 @@
                 fixedHeader: true,
                 paging: false,
                 scrollY: 350,
-                scrollCollapse: true
+                scrollCollapse: true,
+                null
             })
         })
     </script>
