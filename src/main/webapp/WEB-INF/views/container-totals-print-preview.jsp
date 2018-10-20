@@ -77,12 +77,8 @@
 	<script type="text/javascript">
         $(document).ready(() => {
             $('#containersTable').DataTable({
-            	"columns": [
-                    	    null,
-                    	    null,
-                    	    null,
-                    	    { "orderable": false }
-                    	  ]
+            	paging: false,
+                searching: false
             })
         })
     </script>

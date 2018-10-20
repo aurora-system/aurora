@@ -49,11 +49,8 @@
     <script type="text/javascript">
         $(document).ready(() => {
             $('#debtsTable').DataTable({
-                fixedHeader: true,
                 paging: false,
-                scrollY: 350,
-                scrollCollapse: true,
-                null
+                searching: false
             })
         })
     </script>
