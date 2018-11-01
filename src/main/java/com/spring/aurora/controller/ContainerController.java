@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,8 +28,10 @@ import com.spring.aurora.entity.DebtCustomerEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
+import com.spring.aurora.model.Order;
 import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.OrderService;
 
 @Controller
 @RequestMapping("/container")
@@ -38,6 +41,7 @@ public class ContainerController {
 
     @Autowired private ContainerService containerService;
     @Autowired private CustomerService customerService;
+    @Autowired private OrderService orderService;
 
     @RequestMapping(value = "/return", method = RequestMethod.GET)
     public String returnContainer(@RequestParam String cid, Model model) {
@@ -142,8 +146,8 @@ public class ContainerController {
     	return "container-history";
     }
 
-    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    public String listAllContainers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
+    @RequestMapping(value = "/listAllOld", method = RequestMethod.GET)
+    public String listAllContainersOld(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
     	
     	List<Customer> customers = customerService.findAll();
 		Map<String, Object> containersMap = customers.stream()
@@ -161,6 +165,45 @@ public class ContainerController {
         	runningSlim += getSlimTotal(c.getCustomerId());
         }
         
+        model.addAttribute("runningRound", runningRound);
+        model.addAttribute("runningSlim", runningSlim);
+        
+        if (mode.equalsIgnoreCase("preview")) {
+        	return "container-totals-print-preview";
+        } else {
+        	return "container-totals";
+        }
+    }
+    
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public String listAllContainers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
+    	
+    	List<Customer> customers = customerService.findAll();
+    	Map<String, Object> containersMap = new HashMap<String, Object>();
+        int runningRound = 0;
+        int runningSlim = 0;
+
+        for (Customer c : customers) {
+        	
+        	int customerTotalRound = 0;
+            int customerTotalSlim = 0;
+        	List<Order> orders = orderService.findAllByCustomerId(c.getCustomerId());
+        	
+        	for (Order o : orders) {
+        		customerTotalRound = customerTotalRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
+        		customerTotalSlim = customerTotalSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
+        		runningRound = runningRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
+        		runningSlim = runningSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
+        	}
+        	
+        	ContainerCustomerEntity cce = new ContainerCustomerEntity(c, customerTotalSlim, customerTotalRound);
+        	
+        	if (cce.getRoundTotal() != 0 || cce.getSlimTotal() != 0) {
+        		containersMap.put(c.getCustomerId(), cce);
+        	}
+        }
+        
+        model.addAttribute("containersMap", containersMap);
         model.addAttribute("runningRound", runningRound);
         model.addAttribute("runningSlim", runningSlim);
         

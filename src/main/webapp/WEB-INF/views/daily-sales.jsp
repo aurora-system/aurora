@@ -8,7 +8,7 @@
 <link href="/resources/css/main.css" rel="stylesheet">
 <spring:url value="/orders/daily" var="dailySalesUrl"/>
 <body>
-    <div class="container" style="width: 1200px">
+    <div class="container" style="width: 1300px">
     	<div class="row">
             <div class="col-lg-12">
                 

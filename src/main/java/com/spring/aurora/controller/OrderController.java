@@ -273,6 +273,9 @@ public class OrderController {
         Double totalCheckPayments = 0.00;
         Double totalDebt = 0.00;
         
+        int totalReturnedRound = 0;
+        int totalReturnedSlim = 0;
+        
         List<DailySalesEntity> dseList = new ArrayList<>();
         
         Date date = ("today".equalsIgnoreCase(d)) ? Date.valueOf(LocalDate.now()) : Date.valueOf(LocalDate.parse(d));
@@ -312,7 +315,12 @@ public class OrderController {
             	String formattedDate = new SimpleDateFormat("h:mm a").format(dateTime);
             	
             	dse.setReturnedRound(o.getRoundReturned());
+            	totalReturnedRound += Integer.parseInt(o.getRoundReturned());
+            	
             	dse.setReturnedSlim(o.getSlimReturned());
+            	totalReturnedSlim += Integer.parseInt(o.getSlimReturned());
+            	
+            	
             	dse.setRemarks(o.getRemarks());
             	dse.setDateAndTime(formattedDate);
             	dseList.add(dse);
@@ -376,8 +384,8 @@ public class OrderController {
         
         model.addAttribute("totalSlimDelivered", totalSlimDelivered);
         model.addAttribute("totalRoundDelivered", totalRoundDelivered);
-        model.addAttribute("totalSlimReturned", totalSlimReturned);
-        model.addAttribute("totalRoundReturned", totalRoundReturned);
+        model.addAttribute("totalSlimReturned", totalReturnedSlim);
+        model.addAttribute("totalRoundReturned", totalReturnedRound);
         
         model.addAttribute("totalExpenses", ReportUtil.applyCurrencyFormat("" + totalExpenses));
         model.addAttribute("totalCashPayments", ReportUtil.applyCurrencyFormat("" + totalCashPayments));

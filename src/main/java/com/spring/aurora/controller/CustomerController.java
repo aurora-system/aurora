@@ -185,17 +185,31 @@ public class CustomerController {
         int totalRoundBorrowed = 0;
         int totalSlimBorrowed = 0;
         
-        for (Container c : containerList) {
-        	
-        	if (c.getStatus().equalsIgnoreCase("B")) {
-        		totalRoundBorrowed = totalRoundBorrowed +  c.getRoundCount();
-        		totalSlimBorrowed = totalSlimBorrowed + c.getSlimCount();
-        	} else {
-        		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
-        		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
-        		returnedContainers.add(c);
-        	}
+        List<Order> orders = orderService.findAllByCustomerId(customerId);
+        
+        for (Order o : orders) {
+        	totalRoundBorrowed = totalRoundBorrowed +  o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
+    		totalSlimBorrowed = totalSlimBorrowed + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
+    		
+    		Container c = new Container();
+    		c.setRoundCount(Integer.parseInt(o.getRoundReturned()));
+    		c.setSlimCount(Integer.parseInt(o.getSlimReturned()));
+    		c.setStatus("RO");
+    		
+    		returnedContainers.add(c);
         }
+        
+//        for (Container c : containerList) {
+//        	
+//        	if (c.getStatus().equalsIgnoreCase("B")) {
+//        		totalRoundBorrowed = totalRoundBorrowed +  c.getRoundCount();
+//        		totalSlimBorrowed = totalSlimBorrowed + c.getSlimCount();
+//        	} else {
+//        		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
+//        		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
+//        		returnedContainers.add(c);
+//        	}
+//        }
         
         model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
     	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
