@@ -191,12 +191,27 @@ public class CustomerController {
         	totalRoundBorrowed = totalRoundBorrowed +  o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
     		totalSlimBorrowed = totalSlimBorrowed + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
     		
-    		Container c = new Container();
-    		c.setRoundCount(Integer.parseInt(o.getRoundReturned()));
-    		c.setSlimCount(Integer.parseInt(o.getSlimReturned()));
-    		c.setStatus("RO");
+    		int roundReturned = Integer.parseInt(o.getRoundReturned());
+    		int slimReturned = Integer.parseInt(o.getSlimReturned());
     		
-    		returnedContainers.add(c);
+    		if (roundReturned == 0 && slimReturned == 0) {
+    			// Do not save
+    		} else {
+    			Container c = new Container();
+        		c.setRoundCount(roundReturned);
+        		c.setSlimCount(slimReturned);
+        		c.setStatus("RO");
+        		c.setCreatedAt(o.getCreatedAt());
+        		returnedContainers.add(c);
+    		}
+        }
+        
+        for (Container c : containerList) {
+        	if (c.getStatus().equalsIgnoreCase("R")) {
+        		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
+        		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
+        		returnedContainers.add(c);
+        	}
         }
         
 //        for (Container c : containerList) {

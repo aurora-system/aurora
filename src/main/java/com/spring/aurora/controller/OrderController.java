@@ -320,7 +320,6 @@ public class OrderController {
             	dse.setReturnedSlim(o.getSlimReturned());
             	totalReturnedSlim += Integer.parseInt(o.getSlimReturned());
             	
-            	
             	dse.setRemarks(o.getRemarks());
             	dse.setDateAndTime(formattedDate);
             	dseList.add(dse);
@@ -368,15 +367,11 @@ public class OrderController {
         	dse.setRemarks("Returned containers.");
         	
         	if (c.getStatus().equalsIgnoreCase("R")) {
-        		totalRoundReturned += c.getRoundCount();
-        		totalSlimReturned += c.getSlimCount();
+        		totalReturnedRound += c.getRoundCount();
+        		totalReturnedSlim += c.getSlimCount();
         		dse.setReturnedRound(Integer.valueOf(c.getRoundCount()).toString());
         		dse.setReturnedSlim(Integer.valueOf(c.getSlimCount()).toString());
         		dseList.add(dse);
-        		// TODO: INTRODUCE RETURNED WITH ORDER - RO, R IS ONLY FOR SEPARATE RETURNS
-        	} else if (c.getStatus().equalsIgnoreCase("RO")) {
-        		totalRoundReturned += c.getRoundCount();
-        		totalSlimReturned += c.getSlimCount();
         	}
         }
 
