@@ -28,7 +28,7 @@
                                     <tr>
                                         <td style="padding: 8px;">${entry.value.customerName}</td>
                                         <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></td>
-                                        <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "0.00"></fmt:formatNumber></td>
+                                        <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.paymentsTotal}"></fmt:formatNumber></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

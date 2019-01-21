@@ -39,6 +39,7 @@
                                     <th>Date</th>
                                     <th>Remarks</th>
                                     <th>Amount</th>
+                                    <th>Withholding Tax</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,6 +48,7 @@
                                         <td>${payment.createdAt}</td>
                                         <td>${payment.remarks}</td>
                                         <td>${payment.amount}</td>
+                                        <td>${payment.withholdingTax}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
