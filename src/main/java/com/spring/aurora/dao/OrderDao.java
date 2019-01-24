@@ -16,6 +16,7 @@ public interface OrderDao {
     List<Order> findAllPendingOrders();
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
+    List<Order> findAllOrdersPerMonth(String month, String year);
     Order findOrderByOrderId(String orderId);
     void cancelOrder(String orderId);
     void setToDelivered(String orderId);

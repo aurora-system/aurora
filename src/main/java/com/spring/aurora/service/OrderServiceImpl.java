@@ -96,4 +96,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.getNewDrNumber();
 	}
 
+	@Override
+	public List<Order> findAllOrdersPerMonth(String month, String year) {
+		return orderDao.findAllOrdersPerMonth(month, year);
+	}
+
 }

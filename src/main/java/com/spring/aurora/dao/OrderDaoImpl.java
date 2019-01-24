@@ -193,4 +193,19 @@ public class OrderDaoImpl implements OrderDao {
 		
 		return newDrNumber;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> findAllOrdersPerMonth(String month, String year) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		List<Order> ordersForTheMonth = new ArrayList<>();
+		
+		ordersForTheMonth = session
+				.createQuery("select o from Order o where MONTH(o.createdAt) = :month and YEAR(o.createdAt) = :year")
+				.setParameter("month", Integer.parseInt(month)).setParameter("year", Integer.parseInt(year)).list();
+		
+		return ordersForTheMonth;
+	}
 }

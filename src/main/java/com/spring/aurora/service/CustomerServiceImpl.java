@@ -88,4 +88,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer view(String customerId) {
 		return customerDao.view(customerId);
 	}
+
+	@Override
+	public List<Customer> find(List<String> customerIdList) {
+		return customerDao.find(customerIdList);
+	}
 }

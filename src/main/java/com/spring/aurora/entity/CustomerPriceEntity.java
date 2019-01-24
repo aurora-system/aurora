@@ -1,13 +1,16 @@
 package com.spring.aurora.entity;
 
+import java.sql.Timestamp;
+
 import com.spring.aurora.model.Customer;
 
 public class CustomerPriceEntity {
     
 	private Customer customer;
     private double refillPrice;
+    private Timestamp mostRecentOrderDate;
 	
-    public CustomerPriceEntity(Customer customer, double refillPrice) {
+	public CustomerPriceEntity(Customer customer, double refillPrice) {
 		super();
 		this.customer = customer;
 		this.refillPrice = refillPrice;
@@ -24,6 +27,11 @@ public class CustomerPriceEntity {
 	public void setRefillPrice(double refillPrice) {
 		this.refillPrice = refillPrice;
 	}
-
+	public Timestamp getMostRecentOrderDate() {
+		return mostRecentOrderDate;
+	}
+	public void setMostRecentOrderDate(Timestamp mostRecentOrderDate) {
+		this.mostRecentOrderDate = mostRecentOrderDate;
+	}
    
 }

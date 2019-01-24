@@ -3,6 +3,7 @@ package com.spring.aurora.controller;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,6 +91,92 @@ public class CustomerController {
         return "customer-search-result";
     }
     
+    @RequestMapping(value="/listactive", method = RequestMethod.GET)
+	public String listActiveCustomersForTheMonth(Model model,
+			@RequestParam(value = "mode", defaultValue = "normal", required = false) String mode,
+			@RequestParam(value = "d", required = false) String datePicked) {
+		logger.info("List active customers per month.");
+    	
+		List<CustomerPriceEntity> cpeList = new ArrayList<>();
+		
+		String m = "";
+		String y = "";
+		System.out.println("Date Picked: " + datePicked);
+		
+		List<Customer> customerList = new ArrayList<>();
+		List<String> customerIds = new ArrayList<>();
+		
+		if (datePicked == null || datePicked.equalsIgnoreCase("today") || datePicked.equalsIgnoreCase("")) {
+			LocalDateTime now = LocalDateTime.now();
+			
+			Integer year = now.getYear();
+			Integer month = now.getMonthValue();
+			
+			System.out.println("M: " + month);
+			System.out.println("Y:" + year);
+			
+			m = month.toString();
+			y = year.toString();
+		} else {
+			String[] splitDate = datePicked.split("-");
+			m = splitDate[0];
+			System.out.println("M: " + m);
+			
+			if (splitDate.length > 1) {
+				y = splitDate[1];
+			}
+			System.out.println("Y: " + y);
+		}
+		
+		List<Order> orderList = orderService.findAllOrdersPerMonth(m, y);
+		
+		for (Order o : orderList) {
+			
+			if (!customerIds.contains(o.getCustomerId())) {
+				customerIds.add(o.getCustomerId());
+			}
+		}
+		
+		customerList = customerService.find(customerIds);
+		
+		for (Customer c : customerList) {
+			
+			Double priceRound = 0.0;
+        	Double priceSlim = 0.0;
+        	Double refillPrice = 40.0;
+        	List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(c.getCustomerId());
+        	
+        	Timestamp mostRecentOd = orderService.getMostRecentOrderDate(c.getCustomerId());
+        	
+        	
+        	for (CustomerPrice cp : customerPriceList) {
+        		if (cp.getProductId().equalsIgnoreCase("1")) {
+        			priceRound = cp.getSellingPrice();
+        		}
+        		
+        		if (cp.getProductId().equalsIgnoreCase("2")) {
+        			priceSlim = cp.getSellingPrice();
+        		}
+        	}
+        	
+        	if (priceRound <= 0) {
+        		if (priceSlim > 0) {
+        			refillPrice = priceSlim;
+        		}
+        	} else {
+        		refillPrice = priceRound;
+        	}
+        	
+        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, refillPrice);
+        	cpe.setMostRecentOrderDate(mostRecentOd);
+        	cpeList.add(cpe);
+		}
+		
+		model.addAttribute("cpeList", cpeList);
+		
+    	return "list-customers-monthly-active";
+    }
+    
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
@@ -160,12 +247,21 @@ public class CustomerController {
             Date dueDateConverted = Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             String formattedDueDate = new SimpleDateFormat("MMM dd YYYY").format(dueDateConverted);
             long daysBeforeDueDate = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+            String dueDateText = "";
+            
+            if (daysBeforeDueDate > 0) {
+            	dueDateText = "Due in " + daysBeforeDueDate + " days";
+            } else if (daysBeforeDueDate < 0) {
+            	dueDateText = -(daysBeforeDueDate) + " days overdue";
+            } else {
+            	dueDateText = "Due today";
+            }
             
             model.addAttribute("dueDate", formattedDueDate);
-            model.addAttribute("daysBeforeDueDate", daysBeforeDueDate);
+            model.addAttribute("dueDateText", dueDateText);
         } else {
         	model.addAttribute("dueDate", "N/A");
-        	model.addAttribute("daysBeforeDueDate", 0);
+        	model.addAttribute("dueDateText", "No orders yet");
         }
         
         if (mostRecentOd != null) {

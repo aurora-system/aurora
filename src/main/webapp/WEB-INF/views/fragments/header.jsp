@@ -24,11 +24,13 @@
 <spring:url value="/help" var="urlHelp" />
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
 <spring:url value="/products/list" var="urlListProducts"/>
+<spring:url value="/dashboard" var="urlDashboard"/>
+<spring:url value="/customers/listactive?d=today" var="urlMonthlyActiveCustomers" />
 
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${urlCustomers}">Crystal Clear</a>
+			<a class="navbar-brand" href="${urlDashboard}">Crystal Clear</a>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right" id="headerNav">
@@ -43,6 +45,7 @@
 						<li><a href="${urlMonthly}">Monthly Summary</a></li>
 						<li><a href="${urlDueDates}">Due Dates Summary</a></li>
 						<li><a href="${urlDailyDueDates}">Daily Due Dates</a></li>
+						<li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li>
 					</ul>
 				</li>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>

@@ -9,5 +9,6 @@ public interface CustomerService {
     Customer update(Customer customer);
     Customer find(Customer customer);
     Customer view(String customerId);
+    List<Customer> find(List<String> customerIdList);
     List<Customer> findAll();
 }

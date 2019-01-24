@@ -66,4 +66,21 @@ public class CustomerDaoImpl implements CustomerDao {
 		
 		return customer;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> find(List<String> customerIdList) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		List<Customer> customers = new ArrayList<>();
+		System.out.println("ID List: " + customerIdList);
+		
+		if (customerIdList.size() == 0) {
+			return customers;
+		}
+		customers = session.createQuery("select c from Customer c where c.customerId in (:idList)").setParameterList("idList", customerIdList).list();
+		
+		return customers;
+	}
 }
