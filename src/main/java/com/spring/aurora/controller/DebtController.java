@@ -1,11 +1,11 @@
 package com.spring.aurora.controller;
 
-import com.spring.aurora.entity.DebtCustomerEntity;
-import com.spring.aurora.model.Customer;
-import com.spring.aurora.model.Debt;
-import com.spring.aurora.service.CustomerService;
-import com.spring.aurora.service.DebtService;
-import com.spring.aurora.service.PaymentService;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.spring.aurora.entity.DebtCustomerEntity;
+import com.spring.aurora.model.Customer;
+import com.spring.aurora.model.Debt;
+import com.spring.aurora.service.CustomerService;
+import com.spring.aurora.service.DebtService;
+import com.spring.aurora.service.PaymentService;
 
 @Controller
 @RequestMapping("/debts")
@@ -76,9 +75,12 @@ public class DebtController {
         Map<String, Object> debtsMap = customers.stream()
                 .filter(customer -> getDebtsTotal(customer.getCustomerId()) > 0.0)
                 .collect(Collectors.toMap(Customer::getCustomerId,
-                customer -> {return new DebtCustomerEntity(
-                        customer.getName(), getDebtsTotal(customer.getCustomerId()));}
-                        ));
+                		customer -> {return new DebtCustomerEntity(
+                				customer.getName(), 
+                				getDebtsTotal(customer.getCustomerId()), 
+                				paymentService.getPaymentsTotalByCustomerId(customer.getCustomerId()));}
+                        	)
+                		);
         model.addAttribute("debtsMap", debtsMap);
         Double arTotal = getTotalArsAsOfToday();
         model.addAttribute("arTotal", arTotal);

@@ -36,8 +36,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public double getPaymentsTotalByCustomerId(String customerId) {
-        List<Payment> debts = paymentDao.findAllByCustomerId(customerId);
-        double total = debts.stream().mapToDouble(p -> p.getAmount() - p.getWithholdingTax()).sum();
+        List<Payment> payments = paymentDao.findAllByCustomerId(customerId);
+        double total = payments.stream().mapToDouble(p -> p.getAmount() + p.getWithholdingTax()).sum();
         return total;
     }
 
@@ -49,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public double getTotalPayments() {
         List<Payment> payments = paymentDao.findAll();
-        double total = payments.stream().mapToDouble(p -> p.getAmount() - p.getWithholdingTax()).sum();
+        double total = payments.stream().mapToDouble(p -> p.getAmount() + p.getWithholdingTax()).sum();
         return total;
     }
 }

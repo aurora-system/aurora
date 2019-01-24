@@ -327,8 +327,11 @@ public class CustomerController {
     	model.addAttribute("containerHistory", returnedContainers);
         
     	double debtsSubTotal = debtService.findDebtsTotalByCustomerId(customerId);
+    	logger.debug("debsTotal: "+ debtsSubTotal);
         double paymentsSubTotal = paymentService.getPaymentsTotalByCustomerId(customerId);
+        logger.debug("paymentsTotal: " + paymentsSubTotal);
         double totalDebt = debtsSubTotal - paymentsSubTotal;
+        logger.debug("total ARs: " + totalDebt);
         model.addAttribute("totalDebt", totalDebt);
 
         List<CustomerPrice> prices = customerPriceService.findAllByCustomerId(customerId);
