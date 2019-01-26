@@ -5,34 +5,37 @@
 <html lang="en">
 <spring:url value="/resources/css/main.css" var="mainCss" />
 <spring:url value="/customers/new" var="urlAddCustomer" />
-<spring:url value="/customers/list" var="urlListCustomers" />
+<spring:url value="/customers/listactive" var="urlListCustomersMonthlyActive" />
 <body>
 	<jsp:include page="fragments/header.jsp" />
     <div class="container">
-    
-    <div class="row">
+
+		<div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
-           	 	<div class="panel-heading clearfix" style="font-size: 10px;">
-                    Active customers for ${monthYear}
-                </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">
                         <thead>
                           <tr>
                             <th style="padding: 8px;">Type</th>
                             <th style="padding: 8px;">Customer Name</th>
+                            <th style="padding: 8px;">Refill</th>
+                            <th style="padding: 8px;">Most Recent Order</th>
+                            <th style="padding: 8px;">Days</th>
                             <th style="padding: 8px;">Address</th>
                             <th style="padding: 8px;">Contact Number</th>
                           </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="c" items="${customers}">
+                            <c:forEach var="cp" items="${cpeList}">
                                 <tr>
-                                    <td style="padding: 8px;">${c.type}</td>
-                                    <td style="padding: 8px;">${c.name}</td>
-                                    <td style="padding: 8px;">${c.address}</td>
-                                    <td style="padding: 8px;">${c.mainNumber}</td>
+                                    <td style="padding: 8px;">${cp.customer.type}</td>
+                                    <td style="padding: 8px;">${cp.customer.name}</td>
+                                    <td style="padding: 8px;">${cp.refillPrice}</td>
+                                    <td style="padding: 8px;">${cp.mostRecentOrderDate}</td>
+                                    <td style="padding: 8px;">${cp.customer.orderInterval}</td>
+                                    <td style="padding: 8px;">${cp.customer.address}</td>
+                                    <td style="padding: 8px;">${cp.customer.mainNumber}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -46,12 +49,17 @@
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/datepicker.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"columns": [
+            	    null,
+            	    null,
+            	    null,
             	    null,
             	    null,
             	    null,
@@ -66,6 +74,7 @@
     			$('#headerNav a').removeClass('active');
     			$(this).addClass('active');
     		});
+            
         });
     </script>
 

@@ -49,6 +49,8 @@ import com.spring.aurora.util.OrderFormValidator;
 public class CustomerController {
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
+    private static final String monthsStr[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    
     @Autowired
     private CustomerService customerService;
     
@@ -172,9 +174,14 @@ public class CustomerController {
         	cpeList.add(cpe);
 		}
 		
+		model.addAttribute("monthYear", monthsStr[Integer.valueOf(m)-1] + " " + y);
 		model.addAttribute("cpeList", cpeList);
 		
-    	return "list-customers-monthly-active";
+    	if (mode.equalsIgnoreCase("preview")) {
+    		return "list-customers-monthly-active-preview";
+    	} else {
+    		return "list-customers-monthly-active";
+    	}
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
