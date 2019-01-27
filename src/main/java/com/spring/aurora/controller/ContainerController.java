@@ -64,7 +64,7 @@ public class ContainerController {
             redirect.addFlashAttribute("msg", "Returned containers logged successfully!");
         }
         container.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        
+        container.setOrderId("0");
         containerService.insert(container);
         return "redirect:/customers/view?customerId=" +container.getCustomerId();
     }
