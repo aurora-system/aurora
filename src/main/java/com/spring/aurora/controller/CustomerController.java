@@ -310,7 +310,7 @@ public class CustomerController {
         }
         
         for (Container c : containerList) {
-        	if (c.getStatus().equalsIgnoreCase("R")) {
+        	if (c.getStatus().equalsIgnoreCase("R") && c.getOrderId() != null) {
         		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
         		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
         		returnedContainers.add(c);
