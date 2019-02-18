@@ -11,8 +11,8 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading" style="font-size: 10px;">
-                        <p>List of A/Rs for each customer as of today</p>
-                        <p>Total of all Accounts Receivables as of today: <fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${arTotal}"></fmt:formatNumber></p>
+                       List of A/Rs for each customer as of <span class="label label-danger">${dateToday}</span>
+                        <p>Total of all Accounts Receivables: <fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${arTotal}"></fmt:formatNumber></p>
                     </div>
                     <div class="panel-body">
                         <table id="debtsTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">

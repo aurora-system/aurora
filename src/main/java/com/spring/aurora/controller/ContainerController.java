@@ -182,6 +182,7 @@ public class ContainerController {
     	Map<String, Object> containersMap = new HashMap<String, Object>();
         int runningRound = 0;
         int runningSlim = 0;
+        Date dateToday = Date.valueOf(LocalDate.now());
 
         for (Customer c : customers) {
         	
@@ -206,6 +207,7 @@ public class ContainerController {
         model.addAttribute("containersMap", containersMap);
         model.addAttribute("runningRound", runningRound);
         model.addAttribute("runningSlim", runningSlim);
+        model.addAttribute("dateToday", dateToday);
         
         if (mode.equalsIgnoreCase("preview")) {
         	return "container-totals-print-preview";

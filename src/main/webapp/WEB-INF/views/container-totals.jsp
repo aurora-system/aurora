@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading clearfix">
-                        <p class="pull-left">Total Balance of Borrowed Containers as of Today</p>
+                       Total Balance of Borrowed Containers as of <span class="label label-danger">${dateToday}</span>
                         <a href="${urlContainerBalances}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                     </div>
                     <div class="panel-body">

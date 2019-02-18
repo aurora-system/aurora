@@ -12,8 +12,8 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading clearfix">
-                        <p>List of A/Rs for each customer as of today</p>
-                        <p>Total of all Accounts Receivables as of today: <fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${arTotal}"></fmt:formatNumber></p>
+                        List of A/Rs for each customer as of <span class="label label-danger">${dateToday}</span>
+                        <p>Total of all Accounts Receivables: <fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${arTotal}"></fmt:formatNumber></p>
                         <a href="${urlListDebts}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                     </div>
                     <div class="panel-body">

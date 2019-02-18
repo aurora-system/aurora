@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <p>Total Balance of Borrowed Containers as of Today</p>
+                        Total Balance of Borrowed Containers as of <span class="label label-danger">${dateToday}</span>
                     </div>
                     <div class="panel-body">
                         <table id="containersTable" class="table table-striped table-bordered table-hover" style="font-size: 10px;">
