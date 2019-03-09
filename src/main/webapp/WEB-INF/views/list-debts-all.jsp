@@ -21,8 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>Customer</th>
-                                    <th width="100" bgcolor="F7E8D0">Total A/R</th>
-                                    <th width="100" bgcolor="F7E8D0">Total Payments</th>
+                                    <th width="160" bgcolor="F7E8D0">Total A/R</th>
                                     <!--<th width="220">Actions</th>-->
                                 </tr>
                             </thead>
@@ -36,7 +35,6 @@
                                     <tr>
                                         <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
                                         <td bgcolor="F7E8D0"><a href="${urlListDebts}"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></a></td>
-                                        <td bgcolor="F7E8D0"><a href="${urlListPayment}"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.paymentsTotal}"></fmt:formatNumber></a></td>
                                         <!--<td>
                                             <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                                             <a href="${urlListPayment}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">List Payments</a>
