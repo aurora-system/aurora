@@ -351,8 +351,8 @@ public class OrderController {
         		dse.setPaidCash(Double.parseDouble(df2.format(p.getAmount())));
         		totalCashPayments += p.getAmount();
         	} else {
-        		dse.setPaidCheck(Double.parseDouble(df2.format(p.getAmount())));
-        		totalCheckPayments += p.getAmount();
+        		dse.setPaidCheck(Double.parseDouble(df2.format(p.getAmount() + p.getWithholdingTax())));
+        		totalCheckPayments += p.getAmount() + p.getWithholdingTax();
         	}
         	dseList.add(dse);
         }
