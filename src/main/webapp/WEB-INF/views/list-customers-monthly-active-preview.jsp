@@ -64,7 +64,6 @@
             	    null,
             	    null,
             	    null,
-            	    null,
             	    { "orderable": false }
             	  ]
             	

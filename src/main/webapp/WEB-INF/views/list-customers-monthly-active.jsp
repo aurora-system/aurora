@@ -49,7 +49,7 @@
             <div class="panel panel-info">
             	<div class="panel-heading clearfix">
                     Active customers for ${monthYear}
-                    <a href="${urlListCustomers}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
+                    <a href="${urlListCustomersMonthlyActive}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">

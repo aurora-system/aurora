@@ -93,6 +93,13 @@ public class CustomerController {
         return "customer-search-result";
     }
     
+    /**
+     * Fetches customers along with some of their details that have at least 
+     * one successful transaction for the selected month.
+     * @param model - the model
+     * @param mode - normal view or print preview
+     * @param datePicked - the selected month
+     */
     @RequestMapping(value="/listactive", method = RequestMethod.GET)
 	public String listActiveCustomersForTheMonth(Model model,
 			@RequestParam(value = "mode", defaultValue = "normal", required = false) String mode,
@@ -103,7 +110,6 @@ public class CustomerController {
 		
 		String m = "";
 		String y = "";
-		System.out.println("Date Picked: " + datePicked);
 		
 		List<Customer> customerList = new ArrayList<>();
 		List<String> customerIds = new ArrayList<>();
@@ -114,20 +120,14 @@ public class CustomerController {
 			Integer year = now.getYear();
 			Integer month = now.getMonthValue();
 			
-			System.out.println("M: " + month);
-			System.out.println("Y:" + year);
-			
 			m = month.toString();
 			y = year.toString();
 		} else {
 			String[] splitDate = datePicked.split("-");
 			m = splitDate[0];
-			System.out.println("M: " + m);
-			
 			if (splitDate.length > 1) {
 				y = splitDate[1];
 			}
-			System.out.println("Y: " + y);
 		}
 		
 		List<Order> orderList = orderService.findAllOrdersPerMonth(m, y);
@@ -174,16 +174,24 @@ public class CustomerController {
         	cpeList.add(cpe);
 		}
 		
+		System.out.println("CPELIST size: " + cpeList.size());
 		model.addAttribute("monthYear", monthsStr[Integer.valueOf(m)-1] + " " + y);
+		model.addAttribute("dateParam", datePicked);
 		model.addAttribute("cpeList", cpeList);
 		
     	if (mode.equalsIgnoreCase("preview")) {
+    		System.out.println("preview");
     		return "list-customers-monthly-active-preview";
     	} else {
     		return "list-customers-monthly-active";
     	}
     }
     
+    /**
+     * Fetches all the customers and their corresponding details.
+     * @param model - the model
+     * @param mode - normal view or print preview
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
