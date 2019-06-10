@@ -637,7 +637,7 @@ public class OrderController {
         } else {
         	
         	order = orderService.findOrderByOrderId(orderId);
-        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()));
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()), order.getOrderId());
         	
         	// Check first if already saved prior to delivery!
         	boolean saveReturnedContainers = true;
@@ -675,7 +675,7 @@ public class OrderController {
         } else {
         	
         	order = orderService.findOrderByOrderId(orderId);
-        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()));
+        	saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), order.getOrderId(), Date.valueOf(LocalDate.now()), order.getOrderId());
         	
         	// Check first if already saved prior to delivery!
         	boolean saveReturnedContainers = true;
@@ -839,7 +839,8 @@ public class OrderController {
 					updatedOrder.getCustomerId(), oldOrderId, updatedOrder.getOrderId(), orderCreationDate);
             Date orderCreationDateConverted = new Date(orderCreationDate.getTime());
             
-            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), oldOrderId, orderCreationDateConverted);
+            saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), oldOrderId, orderCreationDateConverted, updatedOrder.getOrderId());
+            System.out.println("Deleting debt with order id: " + oldOrderId);
             
             redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             
@@ -856,7 +857,7 @@ public class OrderController {
      * @param totalAmount
      * @param customerId
      */
-    public void saveDebt (double amountPaid, double totalAmount, String customerId, String orderId, Date debtDate) {
+    public void saveDebt (double amountPaid, double totalAmount, String customerId, String prevOrderId, Date debtDate, String newOrderId) {
     	
     	double deficit = totalAmount - amountPaid;
     	
@@ -872,13 +873,14 @@ public class OrderController {
     		}
     		
     		debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
-    		debtEntry.setOrderId(orderId);
+    		debtEntry.setOrderId(prevOrderId);
     		debtService.delete(debtEntry);
+    		debtEntry.setOrderId(newOrderId);
     		debtService.insert(debtEntry);
     	} else {
     		Debt debtEntry = new Debt();
     		debtEntry.setCustomerId(customerId);
-    		debtEntry.setOrderId(orderId);
+    		debtEntry.setOrderId(prevOrderId);
     		debtService.delete(debtEntry);
     	}
     }
