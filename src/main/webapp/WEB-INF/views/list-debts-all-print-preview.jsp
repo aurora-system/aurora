@@ -20,7 +20,6 @@
                                 <tr>
                                     <th style="padding: 8px;">Customer</th>
                                     <th style="padding: 8px;" width="100">Total A/R</th>
-                                    <th style="padding: 8px;" width="100">Total Payments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,7 +27,6 @@
                                     <tr>
                                         <td style="padding: 8px;">${entry.value.customerName}</td>
                                         <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></td>
-                                        <td style="padding: 8px;"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.paymentsTotal}"></fmt:formatNumber></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
