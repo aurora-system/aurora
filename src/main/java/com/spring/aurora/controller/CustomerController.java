@@ -312,6 +312,7 @@ public class CustomerController {
         		c.setRoundCount(roundReturned);
         		c.setSlimCount(slimReturned);
         		c.setStatus("RO");
+        		c.setOrderId("Yes");
         		c.setCreatedAt(o.getCreatedAt());
         		returnedContainers.add(c);
     		}
@@ -321,6 +322,7 @@ public class CustomerController {
         	if (c.getStatus().equalsIgnoreCase("R") && c.getOrderId() != null) {
         		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
         		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
+        		c.setOrderId("No");
         		returnedContainers.add(c);
         	}
         }

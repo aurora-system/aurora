@@ -148,6 +148,7 @@
 	                          <tr>
 	                            <th>Round Returned</th>
 	                            <th>Slim Returned</th>
+	                            <th>Within an Order?</th>
 	                            <th>Return Date</th>
 	                          </tr>
 	                        </thead>
@@ -156,6 +157,7 @@
 	                        		<tr>
 		                        		<td>${ch.roundCount}</td>
 		                        		<td>${ch.slimCount}</td>
+		                        		<td>${ch.orderId}</td>
 		                        		<td>${ch.createdAt}</td>
 	                        		</tr>
 	                        	</c:forEach>
@@ -259,6 +261,7 @@
 				fixedHeader: true
             })
             $('#myContainerTable').DataTable({
+            	"order" : [[ 3, "desc"]],
 				fixedHeader: true
             })
             $('#myPaymentTable').DataTable({
