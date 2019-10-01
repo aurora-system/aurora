@@ -66,6 +66,19 @@ public class ContainerController {
         container.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         container.setOrderId("0");
         containerService.insert(container);
+        
+        Customer customer = customerService.view(container.getCustomerId());
+        int currentTotalRound = customer.getTotalRound();
+        int currentTotalSlim = customer.getTotalSlim();
+        
+        currentTotalRound = currentTotalRound - container.getRoundCount();
+        currentTotalSlim = currentTotalSlim - container.getSlimCount();
+    	
+        customer.setTotalRound(currentTotalRound);
+        customer.setTotalSlim(currentTotalSlim);
+        
+        customerService.update(customer);
+        
         return "redirect:/customers/view?customerId=" +container.getCustomerId();
     }
 
@@ -175,6 +188,52 @@ public class ContainerController {
         }
     }
     
+    @RequestMapping(value = "/listAllOld2", method = RequestMethod.GET)
+    public String listAllContainersOld2(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
+    	
+    	List<Customer> customers = customerService.findAll();
+    	Map<String, Object> containersMap = new HashMap<String, Object>();
+        int runningRound = 0;
+        int runningSlim = 0;
+        Date dateToday = Date.valueOf(LocalDate.now());
+
+        for (Customer c : customers) {
+        	
+        	int customerTotalRound = 0;
+            int customerTotalSlim = 0;
+        	List<Order> orders = orderService.findAllByCustomerId(c.getCustomerId());
+        	
+        	for (Order o : orders) {
+        		customerTotalRound = customerTotalRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
+        		customerTotalSlim = customerTotalSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
+        		runningRound = runningRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
+        		runningSlim = runningSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
+        	}
+        	
+        	customerTotalRound = customerTotalRound - getRoundReturnsByCustomer(c.getCustomerId());
+        	customerTotalSlim = customerTotalSlim - getSlimReturnsByCustomer(c.getCustomerId());
+        	runningRound = runningRound - getRoundReturnsByCustomer(c.getCustomerId());
+        	runningSlim = runningSlim - getSlimReturnsByCustomer(c.getCustomerId());
+        	
+        	ContainerCustomerEntity cce = new ContainerCustomerEntity(c, customerTotalSlim, customerTotalRound);
+        	
+        	if (cce.getRoundTotal() != 0 || cce.getSlimTotal() != 0) {
+        		containersMap.put(c.getCustomerId(), cce);
+        	}
+        }
+        
+        model.addAttribute("containersMap", containersMap);
+        model.addAttribute("runningRound", runningRound);
+        model.addAttribute("runningSlim", runningSlim);
+        model.addAttribute("dateToday", dateToday);
+        
+        if (mode.equalsIgnoreCase("preview")) {
+        	return "container-totals-print-preview";
+        } else {
+        	return "container-totals";
+        }
+    }
+    
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     public String listAllContainers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
     	
@@ -197,6 +256,11 @@ public class ContainerController {
         		runningSlim = runningSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
         	}
         	
+        	customerTotalRound = customerTotalRound - getRoundReturnsByCustomer(c.getCustomerId());
+        	customerTotalSlim = customerTotalSlim - getSlimReturnsByCustomer(c.getCustomerId());
+        	runningRound = runningRound - getRoundReturnsByCustomer(c.getCustomerId());
+        	runningSlim = runningSlim - getSlimReturnsByCustomer(c.getCustomerId());
+        	
         	ContainerCustomerEntity cce = new ContainerCustomerEntity(c, customerTotalSlim, customerTotalRound);
         	
         	if (cce.getRoundTotal() != 0 || cce.getSlimTotal() != 0) {
@@ -215,6 +279,35 @@ public class ContainerController {
         	return "container-totals";
         }
     }
+    
+    public int getSlimReturnsByCustomer (String cid) {
+    	
+    	List<Container> containers = containerService.findAllByCustomerId(cid);
+    	int total = 0;
+    	
+    	for (Container c : containers) {
+    		if (c.getStatus().equalsIgnoreCase("R")) {
+    			total += c.getSlimCount();
+    		}
+    	}
+    	
+    	return total;
+    }
+    
+    public int getRoundReturnsByCustomer (String cid) {
+    	
+    	List<Container> containers = containerService.findAllByCustomerId(cid);
+    	int total = 0;
+    	
+    	for (Container c : containers) {
+    		if (c.getStatus().equalsIgnoreCase("R")) {
+    			total += c.getRoundCount();
+    		}
+    	}
+    	
+    	return total;
+    }
+
 
     public int getSlimTotal (String cid) {
     	

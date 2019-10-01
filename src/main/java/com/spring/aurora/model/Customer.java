@@ -39,7 +39,13 @@ public class Customer {
 	
 	@Column(name="order_interval")
 	private int orderInterval;
-
+	
+	@Column(name="total_round")
+	private int totalRound;
+	
+	@Column(name="total_slim")
+	private int totalSlim;
+	
 	public String getCustomerId() {
 		return customerId;
 	}
@@ -110,6 +116,22 @@ public class Customer {
 
 	public void setOrderInterval(int orderInterval) {
 		this.orderInterval = orderInterval;
+	}
+
+	public int getTotalRound() {
+		return totalRound;
+	}
+
+	public void setTotalRound(int totalRound) {
+		this.totalRound = totalRound;
+	}
+
+	public int getTotalSlim() {
+		return totalSlim;
+	}
+
+	public void setTotalSlim(int totalSlim) {
+		this.totalSlim = totalSlim;
 	}
 
 	public boolean isNew() {

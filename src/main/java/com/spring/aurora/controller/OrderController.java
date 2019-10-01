@@ -6,6 +6,7 @@ import com.spring.aurora.entity.OrderCustomerEntity;
 import com.spring.aurora.entity.OrderProductEntity;
 import com.spring.aurora.model.*;
 import com.spring.aurora.service.*;
+import com.spring.aurora.util.ContainerUtil;
 import com.spring.aurora.util.OrderFormValidator;
 import com.spring.aurora.util.ReportUtil;
 import org.slf4j.Logger;
@@ -735,18 +736,27 @@ public class OrderController {
             
             Order insertedOrder = orderService.insert(order);
             
-            System.out.println("Order Interval: " + orderProductEntity.getOrderInterval());
+            // Update some customer details including container balances
+            Customer customer = customerService.view(order.getCustomerId());
+            int currentTotalRound = customer.getTotalRound();
+            int currentTotalSlim = customer.getTotalSlim();
+            
+            currentTotalRound = currentTotalRound + insertedOrder.getRoundRefillOnlyCount() - Integer.parseInt(insertedOrder.getRoundReturned());
+            currentTotalSlim = currentTotalSlim + insertedOrder.getSlimRefillOnlyCount() - Integer.parseInt(insertedOrder.getSlimReturned());
+        	
+            customer.setTotalRound(currentTotalRound);
+            customer.setTotalSlim(currentTotalSlim);
             
             if (orderProductEntity.getOrderInterval() > 0) {
-            	Customer customer = customerService.view(order.getCustomerId());
-                customer.setOrderInterval(orderProductEntity.getOrderInterval());
-                customerService.update(customer);
+            	customer.setOrderInterval(orderProductEntity.getOrderInterval());
             }
             
-			if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
+            customerService.update(customer);
+            
+			/*if (orderProductEntity.getSaveReturned().equalsIgnoreCase("Yes")) {
 				saveReturnedContainers(Integer.parseInt(order.getSlimReturned()), Integer.parseInt(order.getRoundReturned()),
 						order.getCustomerId(), order.getOrderId());
-			}
+			}*/
             
             List<OrderProduct> orderProductEntityList = orderProductEntity.getOpList();
             
@@ -988,4 +998,5 @@ public class OrderController {
             containerService.insert(containerActivity);
         }
     }
+    
 }
