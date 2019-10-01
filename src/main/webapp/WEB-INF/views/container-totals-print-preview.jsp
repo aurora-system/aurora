@@ -22,11 +22,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="c" items="${containersMap}">
+                                <c:forEach var="c" items="${containersList}">
                                     <tr>
-                                        <td style="padding: 8px;">${c.value.customer.name}</td>
-                                        <td style="padding: 8px;">${c.value.roundTotal}</td>
-                                        <td style="padding: 8px;">${c.value.slimTotal}</td>
+                                        <td style="padding: 8px;">${c.name}</td>
+                                        <td style="padding: 8px;">${c.totalRound}</td>
+                                        <td style="padding: 8px;">${c.totalSlim}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

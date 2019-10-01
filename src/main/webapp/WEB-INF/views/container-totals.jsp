@@ -25,13 +25,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="c" items="${containersMap}">
-                                    <spring:url value="/customers/view?customerId=${c.key}" var="urlViewCustomer" />
-                                    <spring:url value="/container/return?cid=${c.key}" var="urlReturnContainer" />
+                                <c:forEach var="c" items="${containersList}">
+                                    <spring:url value="/customers/view?customerId=${c.customerId}" var="urlViewCustomer" />
+                                    <spring:url value="/container/return?cid=${c.customerId}" var="urlReturnContainer" />
                                     <tr>
-                                        <td><a href="${urlViewCustomer}">${c.value.customer.name}</a></td>
-                                        <td>${c.value.roundTotal}</td>
-                                        <td>${c.value.slimTotal}</td>
+                                        <td><a href="${urlViewCustomer}">${c.name}</a></td>
+                                        <td>${c.totalRound}</td>
+                                        <td>${c.totalSlim}</td>
                                         <td>
                                             <a href="${urlReturnContainer}" style="text-align: center;" class="btn btn-default" role="button">Return</a>
                                         </td>

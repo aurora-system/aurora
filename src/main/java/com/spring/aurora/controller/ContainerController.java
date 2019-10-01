@@ -238,37 +238,21 @@ public class ContainerController {
     public String listAllContainers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
     	
     	List<Customer> customers = customerService.findAll();
-    	Map<String, Object> containersMap = new HashMap<String, Object>();
+    	List<Customer> customerContainerTotals = new ArrayList<>();
+    	
         int runningRound = 0;
         int runningSlim = 0;
         Date dateToday = Date.valueOf(LocalDate.now());
 
         for (Customer c : customers) {
-        	
-        	int customerTotalRound = 0;
-            int customerTotalSlim = 0;
-        	List<Order> orders = orderService.findAllByCustomerId(c.getCustomerId());
-        	
-        	for (Order o : orders) {
-        		customerTotalRound = customerTotalRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
-        		customerTotalSlim = customerTotalSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
-        		runningRound = runningRound + o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
-        		runningSlim = runningSlim + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
-        	}
-        	
-        	customerTotalRound = customerTotalRound - getRoundReturnsByCustomer(c.getCustomerId());
-        	customerTotalSlim = customerTotalSlim - getSlimReturnsByCustomer(c.getCustomerId());
-        	runningRound = runningRound - getRoundReturnsByCustomer(c.getCustomerId());
-        	runningSlim = runningSlim - getSlimReturnsByCustomer(c.getCustomerId());
-        	
-        	ContainerCustomerEntity cce = new ContainerCustomerEntity(c, customerTotalSlim, customerTotalRound);
-        	
-        	if (cce.getRoundTotal() != 0 || cce.getSlimTotal() != 0) {
-        		containersMap.put(c.getCustomerId(), cce);
+        	if (c.getTotalRound() != 0 || c.getTotalSlim() != 0) {
+        		customerContainerTotals.add(c);
+        		runningRound = runningRound + c.getTotalRound();
+            	runningSlim = runningSlim + c.getTotalSlim();
         	}
         }
         
-        model.addAttribute("containersMap", containersMap);
+        model.addAttribute("containersList", customerContainerTotals);
         model.addAttribute("runningRound", runningRound);
         model.addAttribute("runningSlim", runningSlim);
         model.addAttribute("dateToday", dateToday);
