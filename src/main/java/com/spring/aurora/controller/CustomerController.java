@@ -246,8 +246,7 @@ public class CustomerController {
     public String viewCustomer(Model model, @RequestParam String customerId) {
         logger.info("Display customer information.");
         
-        List<Order> orderList = new ArrayList<>();
-        orderList = orderService.findAllByCustomerId(customerId);
+        List<Order> orderList = orderService.findAllByCustomerId(customerId);
         
         Customer customer = customerService.view(customerId);
         
@@ -288,20 +287,11 @@ public class CustomerController {
         	model.addAttribute("mostRecentOrderDate", "No orders yet.");
         }
         
-        List<Container> containerList = new ArrayList<>();
-        containerList = containerService.findAllByCustomerId(customerId);
-        
+        List<Container> containerList = containerService.findAllByCustomerId(customerId);
         List<Container> returnedContainers = new ArrayList<>();
-   
-        int totalRoundBorrowed = 0;
-        int totalSlimBorrowed = 0;
-        
         List<Order> orders = orderService.findAllByCustomerId(customerId);
         
         for (Order o : orders) {
-        	totalRoundBorrowed = totalRoundBorrowed +  o.getRoundRefillOnlyCount() - Integer.parseInt(o.getRoundReturned());
-    		totalSlimBorrowed = totalSlimBorrowed + o.getSlimRefillOnlyCount() - Integer.parseInt(o.getSlimReturned());
-    		
     		int roundReturned = Integer.parseInt(o.getRoundReturned());
     		int slimReturned = Integer.parseInt(o.getSlimReturned());
     		
@@ -320,8 +310,6 @@ public class CustomerController {
         
         for (Container c : containerList) {
         	if (c.getStatus().equalsIgnoreCase("R") && c.getOrderId() != null) {
-        		totalRoundBorrowed = totalRoundBorrowed - c.getRoundCount();
-        		totalSlimBorrowed = totalSlimBorrowed - c.getSlimCount();
         		c.setOrderId("No");
         		returnedContainers.add(c);
         	}
@@ -339,8 +327,8 @@ public class CustomerController {
 //        	}
 //        }
         
-        model.addAttribute("totalBorrowedRound", totalRoundBorrowed);
-    	model.addAttribute("totalBorrowedSlim", totalSlimBorrowed);
+        model.addAttribute("totalBorrowedRound", customer.getTotalRound());
+    	model.addAttribute("totalBorrowedSlim", customer.getTotalSlim());
     	model.addAttribute("containerHistory", returnedContainers);
         
     	double debtsSubTotal = debtService.findDebtsTotalByCustomerId(customerId);
