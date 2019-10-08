@@ -9,6 +9,7 @@
 <spring:url value="/payments/new" var="urlNewPayment" />
 <spring:url value="/debts/new" var="urlNewDebt" />
 <spring:url value="/customers/edit" var="urlEditCustomer" />
+<spring:url value="/customers/containerBalances" var="urlUpdateContainerBalances" />
 <spring:url value="/container/return" var="urlReturnContainer" />
 <body>
     <div class="container">
@@ -30,6 +31,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
                     <p class="pull-left" style="font-size: 20px"><b>${customer.name}</b></p>
+                    <a href="${urlUpdateContainerBalances}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">Update Container Balance</a>
                     <a href="${urlEditCustomer}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">Edit</a>
                 </div>
                 <div class="panel-body">

@@ -376,6 +376,15 @@ public class CustomerController {
         return "edit-customer";
     }
     
+    @RequestMapping(value = "/containerBalances", method = RequestMethod.GET)
+    public String updateContainerTotals(Model model, String customerId) {
+        logger.debug("Update Customer container totals.");
+        
+        Customer customer = customerService.view(customerId);
+        model.addAttribute("customerForm", customer);
+        return "set-container-totals";
+    }
+    
     // TODO: Transfer to OrderController
     /*@RequestMapping(value = "/neworder", method = RequestMethod.GET)
     public String newOrder(@ModelAttribute(value="customerId") String customerId, Model model) {
@@ -497,5 +506,26 @@ public class CustomerController {
             // POST/REDIRECT/GET
             return "redirect:/customers/view?customerId=" + customer.getCustomerId();
         }
+    }
+    
+    @RequestMapping(value = "/updateContainerBalances", method = RequestMethod.POST)
+    public String updateContainerBalances(@ModelAttribute("customerForm") @Validated Customer customer,
+                               BindingResult result, Model model,
+                               final RedirectAttributes redirectAttributes) {
+    	
+    	 logger.debug("Update customer container totals.");
+         if (result.hasErrors()) {
+             model.addAttribute("types", new String[] {"Business","Residential"});
+             return "set-container-totals";
+         } else {
+             // Add message to flash scope
+             redirectAttributes.addFlashAttribute("css", "success");
+
+             customerService.update(customer);
+ 			redirectAttributes.addFlashAttribute("msg", "Customer updated successfully!");
+
+             // POST/REDIRECT/GET
+             return "redirect:/customers/view?customerId=" + customer.getCustomerId();
+         }
     }
 }
