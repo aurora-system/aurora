@@ -62,6 +62,8 @@
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
 		                      	    <button type="submit" class="btn btn-primary">Save Payment</button>
+		                      	    <spring:url value="/customers/view?customerId=${payment.customerId}" var="viewCustomerUrl"/>
+                            		<a href="${viewCustomerUrl}" class="btn btn-primary">Cancel</a>
 		                        </div>
 		                    </div>
                         </form:form>

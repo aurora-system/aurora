@@ -156,14 +156,14 @@
                             </div>
                         </spring:bind>
                         
-                        <spring:bind path="saveReturned">
+                        <%--<spring:bind path="saveReturned">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="saveReturned">Save Returned Containers Before Delivery:</label>
                                 <div class="col-sm-9">
                                     <form:radiobuttons path="saveReturned" items="${saveReturnedAnswers}"/>
                                 </div>
                             </div>
-                        </spring:bind>
+                        </spring:bind> --%>
                         
                         <!-- REMARKS -->
                         <spring:bind path="order.remarks">

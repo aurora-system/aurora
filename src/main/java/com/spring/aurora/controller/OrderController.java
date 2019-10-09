@@ -783,8 +783,15 @@ public class OrderController {
                                BindingResult result, Model model,
                                final RedirectAttributes redirectAttributes) {
         logger.debug("Update order.");
+        
         Order order = orderProductEntity.getOrder();
         String oldOrderId = order.getOrderId();
+        
+        Order oldOrder = orderService.findOrderByOrderId(oldOrderId);
+        int roundBorrowedCountInitial = oldOrder.getRoundRefillOnlyCount();
+        int slimBorrowedCountInitial = oldOrder.getSlimRefillOnlyCount();
+        int roundReturnedInitial = Integer.parseInt(oldOrder.getRoundReturned());
+        int slimReturnedInitial = Integer.parseInt(oldOrder.getSlimReturned());
         
         if (order.getRoundReturned().equalsIgnoreCase("")) {
         	order.setRoundReturned("0");
@@ -850,6 +857,19 @@ public class OrderController {
             
             saveDebt(order.getAmountPaid(), order.getTotalAmount(), order.getCustomerId(), oldOrderId, orderCreationDateConverted, updatedOrder.getOrderId());
             System.out.println("Deleting debt with order id: " + oldOrderId);
+            
+            // Update some customer details including container balances
+            Customer customer = customerService.view(order.getCustomerId());
+            int currentTotalRound = customer.getTotalRound();
+            int currentTotalSlim = customer.getTotalSlim();
+            
+            currentTotalRound = currentTotalRound - roundBorrowedCountInitial + order.getRoundRefillOnlyCount() + roundReturnedInitial - Integer.parseInt(order.getRoundReturned());
+            currentTotalSlim = currentTotalSlim - slimBorrowedCountInitial + order.getSlimRefillOnlyCount() + slimReturnedInitial - Integer.parseInt(order.getSlimReturned());
+        	
+            customer.setTotalRound(currentTotalRound);
+            customer.setTotalSlim(currentTotalSlim);
+   
+            customerService.update(customer);
             
             redirectAttributes.addFlashAttribute("msg", "Order edited successfully!");
             
