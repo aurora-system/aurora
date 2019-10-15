@@ -16,6 +16,8 @@
                     <spring:url value="/customers/update" var="saveCustomerUrl"/>
                     <form:form class="form-horizontal" action="${saveCustomerUrl}" method="post" modelAttribute="customerForm">
                         <form:hidden path="customerId"/>
+                        <form:hidden path="totalRound"/>
+                        <form:hidden path="totalSlim"/>
                         <spring:bind path="name">
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <label class="col-sm-3 control-label" for="name">Customer name:</label>

@@ -19,6 +19,13 @@
                          	<form:hidden path="customerId"/>
                          	<form:hidden path="type"/>
                          	<form:hidden path="name"/>
+                         	<form:hidden path="address"/>
+                         	<form:hidden path="mainNumber"/>
+                         	<form:hidden path="contactName"/>
+                         	<form:hidden path="alternateNumber"/>
+                         	<form:hidden path="emailAddress"/>
+                         	<form:hidden path="orderInterval"/>
+                         	
                             <spring:bind path="totalRound">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <label class="col-sm-3 control-label">Total Round Balance: </label>
