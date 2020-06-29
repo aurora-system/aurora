@@ -47,7 +47,7 @@
                                         <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${product.sellingPrice}"></fmt:formatNumber></td>
                                         <td>
                                             <spring:url value="/products/edit/${product.productId}" var="editProductUrl"/>
-                                            <a href="${editProductUrl}" class="btn btn-default">Edit Product</a>
+                                            <a href="${editProductUrl}" class="btn btn-default">Edit</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -70,7 +70,7 @@
         $(document).ready(() => {
             $('#productsTable').DataTable({
                 fixedHeader: true,
-                paging: false,
+                paging: true,
                 scrollY: 350,
                 scrollCollapse: true
             })

@@ -47,18 +47,18 @@
 	                    <a href="${dailySalesUrl}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
 	                </div>
 	                <div class="panel-body">
-	                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 12px;">
+	                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 14px;">
 	                        <thead>
 	                          <tr>
-	                          	<th>DR#</th>
+	                          	<th width="50">DR#</th>
 	                          	<th width="100">Time</th>
-	                            <th width="100">Customer</th>
+	                            <th width="150">Customer</th>
 								<th width="10">ROUND Refill</th>
 	                            <th width="10">SLIM Refill</th>
-	                            <th width="10">ROUND Cont</th>
-	                            <th width="10">SLIM Cont</th>
-	                            <th width="10">ROUND Both</th>
-	                            <th width="10">SLIM Both</th>
+<!-- 	                            <th width="10">ROUND Cont</th> -->
+<!-- 	                            <th width="10">SLIM Cont</th> -->
+<!-- 	                            <th width="10">ROUND Both</th> -->
+<!-- 	                            <th width="10">SLIM Both</th> -->
 	                            <th width="50">Remarks</th>
 	                            <th width="30" bgcolor="F7E8D0">A/R</th>
 	                            <th width="30" bgcolor="ECFBEA">Cash</th>
@@ -76,10 +76,10 @@
 	                                    <td>${d.customerName}</td>
 	                                    <td>${d.order.roundRefillOnlyCount}</td>
 	                                    <td>${d.order.slimRefillOnlyCount}</td>
-	                                    <td>${d.order.roundContainerOnlyCount}</td>
-	                                    <td>${d.order.slimContainerOnlyCount}</td>
-	                                    <td>${d.order.roundRefillWithContainerCount}</td>
-	                                    <td>${d.order.slimRefillWithContainerCount}</td>
+<%-- 	                                    <td>${d.order.roundContainerOnlyCount}</td> --%>
+<%-- 	                                    <td>${d.order.slimContainerOnlyCount}</td> --%>
+<%-- 	                                    <td>${d.order.roundRefillWithContainerCount}</td> --%>
+<%-- 	                                    <td>${d.order.slimRefillWithContainerCount}</td> --%>
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
@@ -143,7 +143,7 @@
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">

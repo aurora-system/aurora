@@ -38,22 +38,22 @@
 				<li><a href="${urlOrders}">Orders</a></li>
 				<li><a href="${urlListProducts}">Products</a></li>
 				<li><a href="${urlListExpenses}">Expenses</a></li>
-				<li><a href="${urlDebt}">A/R Summary</a></li>
+<%-- 				<li><a href="${urlDebt}">A/R Summary</a></li> --%>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Reports</a>
 					<ul class="dropdown-menu">
 						<li><a href="${urlDaily}">Daily Sales</a></li>
 						<li><a href="${urlMonthly}">Monthly Summary</a></li>
-						<li><a href="${urlDueDates}">Due Dates Summary</a></li>
-						<li><a href="${urlDailyDueDates}">Daily Due Dates</a></li>
-						<li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li>
+<%-- 						<li><a href="${urlDueDates}">Due Dates Summary</a></li> --%>
+<%-- 						<li><a href="${urlDailyDueDates}">Daily Due Dates</a></li> --%>
+<%-- 						<li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li> --%>
 					</ul>
 				</li>
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>
-					<ul class="dropdown-menu">
-						<li><a href="${urlContainerBalance}">Total Balances</a></li>
-						<li><a href="${urlContainerHistory}">History</a></li>
-					</ul>
-				</li>
+<!-- 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a> -->
+<!-- 					<ul class="dropdown-menu"> -->
+<%-- 						<li><a href="${urlContainerBalance}">Total Balances</a></li> --%>
+<%-- 						<li><a href="${urlContainerHistory}">History</a></li> --%>
+<!-- 					</ul> -->
+<!-- 				</li> -->
 <!-- 				<li class="dropdown"> -->
 <!-- 					<a href="#">Reports</a> -->
 <!-- 					<span class="caret"></span> -->
