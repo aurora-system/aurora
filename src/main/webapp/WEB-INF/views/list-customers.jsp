@@ -45,27 +45,27 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="cp" items="${customerPrices}">
+                            <c:forEach var="cl" items="${customers}">
                                 <tr>
 <%--                                     <td>${cp.customer.type}</td> --%>
-                                    <td>${cp.customer.name}</td>
+                                    <td>${cl.name}</td>
 <%--                                     <td>${cp.refillPrice}</td> --%>
-                                    <td>${cp.customer.address}</td>
-									<td>${cp.customer.contactName}</td>
-                                    <td>${cp.customer.mainNumber}</td>
+                                    <td>${cl.address}</td>
+									<td>${cl.contactName}</td>
+                                    <td>${cl.mainNumber}</td>
                                     <td nowrap>
 <!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->
 										
 										<form action="view" method="get" style="display: inline-block;" >
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=customerId value="${cp.customer.customerId}"> 
+											<input type="hidden" name=customerId value="${cl.customerId}"> 
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
 										<spring:url value="/orders/neworder" var="newOrderUrl"/>
 										<form action="${newOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name="customerId" value="${cp.customer.customerId}"/> 
+											<input type="hidden" name="customerId" value="${cl.customerId}"/> 
 											<input class="btn btn-default" type="submit" value="New Order"/>
 										</form>
 									</td>

@@ -199,9 +199,9 @@ public class CustomerController {
         List<Customer> customerList = new ArrayList<>();
         customerList = customerService.findAll();
         
-        List<CustomerPriceEntity> cpeList = new ArrayList<>();
+//        List<CustomerPriceEntity> cpeList = new ArrayList<>();
         
-        for (Customer c : customerList) {
+//        for (Customer c : customerList) {
         	
 //        	Double priceRound = 0.0;
 //        	Double priceSlim = 0.0;
@@ -227,12 +227,12 @@ public class CustomerController {
 //        	}
         	
         	
-        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, 0.0);
-        	cpeList.add(cpe);
-        }
+//        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, 0.0);
+//        	cpeList.add(cpe);
+//        }
         
-        model.addAttribute("customers", customerService.findAll());
-        model.addAttribute("customerPrices", cpeList);
+        model.addAttribute("customers", customerList);
+//        model.addAttribute("customerPrices", cpeList);
         //model.addAttribute("orderForm", new Order());
         if (mode.equalsIgnoreCase("preview")) {
         	return "list-customers-print-preview";
