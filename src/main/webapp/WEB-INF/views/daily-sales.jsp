@@ -61,9 +61,9 @@
 <!-- 	                            <th width="10">SLIM Both</th> -->
 	                            <th width="50">Remarks</th>
 	                            <th width="30" bgcolor="F7E8D0">A/R</th>
-	                            <th width="30" bgcolor="ECFBEA">Cash</th>
-	                            <th width="30" bgcolor="EEE7FB">Check</th>
-<!-- 	                            <th width="30" bgcolor="FBEAEA">Expense</th> -->
+	                            <th width="30" bgcolor="ECFBEA">Payment</th>
+<!-- 	                            <th width="30" bgcolor="EEE7FB">Check</th> -->
+	                            <th width="30" bgcolor="FBEAEA">Expense</th>
 	                            <th width="10">ROUND Ret</th>
 	                            <th width="10">SLIM Ret</th>
 	                          </tr>
@@ -83,8 +83,8 @@
 	                                    <td>${d.remarks}</td>
 	                                    <td bgcolor="F7E8D0"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.balanceAmount}" /></td>
 	                                    <td bgcolor="ECFBEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCash}" /></td>
-	                                    <td bgcolor="EEE7FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td>
-<%-- 	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td> --%>
+<%-- 	                                    <td bgcolor="EEE7FB"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.paidCheck}" /></td> --%>
+	                                    <td bgcolor="FBEAEA"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${d.expenseAmount}" /></td>
 	                                    <td>${d.returnedRound}</td>
 	                                    <td>${d.returnedSlim}</td>
 	                                </tr>
@@ -112,10 +112,10 @@
 	                            <th>Round Returned</th>
 	                            <th>Slim Returned</th>
 	                            <th bgcolor="F7E8D0">A/R</th>
-	                            <th bgcolor="ECFBEA">Cash Payment</th>
-	                            <th bgcolor="EEE7FB">Check Payment</th>
-<!-- 	                            <th bgcolor="FBEAEA">Expense</th> -->
-	                            <th bgcolor="D0E6F7">Net Cash</th>
+	                            <th bgcolor="ECFBEA">Payment</th>
+<!-- 	                            <th bgcolor="EEE7FB">Check Payment</th> -->
+	                            <th bgcolor="FBEAEA">Expense</th>
+	                            <th bgcolor="D0E6F7">Net Amount</th>
 	                          </tr>
 	                        </thead>
 	                        <tbody>
@@ -126,8 +126,8 @@
 	                        		<td>${totalSlimReturned}</td>
 	                        		<td bgcolor="F7E8D0">${totalDebt}</td>
 	                        		<td bgcolor="ECFBEA">${totalCashPayments}</td>
-	                        		<td bgcolor="EEE7FB">${totalCheckPayments}</td>
-<%-- 	                        		<td bgcolor="FBEAEA">${totalExpenses}</td> --%>
+<%-- 	                        		<td bgcolor="EEE7FB">${totalCheckPayments}</td> --%>
+	                        		<td bgcolor="FBEAEA">${totalExpenses}</td>
 	                        		<td bgcolor="D0E6F7">${netCash}</td>
 	                        	</tr>
 	                        </tbody>

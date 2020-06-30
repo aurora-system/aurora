@@ -203,31 +203,31 @@ public class CustomerController {
         
         for (Customer c : customerList) {
         	
-        	Double priceRound = 0.0;
-        	Double priceSlim = 0.0;
-        	Double refillPrice = 40.0;
-        	List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(c.getCustomerId());
+//        	Double priceRound = 0.0;
+//        	Double priceSlim = 0.0;
+//        	Double refillPrice = 40.0;
+//        	List<CustomerPrice> customerPriceList = customerPriceService.findAllByCustomerId(c.getCustomerId());
+//        	
+//        	for (CustomerPrice cp : customerPriceList) {
+//        		if (cp.getProductId().equalsIgnoreCase("1")) {
+//        			priceRound = cp.getSellingPrice();
+//        		}
+//        		
+//        		if (cp.getProductId().equalsIgnoreCase("2")) {
+//        			priceSlim = cp.getSellingPrice();
+//        		}
+//        	}
+//        	
+//        	if (priceRound <= 0) {
+//        		if (priceSlim > 0) {
+//        			refillPrice = priceSlim;
+//        		}
+//        	} else {
+//        		refillPrice = priceRound;
+//        	}
         	
-        	for (CustomerPrice cp : customerPriceList) {
-        		if (cp.getProductId().equalsIgnoreCase("1")) {
-        			priceRound = cp.getSellingPrice();
-        		}
-        		
-        		if (cp.getProductId().equalsIgnoreCase("2")) {
-        			priceSlim = cp.getSellingPrice();
-        		}
-        	}
         	
-        	if (priceRound <= 0) {
-        		if (priceSlim > 0) {
-        			refillPrice = priceSlim;
-        		}
-        	} else {
-        		refillPrice = priceRound;
-        	}
-        	
-        	
-        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, refillPrice);
+        	CustomerPriceEntity cpe = new CustomerPriceEntity(c, 0.0);
         	cpeList.add(cpe);
         }
         

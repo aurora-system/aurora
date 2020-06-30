@@ -37,7 +37,7 @@
                     List of Pending Orders
                 </div>
                 <div class="panel-body">
-                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 12px;">
+                    <table id="myTable" class="table table-striped table-bordered table-hover" style="font-size: 14px;">
                         <thead>
                           <tr>
                           	<th>Actions</th>
@@ -47,14 +47,14 @@
                             <th>Total Amount</th>
                             <th bgcolor="F6ECD5">ROUND Refill</th>
                             <th bgcolor="D5E8F6">SLIM Refill</th>
-                            <th bgcolor="F6ECD5">ROUND Cont</th>
-                            <th bgcolor="D5E8F6">SLIM Cont</th>
-                            <th bgcolor="F6ECD5">ROUND Both</th>
-                            <th bgcolor="D5E8F6">SLIM Both</th>
-                            <th bgcolor="F6ECD5">ROUND Ret</th>
-                            <th bgcolor="D5E8F6">SLIM Ret</th>
+<!--                             <th bgcolor="F6ECD5">ROUND Cont</th> -->
+<!--                             <th bgcolor="D5E8F6">SLIM Cont</th> -->
+<!--                             <th bgcolor="F6ECD5">ROUND Both</th> -->
+<!--                             <th bgcolor="D5E8F6">SLIM Both</th> -->
+<!--                             <th bgcolor="F6ECD5">ROUND Ret</th> -->
+<!--                             <th bgcolor="D5E8F6">SLIM Ret</th> -->
                             <th>Date</th>
-                            <th>Edit</th>
+<!--                             <th>Edit</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -87,21 +87,21 @@
                                     <td><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${o.order.totalAmount}"></fmt:formatNumber></td>
                                     <td bgcolor="F6ECD5">${o.order.roundRefillOnlyCount}</td>
                                     <td bgcolor="D5E8F6">${o.order.slimRefillOnlyCount}</td>
-                                    <td bgcolor="F6ECD5">${o.order.roundContainerOnlyCount}</td>
-                                    <td bgcolor="D5E8F6">${o.order.slimContainerOnlyCount}</td>
-                                    <td bgcolor="F6ECD5">${o.order.roundRefillWithContainerCount}</td>
-                                    <td bgcolor="D5E8F6">${o.order.slimRefillWithContainerCount}</td>
-                                    <td bgcolor="F6ECD5">${o.order.roundReturned}</td>
-                                    <td bgcolor="D5E8F6">${o.order.slimReturned}</td>
+<%--                                     <td bgcolor="F6ECD5">${o.order.roundContainerOnlyCount}</td> --%>
+<%--                                     <td bgcolor="D5E8F6">${o.order.slimContainerOnlyCount}</td> --%>
+<%--                                     <td bgcolor="F6ECD5">${o.order.roundRefillWithContainerCount}</td> --%>
+<%--                                     <td bgcolor="D5E8F6">${o.order.slimRefillWithContainerCount}</td> --%>
+<%--                                     <td bgcolor="F6ECD5">${o.order.roundReturned}</td> --%>
+<%--                                     <td bgcolor="D5E8F6">${o.order.slimReturned}</td> --%>
                                     <td>${o.formattedDate}</td>
-                                    <td>
-                                    	<spring:url value="/orders/edit" var="editOrderUrl"/>
-										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-default" type="submit" value="Edit">
-										</form>
-                                    </td>
+<!--                                     <td> -->
+<%--                                     	<spring:url value="/orders/edit" var="editOrderUrl"/> --%>
+<%-- 										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm"> --%>
+<%-- 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />  --%>
+<!-- 											<input type="hidden" name=orderId value=${o.order.orderId}>  -->
+<!-- 											<input class="btn btn-default" type="submit" value="Edit"> -->
+<%-- 										</form> --%>
+<!--                                     </td> -->
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -125,13 +125,6 @@
             	"order" : [[ 3, "desc"]],
             	"columns": [
             	    { "orderable": false },
-            	    null,
-            	    null,
-            	    null,
-            	    null,
-            	    null,
-            	    null,
-            	    null,
             	    null,
             	    null,
             	    null,

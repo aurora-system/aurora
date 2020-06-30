@@ -35,9 +35,9 @@
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Type</th>
+<!--                             <th>Type</th> -->
                             <th>Customer Name</th>
-                            <th>Refill Price</th>
+<!--                             <th>Refill Price</th> -->
                             <th>Address</th>
                             <th>Contact Person</th>
                             <th>Contact Number</th>
@@ -47,9 +47,9 @@
                         <tbody>
                             <c:forEach var="cp" items="${customerPrices}">
                                 <tr>
-                                    <td>${cp.customer.type}</td>
+<%--                                     <td>${cp.customer.type}</td> --%>
                                     <td>${cp.customer.name}</td>
-                                    <td>${cp.refillPrice}</td>
+<%--                                     <td>${cp.refillPrice}</td> --%>
                                     <td>${cp.customer.address}</td>
 									<td>${cp.customer.contactName}</td>
                                     <td>${cp.customer.mainNumber}</td>
@@ -88,8 +88,6 @@
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"columns": [
-            	    null,
-            	    null,
             	    null,
             	    null,
             	    null,

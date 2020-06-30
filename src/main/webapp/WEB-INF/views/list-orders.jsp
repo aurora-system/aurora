@@ -74,7 +74,7 @@
 <!--                             <th bgcolor="F6ECD5">ROUND Ret</th> -->
 <!--                             <th bgcolor="D5E8F6">SLIM Ret</th> -->
                             <th>Date</th>
-                            <th>Edit</th>
+<!--                             <th>Edit</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -115,14 +115,14 @@
 <%--                                     <td bgcolor="F6ECD5">${o.order.roundReturned}</td> --%>
 <%--                                     <td bgcolor="D5E8F6">${o.order.slimReturned}</td> --%>
                                     <td>${o.formattedDate}</td>
-                                    <td>
-                                    	<spring:url value="/orders/edit" var="editOrderUrl"/>
-										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=orderId value=${o.order.orderId}> 
-											<input class="btn btn-default" type="submit" value="Edit">
-										</form>
-                                    </td>
+<!--                                     <td> -->
+<%--                                     	<spring:url value="/orders/edit" var="editOrderUrl"/> --%>
+<%-- 										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm"> --%>
+<%-- 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />  --%>
+<!-- 											<input type="hidden" name=orderId value=${o.order.orderId}>  -->
+<!-- 											<input class="btn btn-default" type="submit" value="Edit"> -->
+<%-- 										</form> --%>
+<!--                                     </td> -->
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -146,7 +146,6 @@
             	"order" : [[ 3, "desc"]],
             	"columns": [
             	    { "orderable": false },
-            	    null,
             	    null,
             	    null,
             	    null,
