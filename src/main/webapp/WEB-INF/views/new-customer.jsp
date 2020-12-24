@@ -88,7 +88,7 @@
                             </div>
                         </spring:bind>
                         <div class="col-sm-offset-3 col-sm-9">
-                        	<button type="submit" class="btn btn-primary">Submit</button>
+                        	<button onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" type="submit" class="btn btn-primary">Submit</button>
                         	<spring:url value="/customers/list" var="listCustomersUrl"/>
                             <a href="${listCustomersUrl}" class="btn btn-primary">Cancel</a>
                         </div>

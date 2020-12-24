@@ -45,7 +45,7 @@
                             </spring:bind>
                             <div class="form-group">
 		                        <div class="col-sm-offset-3 col-sm-9">
-		                      	    <button type="submit" class="btn btn-primary">Log Expense</button>
+		                      	    <button onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" type="submit" class="btn btn-primary">Log Expense</button>
 		                        </div>
 		                    </div>
                         </form:form>
