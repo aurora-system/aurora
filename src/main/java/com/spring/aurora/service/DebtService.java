@@ -1,15 +1,18 @@
 package com.spring.aurora.service;
 
-import com.spring.aurora.model.Debt;
-
 import java.sql.Date;
 import java.util.List;
+
+import com.spring.aurora.model.Debt;
 
 public interface DebtService {
     Debt insert(Debt customer);
     Debt delete(Debt debt);
-    List<Debt> findAllByCustomerId(String customerId);
-    List<Debt> findAllByCustomerIdAndDate(String customerId, Date date);
-    double findDebtsTotalByCustomerId(String customerId);
+
+    List<Debt> findAllByCustomerId(long customerId);
+
+    List<Debt> findAllByCustomerIdAndDate(long customerId, Date date);
+
+    double findDebtsTotalByCustomerId(long customerId);
     double findTotalARs();
 }

@@ -1,6 +1,7 @@
 package com.spring.aurora.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,34 +22,35 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment insert(Payment payment) {
-        return paymentDao.insert(payment);
+        return this.paymentDao.save(payment);
     }
 
     @Override
-    public List<Payment> findAllByCustomerId(String customerId) {
-        return paymentDao.findAllByCustomerId(customerId);
+    public List<Payment> findAllByCustomerId(long customerId) {
+        return this.paymentDao.findAllByCustomerId(customerId);
     }
 
     @Override
-    public List<Payment> findAllByCustomerIdAndDate(String customerId, Date date) {
-        return paymentDao.findAllByCustomerIdAndDate(customerId, date);
+    public List<Payment> findAllByCustomerIdAndDate(long customerId, Date date) {
+        return this.paymentDao.findAllByCustomerIdAndCreatedAt(customerId, date);
     }
 
     @Override
-    public double getPaymentsTotalByCustomerId(String customerId) {
-        List<Payment> payments = paymentDao.findAllByCustomerId(customerId);
+    public double getPaymentsTotalByCustomerId(long customerId) {
+        List<Payment> payments = this.paymentDao.findAllByCustomerId(customerId);
         double total = payments.stream().mapToDouble(p -> p.getAmount() + p.getWithholdingTax()).sum();
         return total;
     }
 
-	@Override
-	public List<Payment> findAllByDate(Date date) {
-		return paymentDao.findAllByDate(date);
-	}
+    @Override
+    public List<Payment> findAllByDate(Date date) {
+        return this.paymentDao.findAllByCreatedAt(date);
+    }
 
     @Override
     public double getTotalPayments() {
-        List<Payment> payments = paymentDao.findAll();
+        List<Payment> payments = new ArrayList<>();
+        this.paymentDao.findAll().forEach(payments::add);
         double total = payments.stream().mapToDouble(p -> p.getAmount() + p.getWithholdingTax()).sum();
         return total;
     }

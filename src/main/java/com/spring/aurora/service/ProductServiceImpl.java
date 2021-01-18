@@ -1,5 +1,6 @@
 package com.spring.aurora.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -19,17 +20,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
-        return productDao.save(product);
+        return this.productDao.save(product);
     }
 
     @Override
     public List<Product> findAll() {
-        return productDao.findAll();
-        //return Collections.emptyList();
+        List<Product> result = new ArrayList<>();
+        this.productDao.findAll().forEach(result::add);
+        return result;
     }
 
     @Override
-    public Product findByProductId(String productId) {
-        return productDao.findByProductId(productId);
+    public Product findByProductId(long productId) {
+        return this.productDao.findById(productId).orElseGet(Product::new);
     }
 }

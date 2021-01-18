@@ -1,16 +1,25 @@
 package com.spring.aurora.model;
 
-import javax.persistence.*;
 import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
 
 @Entity
 @Table(name="EXPENSE")
+@Data
 public class Expense {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="expense_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String expenseId;
+    private long expenseId;
 
     @Column(name="description")
     private String description;
@@ -21,36 +30,4 @@ public class Expense {
     @Column(name="created_at")
     //@Convert(converter = com.spring.aurora.util.LocalDateAttributeConverter.class)
     private Date createdAt;
-
-    public String getExpenseId() {
-        return expenseId;
-    }
-
-    public void setExpenseId(String expenseId) {
-        this.expenseId = expenseId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 }

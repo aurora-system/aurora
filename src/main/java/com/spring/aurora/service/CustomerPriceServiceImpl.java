@@ -19,21 +19,21 @@ public class CustomerPriceServiceImpl implements CustomerPriceService {
 
     @Override
     public CustomerPrice saveOrUpdate(CustomerPrice customerPrice) {
-        return customerPriceDao.saveOrUpdate(customerPrice);
+        return this.customerPriceDao.save(customerPrice);
     }
 
     @Override
-    public List<CustomerPrice> findAllByCustomerId(String customerId) {
-        return customerPriceDao.findAllByCustomerId(customerId);
+    public List<CustomerPrice> findAllByCustomerId(long customerId) {
+        return this.customerPriceDao.findAllByCustomerId(customerId);
     }
 
     @Override
-    public List<CustomerPrice> findAllByProductId(String productId) {
-        return customerPriceDao.findAllByProductId(productId);
+    public List<CustomerPrice> findAllByProductId(long productId) {
+        return this.customerPriceDao.findAllByProductId(productId);
     }
 
-	@Override
-	public void deleteCustomerPrice(String customerId, String productId) {
-		customerPriceDao.deleteCustomerPrice(customerId, productId);
-	}
+    @Override
+    public void deleteCustomerPrice(long customerId, long productId) {
+        this.customerPriceDao.deleteCustomerPrice(customerId, productId);
+    }
 }

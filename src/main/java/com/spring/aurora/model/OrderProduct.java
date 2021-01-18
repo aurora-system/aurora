@@ -1,7 +1,5 @@
 package com.spring.aurora.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,54 +7,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name="ORDER_PRODUCT")
+@Data
 public class OrderProduct {
 
-	@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_product_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String orderProductId;
-	
-	@Column(name="order_id")
-	private String orderId;
-	
-	@Column(name="product_id")
-	private String productId;
-	
-	@Column(name="quantity")
-	private String quantity;
+    private long orderProductId;
 
-	public String getOrderProductId() {
-		return orderProductId;
-	}
+    @Column(name="order_id")
+    private long orderId;
 
-	public void setOrderProductId(String orderProductId) {
-		this.orderProductId = orderProductId;
-	}
+    @Column(name="product_id")
+    private long productId;
 
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
-	public String getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
-	
+    @Column(name="quantity")
+    private String quantity;
 }

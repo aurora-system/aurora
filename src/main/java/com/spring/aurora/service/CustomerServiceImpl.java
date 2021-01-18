@@ -1,5 +1,6 @@
 package com.spring.aurora.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -25,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     private PaymentDao paymentDao;
 
     public CustomerDao getCustomerDao() {
-        return customerDao;
+        return this.customerDao;
     }
 
     public void setCustomerDao(CustomerDao customerDao) {
@@ -33,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public OrderDao getOrderDao() {
-        return orderDao;
+        return this.orderDao;
     }
 
     public void setOrderDao(OrderDao orderDao) {
@@ -41,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public ContainerDao getContainerDao() {
-        return containerDao;
+        return this.containerDao;
     }
 
     public void setContainerDao(ContainerDao containerDao) {
@@ -49,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public DebtDao getDebtDao() {
-        return debtDao;
+        return this.debtDao;
     }
 
     public void setDebtDao(DebtDao debtDao) {
@@ -57,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public PaymentDao getPaymentDao() {
-        return paymentDao;
+        return this.paymentDao;
     }
 
     public void setPaymentDao(PaymentDao paymentDao) {
@@ -66,31 +67,33 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer insert(Customer customer) {
-        return customerDao.insert(customer);
+        return this.customerDao.save(customer);
     }
 
     @Override
     public Customer update(Customer customer) {
-        return customerDao.update(customer);
+        return this.customerDao.save(customer);
     }
 
     @Override
     public Customer find(Customer customer) {
-        return customerDao.find(customer);
+        return this.customerDao.findById(customer.getCustomerId()).orElseGet(Customer::new);
     }
 
     @Override
     public List<Customer> findAll() {
-        return customerDao.findAll();
+        List<Customer> result = new ArrayList<>();
+        this.customerDao.findAll().forEach(result::add);
+        return result;
     }
 
-	@Override
-	public Customer view(String customerId) {
-		return customerDao.view(customerId);
-	}
+    @Override
+    public Customer view(long customerId) {
+        return this.customerDao.findById(customerId).orElseGet(Customer::new);
+    }
 
-	@Override
-	public List<Customer> find(List<String> customerIdList) {
-		return customerDao.find(customerIdList);
-	}
+    @Override
+    public List<Customer> findAllByCustomerIdIn(List<Long> customerIdList) {
+        return this.customerDao.findAllByCustomerIdIn(customerIdList);
+    }
 }

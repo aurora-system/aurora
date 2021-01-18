@@ -9,87 +9,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name="CONTAINER")
+@Data
 public class Container {
 
-	@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="container_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String containerId;
-	
-	@Column(name="customer_id")
-	private String customerId;
-	
-	@Column(name="order_id")
-	private String orderId;
-	
-	@Column(name="status")
-	private String status;
-	
-	@Column(name="round_count")
-	private int roundCount;
-	
-	@Column(name="slim_count")
-	private int slimCount;
-	
-	@Column(name="created_at")
-	private Timestamp createdAt;
+    private long containerId;
 
-	public String getContainerId() {
-		return containerId;
-	}
+    @Column(name="customer_id")
+    private long customerId;
 
-	public void setContainerId(String containerId) {
-		this.containerId = containerId;
-	}
+    @Column(name="order_id")
+    private long orderId;
 
-	public String getCustomerId() {
-		return customerId;
-	}
+    @Column(name="status")
+    private String status;
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
+    @Column(name="round_count")
+    private int roundCount;
 
-	public String getOrderId() {
-		return orderId;
-	}
+    @Column(name="slim_count")
+    private int slimCount;
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public int getRoundCount() {
-		return roundCount;
-	}
-
-	public void setRoundCount(int roundCount) {
-		this.roundCount = roundCount;
-	}
-
-	public int getSlimCount() {
-		return slimCount;
-	}
-
-	public void setSlimCount(int slimCount) {
-		this.slimCount = slimCount;
-	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-	
+    @Column(name="created_at")
+    private Timestamp createdAt;
 }

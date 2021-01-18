@@ -1,12 +1,12 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Expense;
-import jdk.nashorn.internal.ir.ExpressionStatement;
-
 import java.sql.Date;
 import java.util.List;
 
-public interface ExpenseDao {
-    Expense insert(Expense expense);
-    List<Expense> findAllByDate(Date date);
+import org.springframework.data.repository.CrudRepository;
+
+import com.spring.aurora.model.Expense;
+
+public interface ExpenseDao extends CrudRepository<Expense, Long> {
+    List<Expense> findAllByCreatedAt(Date createdAt);
 }

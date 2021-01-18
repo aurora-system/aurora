@@ -22,34 +22,35 @@ public class DebtServiceImpl implements DebtService {
 
     @Override
     public Debt insert(Debt debt) {
-        return debtDao.insert(debt);
+        return this.debtDao.save(debt);
     }
-    
+
     @Override
     public Debt delete(Debt debt) {
-        return debtDao.delete(debt);
+        return this.debtDao.save(debt);
     }
 
     @Override
-    public List<Debt> findAllByCustomerId(String customerId) {
-        return debtDao.findAllByCustomerId(customerId);
+    public List<Debt> findAllByCustomerId(long customerId) {
+        return this.debtDao.findAllByCustomerId(customerId);
     }
 
     @Override
-    public List<Debt> findAllByCustomerIdAndDate(String customerId, Date date) {
+    public List<Debt> findAllByCustomerIdAndDate(long customerId, Date date) {
         return new ArrayList<>();
     }
 
     @Override
-    public double findDebtsTotalByCustomerId(String customerId) {
-        List<Debt> debts = debtDao.findAllByCustomerId(customerId);
-        double total = debts.stream().mapToDouble(p -> p.getAmount()).sum();
+    public double findDebtsTotalByCustomerId(long customerId) {
+        List<Debt> debts = this.debtDao.findAllByCustomerId(customerId);
+        double total = debts.stream().mapToDouble(Debt::getAmount).sum();
         return total;
     }
 
     @Override
     public double findTotalARs() {
-        List<Debt> debts = debtDao.findAll();
+        List<Debt> debts = new ArrayList<>();
+        this.debtDao.findAll().forEach(debts::add);
         double total = debts.stream().mapToDouble(Debt::getAmount).sum();
         return total;
     }

@@ -9,76 +9,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name="DEBT")
+@Data
 public class Debt {
 
-	@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="debt_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String debtId;
-	
-	@Column(name="customer_id")
-	private String customerId;
-	
-	@Column(name="amount")
-	private Double amount;
-	
-	@Column(name="remarks")
-	private String remarks;
-	
-	@Column(name="created_at")
-	private Date createdAt;
-	
-	@Column(name="linked_order_id")
-	private String orderId;
+    private long debtId;
 
-	public String getDebtId() {
-		return debtId;
-	}
+    @Column(name="customer_id")
+    private long customerId;
 
-	public void setDebtId(String debtId) {
-		this.debtId = debtId;
-	}
+    @Column(name="amount")
+    private Double amount;
 
-	public String getCustomerId() {
-		return customerId;
-	}
+    @Column(name="remarks")
+    private String remarks;
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
+    @Column(name="created_at")
+    private Date createdAt;
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-	
+    @Column(name="linked_order_id")
+    private long orderId;
 }

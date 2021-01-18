@@ -1,22 +1,31 @@
 package com.spring.aurora.model;
 
-import javax.persistence.*;
 import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "CUSTOMER_PRICE")
+@Data
 public class CustomerPrice {
-    
-	@Id
-    @GeneratedValue
-    @Column(name = "price_id")
-    private String priceId;
 
-	@Column(name = "customer_id")
-    private String customerId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "price_id")
+    private long priceId;
+
+    @Column(name = "customer_id")
+    private long customerId;
 
     @Column(name = "product_id")
-    private String productId;
+    private long productId;
 
     @Column(name = "selling_price")
     private Double sellingPrice;
@@ -26,52 +35,4 @@ public class CustomerPrice {
 
     @Column(name = "updated_at")
     private Date updatedAt;
-
-    public String getPriceId() {
-        return priceId;
-    }
-
-    public void setPriceId(String priceId) {
-        this.priceId = priceId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

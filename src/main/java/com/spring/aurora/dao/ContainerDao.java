@@ -1,17 +1,20 @@
 package com.spring.aurora.dao;
 
-import com.spring.aurora.model.Container;
-
 import java.sql.Date;
 import java.util.List;
 
-public interface ContainerDao {
-    
-	Container insert(Container container);
-	Container update(Container container);
-	Container delete(Container container);
-    List<Container> findAllByCustomerId(String customerId);
-    List<Container> findAll();
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.spring.aurora.model.Container;
+
+@Repository
+public interface ContainerDao extends CrudRepository<Container, Long> {
+
+    List<Container> findAllByCustomerId(long customerId);
+
+    @Query("select c from Container c where DATE(c.createdAt) = :date")
     List<Container> findContainerActivityByDate(Date date);
-    
+
 }

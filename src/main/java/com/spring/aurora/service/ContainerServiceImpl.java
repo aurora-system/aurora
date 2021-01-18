@@ -1,6 +1,7 @@
 package com.spring.aurora.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,41 +16,44 @@ import com.spring.aurora.model.Container;
 @Transactional
 public class ContainerServiceImpl implements ContainerService {
 
-	@Autowired
-	private ContainerDao containerDao;
+    @Autowired
+    private ContainerDao containerDao;
 
-	public void setContainerDao(ContainerDao containerDao) {
-		this.containerDao = containerDao;
-	}
-	    
+    public void setContainerDao(ContainerDao containerDao) {
+        this.containerDao = containerDao;
+    }
+
     @Override
     public Container insert(Container container) {
-        return containerDao.insert(container);
-    }
-    
-    @Override
-	public Container update(Container container) {
-    	return containerDao.update(container);
-	}
-    
-    @Override
-	public Container delete(Container container) {
-    	return containerDao.delete(container);
-	}
-
-    @Override
-    public List<Container> findAllByCustomerId(String customerId) {
-        return containerDao.findAllByCustomerId(customerId);
+        return this.containerDao.save(container);
     }
 
-	@Override
-	public List<Container> findAll() {
-		return containerDao.findAll();
-	}
+    @Override
+    public Container update(Container container) {
+        return this.containerDao.save(container);
+    }
 
-	@Override
-	public List<Container> findContainerActivityByDate(Date date) {
-		return containerDao.findContainerActivityByDate(date);
-	}
+    @Override
+    public Container delete(Container container) {
+        this.containerDao.delete(container);
+        return container;
+    }
+
+    @Override
+    public List<Container> findAllByCustomerId(long customerId) {
+        return this.containerDao.findAllByCustomerId(customerId);
+    }
+
+    @Override
+    public List<Container> findAll() {
+        List<Container> result = new ArrayList<>();
+        this.containerDao.findAll().forEach(result::add);
+        return result;
+    }
+
+    @Override
+    public List<Container> findContainerActivityByDate(Date date) {
+        return this.containerDao.findContainerActivityByDate(date);
+    }
 
 }

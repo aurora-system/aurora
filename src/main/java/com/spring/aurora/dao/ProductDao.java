@@ -1,11 +1,8 @@
 package com.spring.aurora.dao;
 
+import org.springframework.data.repository.CrudRepository;
+
 import com.spring.aurora.model.Product;
 
-import java.util.List;
-
-public interface ProductDao {
-    Product save(Product product);
-    List<Product> findAll();
-    Product findByProductId(String productId);
+public interface ProductDao extends CrudRepository<Product, Long> {
 }
