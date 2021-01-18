@@ -1,14 +1,14 @@
 package com.spring.aurora.dao;
 
-import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.repository.CrudRepository;
 
 import com.spring.aurora.model.User;
 
-public interface UserDao {
+public interface UserDao extends CrudRepository<User, Long> {
 
-	void insert(User user);
-	void update(User user);
-	void delete(String username);
-	User findByUsername(String username);
-	List<User> findAll();
+    Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
 }

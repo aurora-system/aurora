@@ -1,89 +1,64 @@
 package com.spring.aurora.model;
 
-import java.io.Serializable;
+import static java.util.stream.Collectors.toSet;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "users", catalog = "aurora")
-public class User implements Serializable {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-    private static final long serialVersionUID = 3390708912033322149L;
+import lombok.Data;
 
-    private String username;
-    private String password;
-    private boolean enabled;
-    private Set<UserAuthority> userAuthority = new HashSet<>(0);
-    private List<String> roles = new ArrayList<>(Arrays.asList("ROLE_ADMIN", "ROLE_USER"));
-
-    public User() {
-    }
-
-    public User(String username, String password, boolean enabled) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-    public User(String username, String password, boolean enabled, Set<UserAuthority> userAuthority) {
-        this(username, password, enabled);
-        this.userAuthority = userAuthority;
-    }
+@Entity
+@Table(name = "users", catalog = "aurora")
+@Data
+public class User implements UserDetails {
+    private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "username", unique = true, nullable = false, length = 45)
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
+    private String username;
     @Column(name = "password", nullable = false, length = 60)
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    private String password;
+    private String email;
     @Column(name = "enabled", nullable = false)
-    public boolean isEnabled() {
-        return this.enabled;
+    private boolean enabled;
+    private String firstName;
+    private String lastName;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(toSet());
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<UserAuthority> getUserAuthority() {
-        return this.userAuthority;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setUserAuthority(Set<UserAuthority> userAuthority) {
-        this.userAuthority = userAuthority;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
-
-    @Transient
-    public List<String> getRoles() {
-        return this.roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
 }
