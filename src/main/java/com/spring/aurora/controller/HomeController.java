@@ -22,15 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.aurora.model.Order;
-import com.spring.aurora.service.ContainerService;
-import com.spring.aurora.service.CustomerPriceService;
-import com.spring.aurora.service.CustomerService;
-import com.spring.aurora.service.DebtService;
-import com.spring.aurora.service.ExpenseService;
-import com.spring.aurora.service.OrderProductService;
 import com.spring.aurora.service.OrderService;
-import com.spring.aurora.service.PaymentService;
-import com.spring.aurora.service.ProductService;
 
 @Controller
 public class HomeController {
@@ -42,30 +34,6 @@ public class HomeController {
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private ContainerService containerService;
-
-    @Autowired
-    private DebtService debtService;
-
-    @Autowired
-    private ExpenseService expenseService;
-
-    @Autowired
-    private PaymentService paymentService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private OrderProductService orderProductService;
-
-    @Autowired
-    private CustomerPriceService customerPriceService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Locale locale, Model model) {

@@ -37,7 +37,6 @@ import com.spring.aurora.service.ContainerService;
 import com.spring.aurora.service.CustomerPriceService;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.DebtService;
-import com.spring.aurora.service.ExpenseService;
 import com.spring.aurora.service.OrderService;
 import com.spring.aurora.service.PaymentService;
 import com.spring.aurora.service.ProductService;
@@ -65,9 +64,6 @@ public class CustomerController {
 
     @Autowired
     private PaymentService paymentService;
-
-    @Autowired
-    private ExpenseService expenseService;
 
     @Autowired
     private CustomerPriceService customerPriceService;
@@ -108,8 +104,8 @@ public class CustomerController {
 
         List<CustomerPriceEntity> cpeList = new ArrayList<>();
 
-        String m = "";
-        String y = "";
+        Integer m = 1;
+        Integer y = 1970;
 
         List<Customer> customerList = new ArrayList<>();
         List<Long> customerIds = new ArrayList<>();
@@ -117,16 +113,16 @@ public class CustomerController {
         if (datePicked == null || datePicked.equalsIgnoreCase("today") || datePicked.equalsIgnoreCase("")) {
             LocalDateTime now = LocalDateTime.now();
 
-            Integer year = now.getYear();
-            Integer month = now.getMonthValue();
+            y = now.getYear();
+            m = now.getMonthValue();
 
-            m = month.toString();
-            y = year.toString();
+            // m = month.toString();
+            // y = year.toString();
         } else {
             String[] splitDate = datePicked.split("-");
-            m = splitDate[0];
+            m = Integer.parseInt(splitDate[0]);
             if (splitDate.length > 1) {
-                y = splitDate[1];
+                y = Integer.parseInt(splitDate[1]);
             }
         }
 
@@ -175,7 +171,7 @@ public class CustomerController {
         }
 
         System.out.println("CPELIST size: " + cpeList.size());
-        model.addAttribute("monthYear", monthsStr[Integer.valueOf(m)-1] + " " + y);
+        model.addAttribute("monthYear", monthsStr[m-1] + " " + y);
         model.addAttribute("dateParam", datePicked);
         model.addAttribute("cpeList", cpeList);
 

@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +33,8 @@ import com.spring.aurora.service.OrderService;
 @RequestMapping("/container")
 public class ContainerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContainerController.class);
-
-    @Autowired private ContainerService containerService;
+    @Autowired
+    private ContainerService containerService;
     @Autowired private CustomerService customerService;
     @Autowired private OrderService orderService;
 

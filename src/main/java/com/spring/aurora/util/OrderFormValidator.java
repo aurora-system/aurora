@@ -1,15 +1,12 @@
 package com.spring.aurora.util;
 
-import com.spring.aurora.model.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Order;
-import com.spring.aurora.service.OrderService;
 
 @Component
 public class OrderFormValidator implements Validator {

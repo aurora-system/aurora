@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -6,6 +6,10 @@
 <spring:url value="/resources/css/main.css" var="mainCss" />
 <spring:url value="/customers/new" var="urlAddCustomer" />
 <spring:url value="/customers/list" var="urlListCustomers" />
+<head>
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+</head>
 <body>
 	<jsp:include page="fragments/header.jsp" />
     <div class="container">
@@ -58,13 +62,13 @@
 										<!--                                         <button class="btn btn-info">View</button> -->
 										
 										<form action="view" method="get" style="display: inline-block;" >
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+											<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 											<input type="hidden" name=customerId value="${cp.customer.customerId}"> 
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
 										<spring:url value="/orders/neworder" var="newOrderUrl"/>
-										<form action="${newOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+										<form action="${newOrderUrl}" method="get" style="display: inline-block;">
+											<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%> 
 											<input type="hidden" name="customerId" value="${cp.customer.customerId}"/> 
 											<input class="btn btn-default" type="submit" value="New Order"/>
 										</form>
@@ -82,8 +86,6 @@
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({

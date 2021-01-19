@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <div class="container">
 	<hr>
@@ -8,7 +8,7 @@
 				<p class="pull-left">&copy; Aurora Systems v3.0</p>
 			</div>
 			<div class="col-sm-offset-5 col-sm-1 pull-right">
-				<c:url var="logoutUrl" value="/logout" />
+				<spring:url var="logoutUrl" value="/logout" />
 				<form class="form-inline" action="${logoutUrl}" method="post">
 					<input type="submit" value="Log out" /> <input type="hidden"
 						name="${_csrf.parameterName}" value="${_csrf.token}" />

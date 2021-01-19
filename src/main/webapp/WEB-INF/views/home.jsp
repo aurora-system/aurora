@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables.min.css"/>
     <title>Search</title>
 </head>
 <body>
@@ -57,8 +59,6 @@
     </div>
     <script src="${pageContext.request.contextPath}/resources/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/datatables.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables.min.css"/>
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable()

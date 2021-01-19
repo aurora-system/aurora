@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllOrdersPerMonth(String month, String year) {
+    public List<Order> findAllOrdersPerMonth(Integer month, Integer year) {
         return this.orderDao.findAllOrdersPerMonth(month, year);
     }
 

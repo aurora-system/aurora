@@ -20,7 +20,7 @@ public interface OrderDao extends CrudRepository<Order, Long> {
     List<Order> findAllPendingOrders();
 
     @Query("select o from Order o where MONTH(o.createdAt) = :month and YEAR(o.createdAt) = :year")
-    List<Order> findAllOrdersPerMonth(String month, String year);
+    List<Order> findAllOrdersPerMonth(Integer month, Integer year);
 
     @Query("select o from Order o where o.customerId = :customerId order by createdAt desc")
     Timestamp getMostRecentOrderDate(long customerId);

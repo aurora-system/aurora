@@ -17,7 +17,8 @@ public interface OrderService {
     List<Order> findAllOrdersToday(Date dateParam);
     List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     List<Order> findAll();
-    List<Order> findAllOrdersPerMonth(String month, String year);
+
+    List<Order> findAllOrdersPerMonth(Integer month, Integer year);
 
     Order findOrderByOrderId(long orderId);
 
