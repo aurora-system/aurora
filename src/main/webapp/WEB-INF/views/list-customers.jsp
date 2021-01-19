@@ -3,15 +3,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/resources/css/main.css" var="mainCss" />
-<spring:url value="/customers/new" var="urlAddCustomer" />
-<spring:url value="/customers/list" var="urlListCustomers" />
 <head>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+    <jsp:include page="fragments/header.jsp" />
 </head>
 <body>
-	<jsp:include page="fragments/header.jsp" />
+	<jsp:include page="fragments/nav.jsp" />
     <div class="container">
     
     <div class="row">
@@ -32,6 +28,8 @@
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
                     <p class="pull-left">List of Customers</p> 
+                    <spring:url value="/customers/new" var="urlAddCustomer" />
+                    <spring:url value="/customers/list" var="urlListCustomers" />
                     <a href="${urlAddCustomer}" class="btn btn-info pull-right" role="button" style="margin-left: 5px;">New Customer</a>
                     <a href="${urlListCustomers}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                 </div>
@@ -83,9 +81,6 @@
     </div>
     </div>
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({

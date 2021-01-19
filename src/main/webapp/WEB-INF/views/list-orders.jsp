@@ -1,13 +1,14 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/orders/pending" var="urlShowPending" />
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
-<jsp:include page="fragments/header.jsp" />
-    <div class="container" style="width: 1480px">
+    <jsp:include page="fragments/nav.jsp" />    <div class="container" style="width: 1480px">
     <div class="row">
         <div class="col-lg-12">
             <c:if test="${not empty msg}">
@@ -35,12 +36,13 @@
                         <div class="form-group">
                             <label class="col-sm-1 control-label">Date: </label>
                             <div class="col-sm-3">
-                                <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
+                                <input type="date" class="form-control" name="d" placeholder="Date"/>
                             </div>
                                <div class="col-sm-1">
                                 <button type="submit" class="btn btn-primary">List Orders</button>
                             </div>
                             <c:if test="${pendingCount > 0}">
+                                <spring:url value="/orders/pending" var="urlShowPending" />
                     			<a href="${urlShowPending}" class="btn btn-danger" style="margin-bottom: 10px;" role="button" title="Pending for Delivery">${pendingCount}</a>
                     		</c:if>
                         </div>
@@ -89,14 +91,14 @@
 <%-- 										</form> --%>
 										<form action="deliver" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=orderId value=${o.order.orderId}> 
+											<input type="hidden" name="orderId" value="${o.order.orderId}" /> 
 											<input class="btn btn-success" type="submit" value="Deliver"
 												<c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
 										<form action="cancel" method="get" style="display: inline-block;">
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=orderId value=${o.order.orderId}> 
+											<input type="hidden" name="orderId" value="${o.order.orderId}" /> 
 											<input class="btn btn-danger" type="submit" value="Cancel" <c:if test="${o.order.status == 'Delivered' || o.order.status == 'Cancelled'}">
 												<c:out value="disabled='disabled'"/></c:if>>
 										</form>
@@ -117,9 +119,9 @@
                                     <td>${o.formattedDate}</td>
                                     <td>
                                     	<spring:url value="/orders/edit" var="editOrderUrl"/>
-										<form action="${editOrderUrl}" method="get" style="display: inline-block;" modelAttribute="orderForm">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-											<input type="hidden" name=orderId value=${o.order.orderId}> 
+										<form action="${editOrderUrl}" method="get" style="display: inline-block;" >
+											<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%> 
+											<input type="hidden" name="orderId" value="${o.order.orderId}" /> 
 											<input class="btn btn-default" type="submit" value="Edit">
 										</form>
                                     </td>
@@ -132,14 +134,9 @@
         </div>
     </div>
     </div>
+    
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+    
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({

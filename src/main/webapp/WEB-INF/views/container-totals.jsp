@@ -1,17 +1,20 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<spring:url value="/container/listAll" var="urlContainerBalances" />
-<jsp:include page="fragments/header.jsp" />
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container" style="width: 800px">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading clearfix">
-                       Total Balance of Borrowed Containers as of <span class="label label-danger">${dateToday}</span>
+                        <spring:url value="/container/listAll" var="urlContainerBalances" />
+                        Total Balance of Borrowed Containers as of <span class="label label-danger">${dateToday}</span>
                         <a href="${urlContainerBalances}?mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
                     </div>
                     <div class="panel-body">
@@ -75,14 +78,8 @@
     </div>
     
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
-	<script type="text/javascript">
+    
+    <script type="text/javascript">
         $(document).ready(() => {
             $('#containersTable').DataTable({
                 fixedHeader: true,

@@ -1,11 +1,13 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-
-<body>
+<head>
 	<jsp:include page="fragments/header.jsp" />
+</head>
+<body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -24,7 +26,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Date: </label>
                                 <div class="col-sm-3">
-                                    <input path="d" type="date" class="form-control" name="d" placeholder="Date"/>
+                                    <input type="date" class="form-control" name="d" placeholder="Date"/>
                                 </div>
    								<div class="col-sm-5">
 								    <button type="submit" class="btn btn-primary">List Expenses</button>
@@ -68,14 +70,9 @@
             </div>
         </div>
     </div>
+    
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+    
     <script type="text/javascript">
         $(document).ready(() => {
             $('#expensesTable').DataTable({

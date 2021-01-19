@@ -1,17 +1,14 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
-<spring:url value="/orders/neworder" var="urlNewOrder" />
-<spring:url value="/payments/new" var="urlNewPayment" />
-<spring:url value="/debts/new" var="urlNewDebt" />
-<spring:url value="/customers/edit" var="urlEditCustomer" />
-<spring:url value="/customers/containerBalances" var="urlUpdateContainerBalances" />
-<spring:url value="/container/return" var="urlReturnContainer" />
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container">
     
     <div class="row">
@@ -30,6 +27,8 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading clearfix">
+                    <spring:url value="/customers/edit" var="urlEditCustomer" />
+                    <spring:url value="/customers/containerBalances" var="urlUpdateContainerBalances" />
                     <p class="pull-left" style="font-size: 20px"><b>${customer.name}</b></p>
                     <a href="${urlUpdateContainerBalances}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">Update Container Balance</a>
                     <a href="${urlEditCustomer}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">Edit</a>
@@ -42,7 +41,7 @@
                     <p><b>Alternate number:</b> ${customer.alternateNumber}</p>
 					<p><b>Email Address:</b> ${customer.emailAddress}</p>
 					<p><b>Order Interval:</b> ${customer.orderInterval} Days</p>
-					<span class="label label-danger pull-right"><h6>${dueDateText}</h6></span>
+					<h6><span class="label label-danger pull-right">${dueDateText}</span></h6>
                 </div>
             </div>
         </div>
@@ -87,6 +86,7 @@
 	        <div class="col-lg-12">
 	            <div class="panel panel-info">
 	                <div class="panel-heading clearfix">
+                        <spring:url value="/orders/neworder" var="urlNewOrder" />
 	                    Order History
 	                    <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
 	                </div>
@@ -140,6 +140,7 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+                        <spring:url value="/container/return" var="urlReturnContainer" />
 						Container Returns History
 						<a href="${urlReturnContainer}?cid=${customer.customerId}" class="btn btn-default pull-right" role="button">Return Container</a>
                 	</div>
@@ -176,6 +177,7 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+                        <spring:url value="/payments/new" var="urlNewPayment" />
 						Payment History
 						<a href="${urlNewPayment}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                 	</div>
@@ -212,6 +214,7 @@
     		<div class="col-lg-12">
     			<div class="panel panel-info">
                 	<div class="panel-heading clearfix">
+                        <spring:url value="/debts/new" var="urlNewDebt" />
                 		Details
                 		<a href="${urlNewDebt}?cid=${customer.customerId}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New A/R Entry</a>
                 	</div>
@@ -244,13 +247,7 @@
     </div>
     
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-	<link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-	<link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
+    
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable({

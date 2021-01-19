@@ -1,16 +1,19 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
-<spring:url value="/orders/neworder" var="urlNewOrder" />
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading clearfix">
+                        <spring:url value="/orders/neworder" var="urlNewOrder" />
                         Add new product price for ${customer.name}
                         <a href="${urlNewOrder}?customerId=${customer.customerId}" class="btn btn-default pull-right" role="button">New Order</a>
                     </div>
@@ -21,7 +24,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer name: </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder="${customer.name}" disabled="true"/>
+                                    <input type="text" class="form-control" id="name" placeholder="${customer.name}" disabled="disabled"/>
                                 </div>
                             </div>
                             <spring:bind path="productId">
@@ -90,11 +93,8 @@
             </div>
         </div>
     </div>
+    
     <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
+    
 </body>
 </html>

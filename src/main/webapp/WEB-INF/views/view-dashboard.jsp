@@ -1,16 +1,14 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
-<spring:url value="/orders/neworder" var="urlNewOrder" />
-<spring:url value="/payments/new" var="urlNewPayment" />
-<spring:url value="/debts/new" var="urlNewDebt" />
-<spring:url value="/customers/edit" var="urlEditCustomer" />
-<spring:url value="/container/return" var="urlReturnContainer" />
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container">
     
     <div class="row">

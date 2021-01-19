@@ -1,15 +1,15 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/header.jsp" />
-<link href="/resources/css/main.css" rel="stylesheet">
-<spring:url value="/orders/monthly" var="monthlyTotalsUrl"/>
-
+<head>
+	<jsp:include page="fragments/header.jsp" />
+</head>
 <body>
+    <jsp:include page="fragments/nav.jsp" />
     <div class="container">
     	<div class="row">
             <div class="col-lg-12">
@@ -25,6 +25,7 @@
                 
                 <div class="panel panel-info">
                     <div class="panel-body">
+                        <spring:url value="/orders/monthly" var="monthlyTotalsUrl"/>
                         <form class="form-horizontal" method="get" action="${monthlyTotalsUrl}">
                             <div class="form-group col-sm-6">
 								<div class="col-sm-6 input-append date" id="datepicker" data-date="00-2018" 
@@ -118,19 +119,9 @@
     		</div>
     	</div>
     </div>
-    <jsp:include page="fragments/footer.jsp" />
-    <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/datatables.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
-    <script src="<c:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datepicker.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/datatables.min.css"/>"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	
+    <jsp:include page="fragments/footer.jsp" />
+    
     <script type="text/javascript">
         $(document).ready(() => {
             $('#myTable').DataTable( {
