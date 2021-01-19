@@ -26,20 +26,4 @@ public class AuroraApplication extends SpringBootServletInitializer {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(strength);
         return encoder;
     }
-
-    //    @Bean
-    //    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
-    //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-    //        sessionFactory.setDataSource(dataSource);
-    //        sessionFactory.setPackagesToScan("com.spring.aurora.model");
-    //        // sessionFactory.setHibernateProperties(hibernateProperties());
-    //        return sessionFactory;
-    //    }
-    //
-    //    @Bean
-    //    public PlatformTransactionManager hibernateTransactionManager(DataSource dataSource) {
-    //        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-    //        transactionManager.setSessionFactory(this.sessionFactory(dataSource).getObject());
-    //        return transactionManager;
-    //    }
 }
