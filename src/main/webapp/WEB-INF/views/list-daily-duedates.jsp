@@ -24,7 +24,7 @@
                 
                 <div class="panel panel-info">
                     <div class="panel-body">
-<spring:url value="/customers/dailyduedates" var="dailyDueDatesUrl"/>
+                        <spring:url value="/customers/dailyduedates" var="dailyDueDatesUrl"/>
                         <form class="form-horizontal" method="get" action="${dailyDueDatesUrl}">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Date: </label>
@@ -81,8 +81,6 @@
     </div>
     
     <jsp:include page="fragments/footer.jsp" />
-    
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
         $(document).ready(() => {
