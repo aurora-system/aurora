@@ -88,6 +88,27 @@ public class CustomerController {
         //model.addAttribute("customers", customerService.findAll());
         return "customer-search-result";
     }
+    
+    @RequestMapping(value="/listinactive", method = RequestMethod.GET)
+    public String listInactiveCustomers(Model model
+            , @RequestParam(value = "mode", defaultValue = "normal", required = false) String mode) {
+        
+        List<Customer> customers = customerService.findAll();
+        List<Customer> inactiveCustomers = new ArrayList<>();
+        List<Long> inactiveCustomerIds = orderService.inactiveCustomerIds(java.sql.Date.valueOf(LocalDate.now().minusDays(30)));
+        
+        inactiveCustomers = customerService.findAllByCustomerIdIn(inactiveCustomerIds);
+        customers.removeAll(inactiveCustomers);
+        
+        model.addAttribute("customerList", customers);
+        
+        if (mode.equalsIgnoreCase("preview")) {
+            System.out.println("preview");
+            return "list-inactive-customers-preview";
+        } else {
+            return "list-inactive-customers";
+        }
+    }
 
     /**
      * Fetches customers along with some of their details that have at least
@@ -227,7 +248,7 @@ public class CustomerController {
             cpeList.add(cpe);
         }
 
-        model.addAttribute("customers", this.customerService.findAll());
+//        model.addAttribute("customers", this.customerService.findAll());
         model.addAttribute("customerPrices", cpeList);
         //model.addAttribute("orderForm", new Order());
         if (mode.equalsIgnoreCase("preview")) {

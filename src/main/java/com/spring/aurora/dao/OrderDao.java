@@ -1,6 +1,6 @@
 package com.spring.aurora.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -36,4 +36,7 @@ public interface OrderDao extends CrudRepository<Order, Long> {
     // List<Order> findAllByDeliveryReceiptNumber(int drNumber);
     // Order findOrderByOrderId(long orderId);
     // String getNewDrNumber();
+    
+    @Query("select c.customerId FROM Customer c, Order o WHERE c.customerId = o.customerId and o.createdAt > :dateVal")
+    List<Long> inactiveCustomerIds(Date dateVal);
 }

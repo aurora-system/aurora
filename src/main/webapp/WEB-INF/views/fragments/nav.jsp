@@ -15,6 +15,7 @@
 <spring:url value="/container/history?d=today" var="urlContainerHistory" />
 <spring:url value="/help" var="urlHelp" />
 <spring:url value="/expenses/list?d=today" var="urlListExpenses" />
+<spring:url value="/customers/listinactive" var="urlInactive" />
 <spring:url value="/products/list" var="urlListProducts"/>
 <spring:url value="/dashboard" var="urlDashboard"/>
 <spring:url value="/customers/listactive?d=today" var="urlMonthlyActiveCustomers" />
@@ -37,7 +38,8 @@
             <li><a href="${urlMonthly}">Monthly Summary</a></li>
             <li><a href="${urlDueDates}">Due Dates Summary</a></li>
             <li><a href="${urlDailyDueDates}">Daily Due Dates</a></li>
-            <li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li>
+            <li><a href="${urlInactive}">Inactive Customers</a></li>
+<%--             <li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li> --%>
           </ul>
         </li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>

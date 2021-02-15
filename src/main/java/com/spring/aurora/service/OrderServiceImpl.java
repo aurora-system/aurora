@@ -1,6 +1,6 @@
 package com.spring.aurora.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,6 +122,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findAllOrdersPerMonth(Integer month, Integer year) {
         return this.orderDao.findAllOrdersPerMonth(month, year);
+    }
+
+    @Override
+    public List<Long> inactiveCustomerIds(Date dateVal) {
+        return orderDao.inactiveCustomerIds(dateVal);
     }
 
 }

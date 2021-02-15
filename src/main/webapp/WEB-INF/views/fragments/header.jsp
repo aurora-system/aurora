@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<spring:url value="/resources/css/datatables.min.css"/>"/>
 <link rel="stylesheet" href="<spring:url value="/resources/css/fixedHeader.bootstrap.min.css"/>"/>
 <link rel="stylesheet" href="<spring:url value="/resources/css/datepicker.css"/>"/>
+<link rel="stylesheet" href="<spring:url value="/resources/css/main.css"/>"/>
 
 <script src="<spring:url value="/resources/js/jquery.min.js"/>"></script>
 <script src="<spring:url value="/resources/js/bootstrap.min.js"/>"></script>

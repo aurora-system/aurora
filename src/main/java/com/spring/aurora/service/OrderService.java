@@ -1,7 +1,7 @@
 package com.spring.aurora.service;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.spring.aurora.model.Order;
@@ -26,4 +26,6 @@ public interface OrderService {
 
     void setToDelivered(long orderId);
     String getNewDrNumber();
+    
+    List<Long> inactiveCustomerIds(Date dateVal);
 }
