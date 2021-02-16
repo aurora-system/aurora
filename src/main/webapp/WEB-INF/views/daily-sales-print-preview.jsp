@@ -23,12 +23,12 @@
 	                          	<th style="padding: 8px;">DR#</th>
 	                          	<th style="padding: 8px;" width="60">Time</th>
 	                            <th style="padding: 8px;" width="100">Customer</th>
-								<th style="padding: 8px;">RR</th>
-	                            <th style="padding: 8px;">SR</th>
-	                            <th style="padding: 8px;">RC</th>
-	                            <th style="padding: 8px;">SC</th>
-	                            <th style="padding: 8px;">RB</th>
-	                            <th style="padding: 8px;">SB</th>
+								<th style="padding: 8px;">Round Refill</th>
+	                            <th style="padding: 8px;">Slim Refill</th>
+	                            <th style="padding: 8px;">Round Cont</th>
+	                            <th style="padding: 8px;">Slim Cont</th>
+	                            <th style="padding: 8px;">Round Both</th>
+	                            <th style="padding: 8px;">Slim Both</th>
 	                            <th style="padding: 8px;" width="100">Remarks</th>
 	                            <th style="padding: 8px;">A/R</th>
 	                            <th style="padding: 8px;">Cash</th>
