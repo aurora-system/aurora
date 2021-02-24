@@ -25,16 +25,16 @@ public class Order {
     private long customerId;
 
     @Column(name="delivery_receipt_num")
-    private String deliveryReceiptNum;
+    private String deliveryReceiptNum = "";
 
     @Column(name="status")
-    private String status;
+    private String status = "";
 
     @Column(name="amount_paid")
-    private Double amountPaid;
+    private Double amountPaid = 0.0;
 
     @Column(name="total_amount")
-    private Double totalAmount;
+    private Double totalAmount = 0.0;
 
     @Column(name="slim_refill_only_count")
     private int slimRefillOnlyCount;
@@ -61,16 +61,16 @@ public class Order {
     private int slimFreeCount;
 
     @Column(name="cont_slim_returned")
-    private String slimReturned;
+    private String slimReturned = "0";
 
     @Column(name="cont_round_returned")
-    private String roundReturned;
+    private String roundReturned = "0";
 
     @Column(name="created_at")
-    private Timestamp createdAt;
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
     @Column(name="remarks")
-    private String remarks;
+    private String remarks = "";
 
     public boolean isNew() {
         return (this.orderId == 0);

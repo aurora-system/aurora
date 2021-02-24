@@ -189,12 +189,12 @@ public class OrderController {
         OrderProductEntity ope = new OrderProductEntity();
         Order order = this.orderService.findOrderByOrderId(orderId);
 
-        if (order.getRoundReturned().equalsIgnoreCase("0")) {
-            order.setRoundReturned(null);
-        }
-        if (order.getSlimReturned().equalsIgnoreCase("0")) {
-            order.setSlimReturned(null);
-        }
+//        if (order.getRoundReturned().equalsIgnoreCase("0")) {
+//            order.setRoundReturned(null);
+//        }
+//        if (order.getSlimReturned().equalsIgnoreCase("0")) {
+//            order.setSlimReturned(null);
+//        }
 
         ope.setOrder(order);
 
@@ -660,7 +660,7 @@ public class OrderController {
             boolean saveReturnedContainers = true;
 
             for (Container con : this.containerService.findAllByCustomerId(order.getCustomerId())) {
-                if (con.getOrderId() != 0 && con.getOrderId() == order.getOrderId()) {
+                if (con.getOrderId() != null && con.getOrderId() != 0 && con.getOrderId() == order.getOrderId()) {
                     saveReturnedContainers = false;
                     break;
                 }

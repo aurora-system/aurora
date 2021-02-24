@@ -7,10 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.spring.aurora.entity.CustomerWithPrice;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="CUSTOMER")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Customer {
 
@@ -52,4 +58,20 @@ public class Customer {
     public boolean isNew() {
         return (this.customerId == 0);
     }
-}
+
+    public Customer(CustomerWithPrice cp) {
+        super();
+        this.customerId = cp.getCustomerId();
+        this.type = cp.getType();
+        this.name = cp.getName();
+        this.address = cp.getAddress();
+        this.contactName = cp.getContactName();
+        this.mainNumber = cp.getMainNumber();
+        this.alternateNumber = cp.getAlternateNumber();
+        this.emailAddress = cp.getEmailAddress();
+        this.orderInterval = cp.getOrderInterval();
+        this.totalRound = cp.getTotalRound();
+        this.totalSlim = cp.getTotalSlim();
+    }
+    
+}   

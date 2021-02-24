@@ -2,6 +2,7 @@ package com.spring.aurora.service;
 
 import java.util.List;
 
+import com.spring.aurora.entity.CustomerWithPrice;
 import com.spring.aurora.model.Customer;
 
 public interface CustomerService {
@@ -13,4 +14,6 @@ public interface CustomerService {
 
     List<Customer> findAllByCustomerIdIn(List<Long> customerIdList);
     List<Customer> findAll();
+    
+    List<CustomerWithPrice> findAllCustomersWithPrice();
 }

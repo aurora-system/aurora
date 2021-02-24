@@ -1,5 +1,8 @@
 package com.spring.aurora.controller;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -8,6 +11,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -27,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.CustomerDueDateEntity;
 import com.spring.aurora.entity.CustomerPriceEntity;
+import com.spring.aurora.entity.CustomerWithPrice;
 import com.spring.aurora.entity.ProductPriceEntity;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
@@ -213,19 +218,28 @@ public class CustomerController {
     public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
 
-        List<Customer> customerList = new ArrayList<>();
-        customerList = this.customerService.findAll();
-
+        
+        List<CustomerWithPrice> customerList = this.customerService.findAllCustomersWithPrice();
+        Set<Long> customerIds = customerList.parallelStream()
+                .map(CustomerWithPrice::getCustomerId)
+                .collect(toSet());
+        
         List<CustomerPriceEntity> cpeList = new ArrayList<>();
+        
 
-        for (Customer c : customerList) {
+        for (Long c : customerIds) {
 
             Double priceRound = 0.0;
             Double priceSlim = 0.0;
             Double refillPrice = 40.0;
-            List<CustomerPrice> customerPriceList = this.customerPriceService.findAllByCustomerId(c.getCustomerId());
 
-            for (CustomerPrice cp : customerPriceList) {
+            List<CustomerWithPrice> customerWithPriceList = customerList.stream()
+                    .filter(cp -> cp.getCustomerId() == c)
+                    .collect(toList());
+            
+            Customer customer = null;
+            
+            for (CustomerWithPrice cp : customerWithPriceList) {
                 if (cp.getProductId() == 1) {
                     priceRound = cp.getSellingPrice();
                 }
@@ -233,19 +247,22 @@ public class CustomerController {
                 if (cp.getProductId() == 2) {
                     priceSlim = cp.getSellingPrice();
                 }
-            }
-
-            if (priceRound <= 0) {
-                if (priceSlim > 0) {
-                    refillPrice = priceSlim;
+            
+                if (priceRound <= 0) {
+                    if (priceSlim > 0) {
+                        refillPrice = priceSlim;
+                    }
+                } else {
+                    refillPrice = priceRound;
                 }
-            } else {
-                refillPrice = priceRound;
+            
+                customer = new Customer(cp);
             }
-
-
-            CustomerPriceEntity cpe = new CustomerPriceEntity(c, refillPrice);
-            cpeList.add(cpe);
+            
+            if (customer != null) {
+                CustomerPriceEntity cpe = new CustomerPriceEntity(customer, refillPrice);
+                cpeList.add(cpe);
+            }
         }
 
 //        model.addAttribute("customers", this.customerService.findAll());
@@ -319,15 +336,15 @@ public class CustomerController {
                 c.setRoundCount(roundReturned);
                 c.setSlimCount(slimReturned);
                 c.setStatus("RO");
-                c.setOrderId(-1); // c.setOrderId("Yes");
+                c.setOrderId(-1L); // c.setOrderId("Yes");
                 c.setCreatedAt(o.getCreatedAt());
                 returnedContainers.add(c);
             }
         }
 
         for (Container c : containerList) {
-            if (c.getStatus().equalsIgnoreCase("R") && c.getOrderId() != 0) {
-                c.setOrderId(-2); // c.setOrderId("No");
+            if (c.getStatus().equalsIgnoreCase("R") && (c.getOrderId() != 0)) {
+                c.setOrderId(-2L); // c.setOrderId("No");
                 returnedContainers.add(c);
             }
         }

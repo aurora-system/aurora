@@ -13,6 +13,7 @@ import com.spring.aurora.dao.CustomerDao;
 import com.spring.aurora.dao.DebtDao;
 import com.spring.aurora.dao.OrderDao;
 import com.spring.aurora.dao.PaymentDao;
+import com.spring.aurora.entity.CustomerWithPrice;
 import com.spring.aurora.model.Customer;
 
 @Service("customerService")
@@ -96,4 +97,11 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAllByCustomerIdIn(List<Long> customerIdList) {
         return this.customerDao.findAllByCustomerIdIn(customerIdList);
     }
+
+    @Override
+    public List<CustomerWithPrice> findAllCustomersWithPrice() {
+        return this.customerDao.findAllCustomersWithPrice();
+    }
+    
+    
 }

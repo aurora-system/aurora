@@ -25,10 +25,10 @@ public class Container {
     private long customerId;
 
     @Column(name="order_id")
-    private long orderId;
+    private Long orderId = 0L;
 
     @Column(name="status")
-    private String status;
+    private String status = "";
 
     @Column(name="round_count")
     private int roundCount;
@@ -37,5 +37,5 @@ public class Container {
     private int slimCount;
 
     @Column(name="created_at")
-    private Timestamp createdAt;
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 }

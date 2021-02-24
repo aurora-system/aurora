@@ -1,6 +1,7 @@
 package com.spring.aurora.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,13 +26,13 @@ public class Debt {
     private long customerId;
 
     @Column(name="amount")
-    private Double amount;
+    private Double amount = 0.0;
 
     @Column(name="remarks")
-    private String remarks;
+    private String remarks = "";
 
     @Column(name="created_at")
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
     @Column(name="linked_order_id")
     private long orderId;
