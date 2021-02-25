@@ -1,15 +1,11 @@
 package com.spring.aurora.model;
 
-import static java.util.stream.Collectors.toSet;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,12 +35,14 @@ public class User implements UserDetails {
     private boolean enabled;
     private String firstName;
     private String lastName;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+    //@ElementCollection(fetch = FetchType.EAGER)
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(toSet());
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(this.role));
+        return authorities;
     }
 
     @Override
