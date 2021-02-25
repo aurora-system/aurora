@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -93,20 +94,20 @@ public class CustomerController {
         //model.addAttribute("customers", customerService.findAll());
         return "customer-search-result";
     }
-    
+
     @RequestMapping(value="/listinactive", method = RequestMethod.GET)
     public String listInactiveCustomers(Model model
             , @RequestParam(value = "mode", defaultValue = "normal", required = false) String mode) {
-        
-        List<Customer> customers = customerService.findAll();
+
+        List<Customer> customers = this.customerService.findAll();
         List<Customer> inactiveCustomers = new ArrayList<>();
-        List<Long> inactiveCustomerIds = orderService.inactiveCustomerIds(java.sql.Date.valueOf(LocalDate.now().minusDays(30)));
-        
-        inactiveCustomers = customerService.findAllByCustomerIdIn(inactiveCustomerIds);
+        List<Long> inactiveCustomerIds = this.orderService.inactiveCustomerIds(java.sql.Date.valueOf(LocalDate.now().minusDays(30)));
+
+        inactiveCustomers = this.customerService.findAllByCustomerIdIn(inactiveCustomerIds);
         customers.removeAll(inactiveCustomers);
-        
+
         model.addAttribute("customerList", customers);
-        
+
         if (mode.equalsIgnoreCase("preview")) {
             System.out.println("preview");
             return "list-inactive-customers-preview";
@@ -218,14 +219,15 @@ public class CustomerController {
     public String listCustomers(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         logger.info("List all customers.");
 
-        
+        Double refillPriceDefault = 40.00;
+
         List<CustomerWithPrice> customerList = this.customerService.findAllCustomersWithPrice();
         Set<Long> customerIds = customerList.parallelStream()
                 .map(CustomerWithPrice::getCustomerId)
                 .collect(toSet());
-        
+
         List<CustomerPriceEntity> cpeList = new ArrayList<>();
-        
+
 
         for (Long c : customerIds) {
 
@@ -236,9 +238,9 @@ public class CustomerController {
             List<CustomerWithPrice> customerWithPriceList = customerList.stream()
                     .filter(cp -> cp.getCustomerId() == c)
                     .collect(toList());
-            
+
             Customer customer = null;
-            
+
             for (CustomerWithPrice cp : customerWithPriceList) {
                 if (cp.getProductId() == 1) {
                     priceRound = cp.getSellingPrice();
@@ -247,7 +249,7 @@ public class CustomerController {
                 if (cp.getProductId() == 2) {
                     priceSlim = cp.getSellingPrice();
                 }
-            
+
                 if (priceRound <= 0) {
                     if (priceSlim > 0) {
                         refillPrice = priceSlim;
@@ -255,17 +257,25 @@ public class CustomerController {
                 } else {
                     refillPrice = priceRound;
                 }
-            
+
                 customer = new Customer(cp);
             }
-            
+
             if (customer != null) {
                 CustomerPriceEntity cpe = new CustomerPriceEntity(customer, refillPrice);
                 cpeList.add(cpe);
             }
         }
 
-//        model.addAttribute("customers", this.customerService.findAll());
+        Predicate<Customer> customerHasDefaultPrice = cu -> !customerIds.contains(cu.getCustomerId());
+
+        List<CustomerPriceEntity> cpeList2 = this.customerService.findAll().stream()
+                .filter(customerHasDefaultPrice)
+                .map(cust -> new CustomerPriceEntity(cust,refillPriceDefault))
+                .collect(toList());
+        cpeList.addAll(cpeList2);
+
+        //        model.addAttribute("customers", this.customerService.findAll());
         model.addAttribute("customerPrices", cpeList);
         //model.addAttribute("orderForm", new Order());
         if (mode.equalsIgnoreCase("preview")) {
