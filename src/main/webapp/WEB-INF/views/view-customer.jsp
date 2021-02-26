@@ -41,7 +41,7 @@
                     <p><b>Alternate number:</b> ${customer.alternateNumber}</p>
 					<p><b>Email Address:</b> ${customer.emailAddress}</p>
 					<p><b>Order Interval:</b> ${customer.orderInterval} Days</p>
-					<h6><span class="label label-danger pull-right">${dueDateText}</span></h6>
+					<h4><span class="label label-danger pull-right">${dueDateText}</span></h4>
                 </div>
             </div>
         </div>
