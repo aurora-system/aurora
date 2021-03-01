@@ -35,5 +35,5 @@ public class Debt {
     private Date createdAt = new Date(System.currentTimeMillis());
 
     @Column(name="linked_order_id")
-    private long orderId;
+    private Long orderId;
 }
