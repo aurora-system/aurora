@@ -7,7 +7,7 @@ import com.spring.aurora.model.Debt;
 
 public interface DebtService {
     Debt insert(Debt customer);
-    Debt delete(Debt debt);
+    void delete(Debt debt);
 
     List<Debt> findAllByCustomerId(long customerId);
 

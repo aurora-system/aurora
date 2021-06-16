@@ -26,8 +26,8 @@ public class DebtServiceImpl implements DebtService {
     }
 
     @Override
-    public Debt delete(Debt debt) {
-        return this.debtDao.save(debt);
+    public void delete(Debt debt) {
+        this.debtDao.delete(debt);
     }
 
     @Override
