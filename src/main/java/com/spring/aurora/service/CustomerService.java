@@ -14,6 +14,7 @@ public interface CustomerService {
 
     List<Customer> findAllByCustomerIdIn(List<Long> customerIdList);
     List<Customer> findAll();
-    
+
     List<CustomerWithPrice> findAllCustomersWithPrice();
+    Customer findByCustomerId(long id);
 }

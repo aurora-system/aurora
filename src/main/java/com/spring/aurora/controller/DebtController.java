@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,20 +17,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.DebtCustomerEntity;
+import com.spring.aurora.model.ArSummary;
+import com.spring.aurora.model.ArSummaryRepository;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.Debt;
 import com.spring.aurora.service.CustomerService;
 import com.spring.aurora.service.DebtService;
 import com.spring.aurora.service.PaymentService;
 
+import lombok.AllArgsConstructor;
+
 @Controller
 @RequestMapping("/debts")
+@AllArgsConstructor
 public class DebtController {
 
-    @Autowired
     private DebtService debtService;
-    @Autowired private PaymentService paymentService;
-    @Autowired private CustomerService customerService;
+    private PaymentService paymentService;
+    private CustomerService customerService;
+    private ArSummaryRepository arSummaryRepo;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newDebt(@RequestParam long cid, Model model) {
@@ -66,7 +71,7 @@ public class DebtController {
         return "list-debts";
     }
 
-    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/listAllOld", method = RequestMethod.GET)
     public String listAllDebts(Model model, @RequestParam(value="mode", defaultValue="normal", required=false) String mode) {
         List<Customer> customers = this.customerService.findAll();
         Date dateToday = Date.valueOf(LocalDate.now());
@@ -85,11 +90,29 @@ public class DebtController {
         model.addAttribute("dateToday", dateToday);
 
         if (mode.equalsIgnoreCase("preview")) {
+            return "list-debts-all-print-preview-old";
+        } else {
+            return "list-debts-all-old";
+        }
+
+    }
+
+    @GetMapping("/listAll")
+    public String listArSummary(@RequestParam(value="mode", defaultValue="normal", required=false) String mode, Model model) {
+        List<ArSummary> arSummary = this.arSummaryRepo.findAll();
+        arSummary.forEach(ars -> ars.setCustomer(this.customerService.findByCustomerId(ars.getCustomerId())));
+
+        double arTotal = arSummary.stream()
+                .collect(Collectors.summingDouble(ar -> ar.getArAmount().doubleValue()));
+        model.addAttribute("debtsMap", arSummary);
+        model.addAttribute("arTotal", arTotal);
+        model.addAttribute("dateToday", LocalDate.now());
+
+        if (mode.equalsIgnoreCase("preview")) {
             return "list-debts-all-print-preview";
         } else {
             return "list-debts-all";
         }
-
     }
 
     private Double getTotalArsAsOfToday() {

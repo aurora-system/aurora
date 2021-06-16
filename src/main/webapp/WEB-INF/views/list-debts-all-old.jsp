@@ -30,14 +30,14 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="entry" items="${debtsMap}">
-                                    <spring:url value="/customers/view?customerId=${entry.customerId}" var="urlViewCustomer" />
-                                    <spring:url value="/payments/new?cid=${entry.customerId}" var="urlNewPayment" />
-                                    <spring:url value="/payments/list?cid=${entry.customerId}" var="urlListPayment" />
-                                    <spring:url value="/debts/list?cid=${entry.customerId}" var="urlListDebts" />
-                                    <spring:url value="/debts/new?cid=${entry.customerId}" var="urlNewArEntry" />
+                                    <spring:url value="/customers/view?customerId=${entry.key}" var="urlViewCustomer" />
+                                    <spring:url value="/payments/new?cid=${entry.key}" var="urlNewPayment" />
+                                    <spring:url value="/payments/list?cid=${entry.key}" var="urlListPayment" />
+                                    <spring:url value="/debts/list?cid=${entry.key}" var="urlListDebts" />
+                                    <spring:url value="/debts/new?cid=${entry.key}" var="urlNewArEntry" />
                                     <tr>
-                                        <td><a href="${urlViewCustomer}">${entry.customer.name}</a></td>
-                                        <td bgcolor="F7E8D0"><a href="${urlListDebts}"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.arAmount}"></fmt:formatNumber></a></td>
+                                        <td><a href="${urlViewCustomer}">${entry.value.customerName}</a></td>
+                                        <td bgcolor="F7E8D0"><a href="${urlListDebts}"><fmt:formatNumber type = "currency" pattern = "#,##0.00" value = "${entry.value.debtsTotal}"></fmt:formatNumber></a></td>
                                         <!--<td>
                                             <a href="${urlNewPayment}" style="margin-right: 5px" class="btn btn-default pull-right" role="button">New Payment</a>
                                             <a href="${urlListPayment}" style="margin-right: 5px" class="btn btn-info pull-right" role="button">List Payments</a>

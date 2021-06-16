@@ -102,6 +102,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerWithPrice> findAllCustomersWithPrice() {
         return this.customerDao.findAllCustomersWithPrice();
     }
-    
-    
+
+    @Override
+    public Customer findByCustomerId(long customerId) {
+        return this.customerDao.findById(customerId).orElseGet(Customer::new);
+    }
 }
