@@ -1,27 +1,38 @@
 package com.spring.aurora.service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.aurora.dao.PaymentDao;
+import com.spring.aurora.model.ArSummary;
+import com.spring.aurora.model.ArSummaryRepository;
 import com.spring.aurora.model.Payment;
+
+import lombok.AllArgsConstructor;
 
 @Service("paymentService")
 @Transactional
+@AllArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
-    //private static final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
-    @Autowired
+    private ArSummaryRepository arSummaryRepo;
     private PaymentDao paymentDao;
 
     @Override
     public Payment insert(Payment payment) {
+        ArSummary current = this.arSummaryRepo.findByCustomerId(payment.getCustomerId()).orElseGet(ArSummary::new);
+        if (current.getCustomerId() != payment.getCustomerId()) {
+            current.setCustomerId(payment.getCustomerId());
+        }
+        BigDecimal arAmount = current.getArAmount().subtract(new BigDecimal(payment.getAmount()));
+        current.setArAmount(arAmount);
+        this.arSummaryRepo.save(current);
         return this.paymentDao.save(payment);
     }
 

@@ -81,8 +81,8 @@ public class DebtController {
                         customer -> new DebtCustomerEntity(
                                 customer.getName(),
                                 this.getDebtsTotal(customer.getCustomerId()),
-                                this.paymentService.getPaymentsTotalByCustomerId(customer.getCustomerId()))
-                        )
+                                0.00 // this.paymentService.getPaymentsTotalByCustomerId(customer.getCustomerId()))
+                                ))
                         );
         model.addAttribute("debtsMap", debtsMap);
         Double arTotal = this.getTotalArsAsOfToday();

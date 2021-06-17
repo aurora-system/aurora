@@ -24,5 +24,5 @@ public class ArSummary {
     private long customerId;
     @Transient
     private Customer customer;
-    private BigDecimal arAmount;
+    private BigDecimal arAmount = BigDecimal.ZERO;
 }
