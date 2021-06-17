@@ -1,27 +1,38 @@
 package com.spring.aurora.service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.aurora.dao.DebtDao;
+import com.spring.aurora.model.ArSummary;
+import com.spring.aurora.model.ArSummaryRepository;
 import com.spring.aurora.model.Debt;
+
+import lombok.AllArgsConstructor;
 
 @Service("debtService")
 @Transactional
+@AllArgsConstructor
 public class DebtServiceImpl implements DebtService {
-    //private static final Logger logger = LoggerFactory.getLogger(DebtServiceImpl.class);
 
-    @Autowired
+    private ArSummaryRepository arSummaryRepo;
     private DebtDao debtDao;
 
     @Override
     public Debt insert(Debt debt) {
+        ArSummary current = this.arSummaryRepo.findByCustomerId(debt.getCustomerId()).orElseGet(ArSummary::new);
+        if (current.getCustomerId() != debt.getCustomerId()) {
+            current.setCustomerId(debt.getCustomerId());
+        }
+        BigDecimal arAmount = current.getArAmount().add(new BigDecimal(debt.getAmount()));
+        current.setArAmount(arAmount);
+        this.arSummaryRepo.save(current);
         return this.debtDao.save(debt);
     }
 
