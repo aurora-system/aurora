@@ -1,9 +1,13 @@
 package com.spring.aurora.controller;
 
+import static java.util.stream.Collectors.toList;
+
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -104,7 +108,8 @@ public class DebtController {
 
         double arTotal = arSummary.stream()
                 .collect(Collectors.summingDouble(ar -> ar.getArAmount().doubleValue()));
-        model.addAttribute("debtsMap", arSummary);
+        Predicate<ArSummary> removeZero = ar -> ar.getArAmount().compareTo(BigDecimal.ZERO) != 0;
+        model.addAttribute("debtsMap", arSummary.stream().filter(removeZero).collect(toList()));
         model.addAttribute("arTotal", arTotal);
         model.addAttribute("dateToday", LocalDate.now());
 
