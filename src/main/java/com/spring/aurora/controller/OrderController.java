@@ -914,21 +914,23 @@ public class OrderController {
             debtEntry.setAmount(deficit);
 
             if (amountPaid == 0) {
-                debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the customer hasn't paid yet");
+                debtEntry.setRemarks("Total amount is: Php" + totalAmount
+                        + " but the customer hasn't paid yet. PreviousOrderId: " + prevOrderId);
             } else {
-                debtEntry.setRemarks("Total amount is: Php" + totalAmount + " but the amount paid is only Php" + amountPaid);
+                debtEntry.setRemarks("Total amount is: Php" + totalAmount 
+                        + " but the amount paid is only Php" + amountPaid + ". PreviousOrderId: " + prevOrderId);
             }
 
             debtEntry.setCreatedAt(Date.valueOf(LocalDate.now()));
-            debtEntry.setOrderId(prevOrderId);
-            this.debtService.delete(debtEntry);
+            //debtEntry.setOrderId(prevOrderId);
+            //this.debtService.delete(debtEntry);
             debtEntry.setOrderId(newOrderId);
-            this.debtService.insert(debtEntry);
+            this.debtService.insert(debtEntry, prevOrderId);
         } else {
             Debt debtEntry = new Debt();
             debtEntry.setCustomerId(customerId);
             debtEntry.setOrderId(prevOrderId);
-            this.debtService.delete(debtEntry);
+            this.debtService.insert(debtEntry, prevOrderId);
         }
     }
 
