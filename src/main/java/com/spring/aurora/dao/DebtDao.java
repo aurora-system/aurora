@@ -8,4 +8,5 @@ import com.spring.aurora.model.Debt;
 
 public interface DebtDao extends CrudRepository<Debt, Long> {
     List<Debt> findAllByCustomerId(long customerId);
+    List<Debt> findByCustomerIdAndOrderId(long customerId, long orderId);
 }

@@ -37,6 +37,20 @@ public class DebtServiceImpl implements DebtService {
     }
 
     @Override
+    public Debt insert(Debt debt, long previousOrderId) {
+        List<Debt> currentDebt = this.debtDao.findByCustomerIdAndOrderId(debt.getCustomerId(), previousOrderId);
+        double currentAmount = currentDebt.size() > 0 ? currentDebt.get(0).getAmount() : 0.00;
+        ArSummary current = this.arSummaryRepo.findByCustomerId(debt.getCustomerId()).orElseGet(ArSummary::new);
+        if (current.getCustomerId() != debt.getCustomerId()) {
+            current.setCustomerId(debt.getCustomerId());
+        }
+        BigDecimal arAmount = current.getArAmount().subtract(new BigDecimal(currentAmount)).add(new BigDecimal(debt.getAmount()));
+        current.setArAmount(arAmount);
+        this.arSummaryRepo.save(current);
+        return this.debtDao.save(debt);
+    }
+
+    @Override
     public void delete(Debt debt) {
         this.debtDao.delete(debt);
     }
