@@ -189,12 +189,12 @@ public class OrderController {
         OrderProductEntity ope = new OrderProductEntity();
         Order order = this.orderService.findOrderByOrderId(orderId);
 
-//        if (order.getRoundReturned().equalsIgnoreCase("0")) {
-//            order.setRoundReturned(null);
-//        }
-//        if (order.getSlimReturned().equalsIgnoreCase("0")) {
-//            order.setSlimReturned(null);
-//        }
+        //        if (order.getRoundReturned().equalsIgnoreCase("0")) {
+        //            order.setRoundReturned(null);
+        //        }
+        //        if (order.getSlimReturned().equalsIgnoreCase("0")) {
+        //            order.setSlimReturned(null);
+        //        }
 
         ope.setOrder(order);
 
@@ -917,7 +917,7 @@ public class OrderController {
                 debtEntry.setRemarks("Total amount is: Php" + totalAmount
                         + " but the customer hasn't paid yet. PreviousOrderId: " + prevOrderId);
             } else {
-                debtEntry.setRemarks("Total amount is: Php" + totalAmount 
+                debtEntry.setRemarks("Total amount is: Php" + totalAmount
                         + " but the amount paid is only Php" + amountPaid + ". PreviousOrderId: " + prevOrderId);
             }
 
@@ -929,7 +929,7 @@ public class OrderController {
         } else {
             Debt debtEntry = new Debt();
             debtEntry.setCustomerId(customerId);
-            debtEntry.setOrderId(prevOrderId);
+            debtEntry.setOrderId(newOrderId);
             this.debtService.insert(debtEntry, prevOrderId);
         }
     }

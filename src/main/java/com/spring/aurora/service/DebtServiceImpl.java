@@ -49,10 +49,10 @@ public class DebtServiceImpl implements DebtService {
         current.setArAmount(arAmount);
         current.setUpdatedAt(LocalDateTime.now());
 
-        List<Debt> isNewDebt = this.debtDao.findByCustomerIdAndOrderId(debt.getCustomerId(), debt.getOrderId());
-        Debt saveDebt = isNewDebt.size() > 0 ? isNewDebt.get(0) : debt;
+        Debt saveDebt = currentDebt.size() > 0 ? currentDebt.get(0) : debt;
+        debt.setDebtId(saveDebt.getDebtId());
         this.arSummaryRepo.save(current);
-        return this.debtDao.save(saveDebt);
+        return this.debtDao.save(debt);
     }
 
     @Override
