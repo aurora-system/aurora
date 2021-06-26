@@ -1,6 +1,7 @@
 package com.spring.aurora.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,4 +26,5 @@ public class ArSummary {
     @Transient
     private Customer customer;
     private BigDecimal arAmount = BigDecimal.ZERO;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }

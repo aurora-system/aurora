@@ -2,6 +2,7 @@ package com.spring.aurora.service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,12 @@ public class DebtServiceImpl implements DebtService {
         }
         BigDecimal arAmount = current.getArAmount().subtract(new BigDecimal(currentAmount)).add(new BigDecimal(debt.getAmount()));
         current.setArAmount(arAmount);
+        current.setUpdatedAt(LocalDateTime.now());
+
+        List<Debt> isNewDebt = this.debtDao.findByCustomerIdAndOrderId(debt.getCustomerId(), debt.getOrderId());
+        Debt saveDebt = isNewDebt.size() > 0 ? isNewDebt.get(0) : debt;
         this.arSummaryRepo.save(current);
-        return this.debtDao.save(debt);
+        return this.debtDao.save(saveDebt);
     }
 
     @Override
