@@ -3,6 +3,7 @@ package com.spring.aurora.controller;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -34,6 +35,8 @@ import com.spring.aurora.entity.CustomerDueDateEntity;
 import com.spring.aurora.entity.CustomerPriceEntity;
 import com.spring.aurora.entity.CustomerWithPrice;
 import com.spring.aurora.entity.ProductPriceEntity;
+import com.spring.aurora.model.ArSummary;
+import com.spring.aurora.model.ArSummaryRepository;
 import com.spring.aurora.model.Container;
 import com.spring.aurora.model.Customer;
 import com.spring.aurora.model.CustomerPrice;
@@ -81,6 +84,10 @@ public class CustomerController {
     CustomerFormValidator customerFormValidator;
     @Autowired
     OrderFormValidator orderFormValidator;
+
+    @Autowired
+    private ArSummaryRepository arSummaryRepo;
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         //binder.setValidator(customerFormValidator);
@@ -375,11 +382,7 @@ public class CustomerController {
         model.addAttribute("totalBorrowedSlim", customer.getTotalSlim());
         model.addAttribute("containerHistory", returnedContainers);
 
-        double debtsSubTotal = this.debtService.findDebtsTotalByCustomerId(customerId);
-        logger.debug("debsTotal: "+ debtsSubTotal);
-        double paymentsSubTotal = this.paymentService.getPaymentsTotalByCustomerId(customerId);
-        logger.debug("paymentsTotal: " + paymentsSubTotal);
-        double totalDebt = debtsSubTotal - paymentsSubTotal;
+        BigDecimal totalDebt = this.arSummaryRepo.findByCustomerId(customerId).orElseGet(ArSummary::new).getArAmount();
         logger.debug("total ARs: " + totalDebt);
         model.addAttribute("totalDebt", totalDebt);
 
