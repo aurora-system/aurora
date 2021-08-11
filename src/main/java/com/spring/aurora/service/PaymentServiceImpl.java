@@ -30,7 +30,9 @@ public class PaymentServiceImpl implements PaymentService {
         if (current.getCustomerId() != payment.getCustomerId()) {
             current.setCustomerId(payment.getCustomerId());
         }
-        BigDecimal arAmount = current.getArAmount().subtract(new BigDecimal(payment.getAmount()));
+        BigDecimal arAmount = current.getArAmount()
+                .subtract(new BigDecimal(payment.getAmount())
+                        .add(new BigDecimal(payment.getWithholdingTax())));
         current.setArAmount(arAmount);
         this.arSummaryRepo.save(current);
         return this.paymentDao.save(payment);
