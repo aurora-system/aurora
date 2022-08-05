@@ -16,3 +16,15 @@
 <script src="<spring:url value="/resources/js/datatables.min.js"/>"></script>
 <script src="<spring:url value="/resources/js/dataTables.fixedHeader.min.js"/>"></script>
 <script src="<spring:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
+
+<style type="text/css">
+     .loader {
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     width: 100%;
+     height: 100%;
+     z-index: 9999;
+     background: url('${contextPath}/aurora/resources/images/pageLoader.gif') 50% 50% no-repeat rgb(249,249,249);
+     }
+ </style> 

@@ -9,8 +9,15 @@ public class CustomerPriceEntity {
 	private Customer customer;
     private double refillPrice;
     private Timestamp mostRecentOrderDate;
+    private int numberOfOrdersForTheMonth;
 	
-	public CustomerPriceEntity(Customer customer, double refillPrice) {
+	public int getNumberOfOrdersForTheMonth() {
+        return numberOfOrdersForTheMonth;
+    }
+    public void setNumberOfOrdersForTheMonth(int numberOfOrdersForTheMonth) {
+        this.numberOfOrdersForTheMonth = numberOfOrdersForTheMonth;
+    }
+    public CustomerPriceEntity(Customer customer, double refillPrice) {
 		super();
 		this.customer = customer;
 		this.refillPrice = refillPrice;

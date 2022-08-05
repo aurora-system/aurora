@@ -30,14 +30,14 @@
 					action="${urlListCustomersMonthlyActive}">
 					<div class="form-group col-sm-6">
 						<div class="col-sm-6 input-append date" id="datepicker"
-							data-date="00-2019" data-date-format="mm-yyyy">
+							data-date="00-2022" data-date-format="mm-yyyy">
 							<input class="form-control" type="text" readonly="readonly"
 								name="d" placeholder="select month"> <span
 								class="glyphicon glyphicon-calendar add-on"
 								style="padding-top: 5px;"></span>
 						</div>
 						<div class="col-sm-6">
-							<button type="submit" class="btn btn-primary">Generate
+							<button type="submit" id="generateMonthlyActiveReport" class="btn btn-primary">Generate
 								Report</button>
 						</div>
 					</div>
@@ -50,7 +50,7 @@
             <div class="panel panel-info">
             	<div class="panel-heading clearfix">
                     Active customers for ${monthYear}
-                    <a href="${urlListCustomersMonthlyActive}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" role="button">Print Preview</a>
+                    <a href="${urlListCustomersMonthlyActive}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" id="printMonthlyActiveReport" role="button">Print Preview</a>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">

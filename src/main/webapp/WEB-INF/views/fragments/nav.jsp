@@ -20,6 +20,7 @@
 <spring:url value="/dashboard" var="urlDashboard"/>
 <spring:url value="/customers/listactive?d=today" var="urlMonthlyActiveCustomers" />
 
+<div class="loader"></div>
 <nav class="navbar navbar-inverse">
   <div class="container">
     <div class="navbar-header">
@@ -31,15 +32,15 @@
         <li><a href="${urlOrders}">Orders</a></li>
         <li><a href="${urlListProducts}">Products</a></li>
         <li><a href="${urlListExpenses}">Expenses</a></li>
-        <li><a href="${urlDebt}">A/R Summary</a></li>
+        <li><a href="${urlDebt}" id="arSummaryLink">A/R Summary</a></li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Reports</a>
           <ul class="dropdown-menu">
             <li><a href="${urlDaily}">Daily Sales</a></li>
-            <li><a href="${urlMonthly}">Monthly Summary</a></li>
+            <li><a href="${urlMonthly}" id="monthlySummaryLink">Monthly Summary</a></li>
             <li><a href="${urlDueDates}">Due Dates Summary</a></li>
-            <li><a href="${urlDailyDueDates}">Daily Due Dates</a></li>
+            <li><a href="${urlDailyDueDates}" id="dailyDueLink">Daily Due Dates</a></li>
             <li><a href="${urlInactive}">Inactive Customers</a></li>
-<%--             <li><a href="${urlMonthlyActiveCustomers}">Monthly Active Customers</a></li> --%>
+			<li><a href="${urlMonthlyActiveCustomers}" id="monthlyActiveLink">Monthly Active Customers</a></li>
           </ul>
         </li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Containers</a>

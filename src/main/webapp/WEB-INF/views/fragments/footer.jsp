@@ -18,4 +18,37 @@
 	</footer>
 </div>
 
+<script type="text/javascript">
+   	$(window).on('load', function() {
+	    $(".loader").fadeOut("slow");
+	})
+</script>
+
+<script type="text/javascript">
+   	$('#monthlyActiveLink').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+	$('#dailyDueLink').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+	$('#arSummaryLink').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+	$('#monthlySummaryLink').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+	$('#generateMonthlyActiveReport').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+	$('#printMonthlyActiveReport').on('click', function() {
+	    $(".loader").fadeIn("slow");
+	})
+	
+</script>
+
 

@@ -1,12 +1,18 @@
 package com.spring.aurora.entity;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class CustomerWithPrice {
 
     private long customerId;
@@ -34,5 +40,4 @@ public class CustomerWithPrice {
     private long productId;
 
     private Double sellingPrice;
-    
 }
