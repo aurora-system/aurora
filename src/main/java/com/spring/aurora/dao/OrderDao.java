@@ -24,6 +24,9 @@ public interface OrderDao extends CrudRepository<Order, Long> {
 
     @Query("select MAX(o.createdAt) from Order o where o.customerId = :customerId")
     Timestamp getMostRecentOrderDate(long customerId);
+    
+    @Query("select count(o) from Order o where MONTH(o.createdAt) = :month and YEAR(o.createdAt) = :year and o.customerId = :customerId")
+    Integer getOrderCountPerMonth(Integer month, Integer year, long customerId);
 
     @Modifying
     @Query("update Order o set o.status = 'Cancelled' where o.orderId = :orderId")

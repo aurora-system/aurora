@@ -21,7 +21,7 @@
                             <th style="padding: 8px;">Customer Name</th>
                             <th style="padding: 8px;">Refill</th>
                             <th style="padding: 8px;">Most Recent Order</th>
-                            <th style="padding: 8px;">Days</th>
+                            <th style="padding: 8px;">Order Count</th>
                             <th style="padding: 8px;">Address</th>
                             <th style="padding: 8px;">Contact Number</th>
                           </tr>
@@ -33,7 +33,7 @@
                                     <td style="padding: 8px;">${cp.customer.name}</td>
                                     <td style="padding: 8px;">${cp.refillPrice}</td>
                                     <td style="padding: 8px;">${cp.mostRecentOrderDate}</td>
-                                    <td style="padding: 8px;">${cp.customer.orderInterval}</td>
+                                    <td style="padding: 8px;">${cp.numberOfOrdersForTheMonth}</td>
                                     <td style="padding: 8px;">${cp.customer.address}</td>
                                     <td style="padding: 8px;">${cp.customer.mainNumber}</td>
                                 </tr>

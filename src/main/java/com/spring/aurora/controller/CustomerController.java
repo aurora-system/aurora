@@ -179,6 +179,7 @@ public class CustomerController {
             List<CustomerPrice> customerPriceList = this.customerPriceService.findAllByCustomerId(c.getCustomerId());
 
             Timestamp mostRecentOd = this.orderService.getMostRecentOrderDate(c.getCustomerId());
+            int orderCount = this.orderService.getOrderCountPerMonth(m, y, c.getCustomerId()).intValue();
 
 
             for (CustomerPrice cp : customerPriceList) {
@@ -201,6 +202,7 @@ public class CustomerController {
 
             CustomerPriceEntity cpe = new CustomerPriceEntity(c, refillPrice);
             cpe.setMostRecentOrderDate(mostRecentOd);
+            cpe.setNumberOfOrdersForTheMonth(orderCount);
             cpeList.add(cpe);
         }
 

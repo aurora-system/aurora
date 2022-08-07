@@ -60,6 +60,7 @@
                             <th>Customer Name</th>
                             <th>Refill Price</th>
                             <th>Most Recent Order</th>
+                            <th>Order Count</th>
                             <th>Address</th>
                             <th>Contact Number</th>
                             <th width="100">Actions</th>
@@ -72,6 +73,7 @@
                                     <td>${cp.customer.name}</td>
                                     <td>${cp.refillPrice}</td>
                                     <td>${cp.mostRecentOrderDate}</td>
+                                    <td>${cp.numberOfOrdersForTheMonth}</td>
                                     <td>${cp.customer.address}</td>
                                     <td>${cp.customer.mainNumber}</td>
                                     <td nowrap>
@@ -105,6 +107,7 @@
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"columns": [
+            	    null,
             	    null,
             	    null,
             	    null,

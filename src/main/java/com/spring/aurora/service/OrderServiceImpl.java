@@ -129,4 +129,9 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.inactiveCustomerIds(dateVal);
     }
 
+    @Override
+    public Integer getOrderCountPerMonth(Integer month, Integer year, long customerId) {
+        return this.orderDao.getOrderCountPerMonth(month, year, customerId);
+    }
+
 }

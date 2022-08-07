@@ -12,6 +12,7 @@ public interface OrderService {
     Order delete(Order order);
 
     Timestamp getMostRecentOrderDate(long customerId);
+    Integer getOrderCountPerMonth(Integer month, Integer year, long customerId);
 
     List<Order> findAllByCustomerId(long customerId);
     List<Order> findAllOrdersToday(Date dateParam);
