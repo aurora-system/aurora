@@ -216,7 +216,7 @@
 <!--         </div> -->
 <!--     </div> -->
     </div>
-    
+    <jsp:include page="fragments/footer.jsp" />
     <script src="<c:url value="/resources/js/jquery.form-validator.min.js"/>"></script>
     <script type="text/javascript">
         $(document).ready(() => {
@@ -325,6 +325,6 @@
             });
         })
     </script>
-
+	
 </body>
 </html>

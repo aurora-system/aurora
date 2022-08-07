@@ -150,7 +150,7 @@
             </div>
         </div>
     </div>
-    
+    <jsp:include page="fragments/footer.jsp" />
     
 <!--     <div class="row"> -->
 <!--         <div class="col-lg-12"> -->
