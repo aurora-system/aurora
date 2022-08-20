@@ -49,8 +49,8 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
             	<div class="panel-heading clearfix">
-                    Active customers for ${monthYear}
-                    <a href="${urlListCustomersMonthlyActive}?d=${dateParam}&mode=preview" class="btn btn-default pull-right" id="printMonthlyActiveReport" role="button">Print Preview</a>
+                    <h2>Active customers for ${monthYear}</h2>
+                    <a href="${urlListCustomersMonthlyActive}?d=${dateParam}&mode=preview" class="btn btn-primary pull-right" id="printMonthlyActiveReport" role="button">Print Preview</a>
                 </div>
                 <div class="panel-body">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
@@ -58,37 +58,33 @@
                           <tr>
                             <th>Type</th>
                             <th>Customer Name</th>
-                            <th>Refill Price</th>
-                            <th>Most Recent Order</th>
-                            <th>Order Count</th>
                             <th>Address</th>
                             <th>Contact Number</th>
+<!--                             <th style="padding: 8px;">Order Count</th> -->
                             <th width="100">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="cp" items="${cpeList}">
+                            <c:forEach var="co" items="${cwoList}">
                                 <tr>
-                                    <td>${cp.customer.type}</td>
-                                    <td>${cp.customer.name}</td>
-                                    <td>${cp.refillPrice}</td>
-                                    <td>${cp.mostRecentOrderDate}</td>
-                                    <td>${cp.numberOfOrdersForTheMonth}</td>
-                                    <td>${cp.customer.address}</td>
-                                    <td>${cp.customer.mainNumber}</td>
+                                    <td>${co.type}</td>
+                                    <td>${co.name}</td>
+                                    <td>${co.address}</td>
+                                    <td>${co.mainNumber}</td>
+<%--                                     <td>${co.numberOfOrdersForTheMonth}</td> --%>
                                     <td nowrap>
 <!-- 										<p><button class="btn btn-default">New Order</button></p>  -->
 										<!--                                         <button class="btn btn-info">View</button> -->
 										
 										<form action="view" method="get" style="display: inline-block;" >
 											<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%> 
-											<input type="hidden" name=customerId value="${cp.customer.customerId}"> 
+											<input type="hidden" name=customerId value="${co.customerId}"> 
 											<input class="btn btn-info" type="submit" value="View">
 										</form>
 										<spring:url value="/orders/neworder" var="newOrderUrl"/>
 										<form action="${newOrderUrl}" method="get" style="display: inline-block;">
 											<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%> 
-											<input type="hidden" name="customerId" value="${cp.customer.customerId}"/> 
+											<input type="hidden" name="customerId" value="${co.customerId}"/> 
 											<input class="btn btn-default" type="submit" value="New Order"/>
 										</form>
 									</td>
@@ -107,9 +103,6 @@
         $(document).ready(() => {
             $('#myTable').DataTable({
             	"columns": [
-            	    null,
-            	    null,
-            	    null,
             	    null,
             	    null,
             	    null,

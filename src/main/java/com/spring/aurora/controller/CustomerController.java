@@ -33,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.aurora.entity.CustomerDueDateEntity;
 import com.spring.aurora.entity.CustomerPriceEntity;
+import com.spring.aurora.entity.CustomerWithOrder;
 import com.spring.aurora.entity.CustomerWithPrice;
 import com.spring.aurora.entity.ProductPriceEntity;
 import com.spring.aurora.model.ArSummary;
@@ -130,8 +131,8 @@ public class CustomerController {
      * @param mode - normal view or print preview
      * @param datePicked - the selected month
      */
-    @RequestMapping(value="/listactive", method = RequestMethod.GET)
-    public String listActiveCustomersForTheMonth(Model model,
+    @RequestMapping(value="/listactiveold", method = RequestMethod.GET)
+    public String listActiveCustomersForTheMonthOLD(Model model,
             @RequestParam(value = "mode", defaultValue = "normal", required = false) String mode,
             @RequestParam(value = "d", required = false) String datePicked) {
         logger.info("List active customers per month.");
@@ -210,6 +211,66 @@ public class CustomerController {
         model.addAttribute("monthYear", monthsStr[m-1] + " " + y);
         model.addAttribute("dateParam", datePicked);
         model.addAttribute("cpeList", cpeList);
+
+        if (mode.equalsIgnoreCase("preview")) {
+            System.out.println("preview");
+            return "list-customers-monthly-active-preview";
+        } else {
+            return "list-customers-monthly-active";
+        }
+    }
+    
+    /**
+     * Fetches customers along with some of their details that have at least
+     * one successful transaction for the selected month.
+     * @param model - the model
+     * @param mode - normal view or print preview
+     * @param datePicked - the selected month
+     */
+    @RequestMapping(value="/listactive", method = RequestMethod.GET)
+    public String listActiveCustomersForTheMonth(Model model,
+            @RequestParam(value = "mode", defaultValue = "normal", required = false) String mode,
+            @RequestParam(value = "d", required = false) String datePicked) {
+        logger.info("List active customers per month.");
+
+        List<CustomerPriceEntity> cpeList = new ArrayList<>();
+
+        Integer m = 1;
+        Integer y = 1970;
+
+        List<Customer> customerList = new ArrayList<>();
+        List<Long> customerIds = new ArrayList<>();
+
+        if (datePicked == null || datePicked.equalsIgnoreCase("today") || datePicked.equalsIgnoreCase("")) {
+            LocalDateTime now = LocalDateTime.now();
+
+            y = now.getYear();
+            m = now.getMonthValue();
+
+            // m = month.toString();
+            // y = year.toString();
+        } else {
+            String[] splitDate = datePicked.split("-");
+            m = Integer.parseInt(splitDate[0]);
+            if (splitDate.length > 1) {
+                y = Integer.parseInt(splitDate[1]);
+            }
+        }
+        
+        
+        List<CustomerWithOrder> custOrderList = this.customerService.findMonthlyActiveCustomers(m, y);
+
+        
+        //for (CustomerWithOrder cwo : custOrderList) {
+            //Timestamp mostRecentOd = this.orderService.getMostRecentOrderDate(cwo.getCustomerId());
+            //int orderCount = this.orderService.getOrderCountPerMonth(m, y, cwo.getCustomerId()).intValue();
+            //cwo.setMostRecentOrderDate(mostRecentOd);
+            //cwo.setNumberOfOrdersForTheMonth(orderCount);
+        //}
+
+        model.addAttribute("monthYear", monthsStr[m-1] + " " + y);
+        model.addAttribute("dateParam", datePicked);
+        model.addAttribute("cwoList", custOrderList);
 
         if (mode.equalsIgnoreCase("preview")) {
             System.out.println("preview");

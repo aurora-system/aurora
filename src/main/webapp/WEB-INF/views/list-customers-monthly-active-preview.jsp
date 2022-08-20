@@ -19,23 +19,19 @@
                           <tr>
                             <th style="padding: 8px;">Type</th>
                             <th style="padding: 8px;">Customer Name</th>
-                            <th style="padding: 8px;">Refill</th>
-                            <th style="padding: 8px;">Most Recent Order</th>
-                            <th style="padding: 8px;">Order Count</th>
                             <th style="padding: 8px;">Address</th>
                             <th style="padding: 8px;">Contact Number</th>
+<!--                             <th style="padding: 8px;">Order Count</th> -->
                           </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="cp" items="${cpeList}">
+                            <c:forEach var="co" items="${cwoList}">
                                 <tr>
-                                    <td style="padding: 8px;">${cp.customer.type}</td>
-                                    <td style="padding: 8px;">${cp.customer.name}</td>
-                                    <td style="padding: 8px;">${cp.refillPrice}</td>
-                                    <td style="padding: 8px;">${cp.mostRecentOrderDate}</td>
-                                    <td style="padding: 8px;">${cp.numberOfOrdersForTheMonth}</td>
-                                    <td style="padding: 8px;">${cp.customer.address}</td>
-                                    <td style="padding: 8px;">${cp.customer.mainNumber}</td>
+                                    <td style="padding: 8px;">${co.type}</td>
+                                    <td style="padding: 8px;">${co.name}</td>
+                                    <td style="padding: 8px;">${co.address}</td>
+                                    <td style="padding: 8px;">${co.mainNumber}</td>
+<%--                                     <td style="padding: 8px;">${co.numberOfOrdersForTheMonth}</td> --%>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -54,13 +50,11 @@
             	    null,
             	    null,
             	    null,
-            	    null,
-            	    null,
-            	    null,
-            	    null,
-            	    { "orderable": false }
-            	  ]
-            	
+            	    null
+            	  ],
+            	  "lengthChange": false,
+            	  "pageLength": 5000,
+            	  "bPaginate": false
             });
             
             $('#headerNav a').click(function(e) {
